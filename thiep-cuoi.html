@@ -1,0 +1,3889 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title id="page-title">Thiệp Mời Cưới - Quốc Huy & Mỹ Linh</title>
+  
+  <!-- Open Graph Meta Tags (Hiển thị xem trước khi gửi qua Zalo / Facebook Messenger / iMessage) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" id="og-title" content="Thiệp Mời Cưới: Quốc Huy & Mỹ Linh 💍">
+  <meta property="og:description" id="og-desc" content="Trân trọng kính mời bạn đến chung vui cùng gia đình chúng mình. Sự hiện diện của bạn là niềm vinh hạnh lớn nhất của chúng mình!">
+  <meta property="og:image" id="og-img" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80">
+  <meta name="theme-color" content="#b97a57">
+
+  <!-- Google Fonts: Playfair Display + Alex Brush + Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <style>
+/* Custom styling for Wedding Invitation Website */
+
+:root {
+  --theme-primary: #B87D65;
+  --theme-secondary: #D4AF37;
+  --theme-accent: #B87D65;
+  --theme-text: #3A2E2B;
+  --theme-card-bg: #FFFFFF;
+  --theme-wax: #B87D65;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Biến màu chủ đề động */
+.theme-primary-color { color: var(--theme-primary); }
+.theme-primary-bg { background-color: var(--theme-primary); }
+.theme-primary-border { border-color: var(--theme-primary); }
+.theme-accent-bg { background-color: var(--theme-accent); }
+.theme-accent-color { color: var(--theme-accent); }
+.theme-wax-bg { background-color: var(--theme-wax); }
+
+/* Hiệu ứng xoay đĩa than âm nhạc */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-music {
+  animation: spin-slow 4s linear infinite;
+}
+
+/* Hiệu ứng zoom nhẹ ảnh Hero */
+@keyframes subtleZoom {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-subtle-zoom {
+  animation: subtleZoom 25s ease-in-out infinite alternate;
+}
+
+/* Cánh hoa rơi lãng mạn */
+.petal {
+  position: absolute;
+  background-color: #ffd1dc;
+  border-radius: 150% 0 150% 0;
+  opacity: 0.6;
+  pointer-events: none;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    top: -10%;
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    top: 110%;
+    transform: translateX(80px) rotate(360deg);
+  }
+}
+
+/* Animation mở phong bì thư */
+.envelope-opening {
+  transform: scale(1.1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Custom scrollbar cho sổ lưu bút và modal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.03);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 125, 101, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 125, 101, 0.8);
+}
+
+/* Nút hiệu ứng chạm bấm trên điện thoại */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+</style>
+
+  <!-- Kho 100 Mẫu Thiệp Cưới -->
+  <script>
+// ==========================================================================
+// KHO 100 MẪU THIỆP CƯỚI WEB ĐA DẠNG PHONG CÁCH (10 BỘ SƯU TẬP x 10 MẪU)
+// ==========================================================================
+
+const WEDDING_CATEGORIES = [
+  { id: 'all', name: 'Tất Cả (100 Mẫu)', icon: 'sparkles' },
+  { id: 'traditional', name: 'Truyền Thống & Á Đông', icon: 'heart' },
+  { id: 'floral', name: 'Hoa Cỏ & Botanical', icon: 'flower-2' },
+  { id: 'luxury', name: 'Hoàng Gia & Luxury', icon: 'crown' },
+  { id: 'rustic', name: 'Rustic & Vintage', icon: 'feather' },
+  { id: 'minimalist', name: 'Tối Giản Hiện Đại', icon: 'layout' },
+  { id: 'ocean', name: 'Biển & Mùa Hè', icon: 'waves' },
+  { id: 'pastel', name: 'Pastel Dịu Ngọt', icon: 'palette' },
+  { id: 'watercolor', name: 'Màu Nước & Hội Họa', icon: 'brush' },
+  { id: 'celestial', name: 'Dạ Hội & Ngân Hà', icon: 'moon' },
+  { id: 'trendy', name: 'Xu Hướng Gen Z & Retro', icon: 'zap' }
+];
+
+const WEDDING_TEMPLATES = [
+  // =========================================================================
+  // BỘ 1: TRUYỀN THỐNG & Á ĐÔNG (1 - 10)
+  // =========================================================================
+  {
+    id: 1,
+    name: "Song Hỷ Cát Tường",
+    category: "traditional",
+    tag: "Phổ biến",
+    desc: "Sắc đỏ son may mắn kết hợp ánh kim chữ Hỷ truyền thống Á Đông.",
+    thumb: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B91C1C", secondary: "#D97706", accent: "#DC2626", text: "#450A0A",
+      bg: "from-rose-50 via-amber-50 to-red-100", cardBg: "#FFFFFF", envelopeWax: "#B91C1C",
+      petals: ["#DC2626", "#F59E0B", "#FCA5A5", "#FEF3C7"]
+    }
+  },
+  {
+    id: 2,
+    name: "Long Phụng Hòa Minh",
+    category: "traditional",
+    tag: "Trang trọng",
+    desc: "Họa tiết rồng phượng sum vầy trên nền lụa đỏ thắm quyền quý.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#991B1B", secondary: "#B45309", accent: "#B91C1C", text: "#3B0707",
+      bg: "from-red-50 via-orange-50 to-rose-100", cardBg: "#FFFDF9", envelopeWax: "#991B1B",
+      petals: ["#991B1B", "#D97706", "#FEE2E2"]
+    }
+  },
+  {
+    id: 3,
+    name: "Gốm Sứ Hoa Lam",
+    category: "traditional",
+    tag: "Thanh tao",
+    desc: "Cảm hứng gốm hoa lam men sứ cổ truyền Việt Nam thanh lịch.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1D4ED8", secondary: "#3B82F6", accent: "#2563EB", text: "#1E293B",
+      bg: "from-blue-50 via-slate-50 to-sky-100", cardBg: "#FFFFFF", envelopeWax: "#1D4ED8",
+      petals: ["#60A5FA", "#93C5FD", "#DBEAFE", "#E2E8F0"]
+    }
+  },
+  {
+    id: 4,
+    name: "Sen Hồng Cung Đình",
+    category: "traditional",
+    tag: "Duyên dáng",
+    desc: "Hương sắc hoa sen thanh tao đại diện cho tình yêu son sắt trăm năm.",
+    thumb: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#BE185D", secondary: "#059669", accent: "#DB2777", text: "#500724",
+      bg: "from-pink-50 via-emerald-50/20 to-rose-100", cardBg: "#FFFFFF", envelopeWax: "#BE185D",
+      petals: ["#F472B6", "#A7F3D0", "#FBCFE8"]
+    }
+  },
+  {
+    id: 5,
+    name: "Thêu Tay Hoàng Triều",
+    category: "traditional",
+    tag: "Quý phái",
+    desc: "Chi tiết hoa văn thêu chỉ vàng óng ánh trên gấm lụa cao cấp.",
+    thumb: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#854D0E", secondary: "#CA8A04", accent: "#A16207", text: "#422006",
+      bg: "from-amber-50 via-yellow-50/50 to-stone-100", cardBg: "#FFFEFA", envelopeWax: "#CA8A04",
+      petals: ["#FBBF24", "#FDE68A", "#D97706"]
+    }
+  },
+  {
+    id: 6,
+    name: "Đèn Lồng Phố Hội",
+    category: "traditional",
+    tag: "Ấm cúng",
+    desc: "Không gian cổ kính lãng mạn như đêm rằm phố cổ Hội An.",
+    thumb: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#C2410C", secondary: "#D97706", accent: "#EA580C", text: "#431407",
+      bg: "from-amber-50 via-orange-50 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#EA580C",
+      petals: ["#FB923C", "#FBBF24", "#FED7AA"]
+    }
+  },
+  {
+    id: 7,
+    name: "Trầu Cau Đượm Tình",
+    category: "traditional",
+    tag: "Ý nghĩa",
+    desc: "Biểu tượng trầu cau gắn kết trăm năm tình nghĩa vợ chồng.",
+    thumb: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#15803D", secondary: "#B91C1C", accent: "#16A34A", text: "#14532D",
+      bg: "from-emerald-50 via-stone-50 to-rose-50", cardBg: "#FFFFFF", envelopeWax: "#B91C1C",
+      petals: ["#86EFAC", "#FCA5A5", "#BBF7D0"]
+    }
+  },
+  {
+    id: 8,
+    name: "Thư Pháp Á Đông",
+    category: "traditional",
+    tag: "Tao nhã",
+    desc: "Nét mực thư pháp thanh thoát lưu giữ nguyện ước ước bách niên giai lão.",
+    thumb: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#262626", secondary: "#B91C1C", accent: "#171717", text: "#171717",
+      bg: "from-stone-100 via-stone-50 to-amber-50/40", cardBg: "#FAF8F5", envelopeWax: "#991B1B",
+      petals: ["#F87171", "#D4D4D8", "#FCA5A5"]
+    }
+  },
+  {
+    id: 9,
+    name: "Gấm Hoa Cát Tường",
+    category: "traditional",
+    tag: "Sang trọng",
+    desc: "Màu gấm đỏ phối ánh vàng hoàng gia rực rỡ và đầm ấm.",
+    thumb: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#7F1D1D", secondary: "#D97706", accent: "#991B1B", text: "#3B0707",
+      bg: "from-rose-50 via-amber-50 to-red-100", cardBg: "#FFFDFB", envelopeWax: "#7F1D1D",
+      petals: ["#EF4444", "#F59E0B", "#FEE2E2"]
+    }
+  },
+  {
+    id: 10,
+    name: "Áo Dài Thục Nữ",
+    category: "traditional",
+    tag: "Dịu dàng",
+    desc: "Họa tiết nụ hoa e ấp gợi nét duyên dáng tà áo dài ngày cưới.",
+    thumb: "https://images.unsplash.com/photo-1546804784-896d0dca3805?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#A21CAF", secondary: "#E11D48", accent: "#C026D3", text: "#4A044E",
+      bg: "from-fuchsia-50 via-rose-50 to-pink-100", cardBg: "#FFFFFF", envelopeWax: "#C026D3",
+      petals: ["#E879F9", "#FDA4AF", "#F5D0FE"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 2: HOA CỎ & BOTANICAL (11 - 20)
+  // =========================================================================
+  {
+    id: 11,
+    name: "Hoa Hồng Champagne",
+    category: "floral",
+    tag: "Lãng mạn",
+    desc: "Sắc hoa hồng pastel và màu rượu champagne ấm áp dịu dàng.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B87D65", secondary: "#D4AF37", accent: "#9D5C43", text: "#3A2E2B",
+      bg: "from-[#FAF7F2] via-[#F3ECE3] to-[#EBD8D0]", cardBg: "#FAF7F2", envelopeWax: "#B87D65",
+      petals: ["#FBCFE8", "#FED7AA", "#FDE047"]
+    }
+  },
+  {
+    id: 12,
+    name: "Bạch Đàn & Khu Vườn Xanh",
+    category: "floral",
+    tag: "Tươi mát",
+    desc: "Lá bạch đàn tươi mát phối hoa trắng mang hơi thở thiên nhiên thuần khiết.",
+    thumb: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#047857", secondary: "#10B981", accent: "#059669", text: "#064E3B",
+      bg: "from-emerald-50 via-stone-50 to-green-100", cardBg: "#FFFFFF", envelopeWax: "#047857",
+      petals: ["#A7F3D0", "#D1FAE5", "#E2E8F0"]
+    }
+  },
+  {
+    id: 13,
+    name: "Mộc Lan Tinh Khôi",
+    category: "floral",
+    tag: "Thanh khiết",
+    desc: "Cành hoa mộc lan trắng nở rộ biểu tượng cho tình yêu chân thành.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#475569", secondary: "#94A3B8", accent: "#334155", text: "#1E293B",
+      bg: "from-slate-50 via-stone-50 to-zinc-100", cardBg: "#FFFFFF", envelopeWax: "#64748B",
+      petals: ["#F1F5F9", "#CBD5E1", "#E2E8F0"]
+    }
+  },
+  {
+    id: 14,
+    name: "Cẩm Tú Cầu Xanh Lam",
+    category: "floral",
+    tag: "Dịu dàng",
+    desc: "Đóa cẩm tú cầu xanh ngắt dệt nên câu chuyện tình bình yên.",
+    thumb: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0284C7", secondary: "#38BDF8", accent: "#0369A1", text: "#0C4A6E",
+      bg: "from-sky-50 via-slate-50 to-cyan-100", cardBg: "#FFFFFF", envelopeWax: "#0284C7",
+      petals: ["#7DD3FC", "#BAE6FD", "#E0F2FE"]
+    }
+  },
+  {
+    id: 15,
+    name: "Hướng Dương Rực Rỡ",
+    category: "floral",
+    tag: "Ngập tràn nắng",
+    desc: "Ánh hoa hướng dương vàng ấm áp hướng trọn trái tim về nhau.",
+    thumb: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#D97706", secondary: "#F59E0B", accent: "#B45309", text: "#451A03",
+      bg: "from-amber-50 via-yellow-50 to-orange-100", cardBg: "#FFFDF7", envelopeWax: "#D97706",
+      petals: ["#FCD34D", "#FDE68A", "#FBBF24"]
+    }
+  },
+  {
+    id: 16,
+    name: "Cành Ô Liu Hy Lạp",
+    category: "floral",
+    tag: "Thần thoại",
+    desc: "Lá ô liu mang lời chúc bình an, trường tồn và hạnh phúc viên mãn.",
+    thumb: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#3F6212", secondary: "#65A30D", accent: "#4D7C0F", text: "#1A2E05",
+      bg: "from-lime-50/70 via-stone-50 to-amber-50/40", cardBg: "#FFFFFF", envelopeWax: "#4D7C0F",
+      petals: ["#BEF264", "#D9F99D", "#E2E8F0"]
+    }
+  },
+  {
+    id: 17,
+    name: "Oải Hương Provence",
+    category: "floral",
+    tag: "Thơ mộng",
+    desc: "Cánh đồng lavender tím biếc của nước Pháp ngọt ngào và thủy chung.",
+    thumb: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#7E22CE", secondary: "#A855F7", accent: "#6B21A8", text: "#3B0764",
+      bg: "from-purple-50 via-fuchsia-50/30 to-violet-100", cardBg: "#FFFFFF", envelopeWax: "#7E22CE",
+      petals: ["#D8B4FE", "#E9D5FF", "#C084FC"]
+    }
+  },
+  {
+    id: 18,
+    name: "Anh Đào Tokyo",
+    category: "floral",
+    tag: "Thanh xuân",
+    desc: "Cánh hoa sakura rơi khẽ khàng trong ngày hạnh phúc đẹp nhất.",
+    thumb: "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#DB2777", secondary: "#F472B6", accent: "#BE185D", text: "#500724",
+      bg: "from-pink-50 via-rose-50/40 to-pink-100", cardBg: "#FFFFFF", envelopeWax: "#DB2777",
+      petals: ["#F472B6", "#FBCFE8", "#FDF2F8"]
+    }
+  },
+  {
+    id: 19,
+    name: "Dã Quỳ Cao Nguyên",
+    category: "floral",
+    tag: "Phóng khoáng",
+    desc: "Sắc vàng dã quỳ hoang dã ấm áp như tình yêu rực rỡ nơi phố núi.",
+    thumb: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#CA8A04", secondary: "#EAB308", accent: "#A16207", text: "#422006",
+      bg: "from-yellow-50 via-amber-50/40 to-stone-100", cardBg: "#FFFDF5", envelopeWax: "#CA8A04",
+      petals: ["#FDE047", "#FEF08A", "#FED7AA"]
+    }
+  },
+  {
+    id: 20,
+    name: "Tulip Hà Lan Tinh Tế",
+    category: "floral",
+    tag: "Cao nhã",
+    desc: "Những cánh hoa tulip vươn mình tượng trưng cho tình yêu hoàn hảo.",
+    thumb: "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#E11D48", secondary: "#FB7185", accent: "#BE123C", text: "#4C0519",
+      bg: "from-rose-50 via-red-50/30 to-rose-100", cardBg: "#FFFFFF", envelopeWax: "#E11D48",
+      petals: ["#FDA4AF", "#FECDD3", "#FEE2E2"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 3: HOÀNG GIA & LUXURY (21 - 30)
+  // =========================================================================
+  {
+    id: 21,
+    name: "Hoàng Gia Gold Foil",
+    category: "luxury",
+    tag: "Đẳng cấp",
+    desc: "Ánh vàng kim 24K dát viền lộng lẫy và quyền lực đỉnh cao.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B45309", secondary: "#D97706", accent: "#92400E", text: "#291605",
+      bg: "from-stone-900 via-stone-800 to-amber-950", cardBg: "#1C1917", envelopeWax: "#D97706",
+      petals: ["#FCD34D", "#F59E0B", "#D97706"], isDark: true
+    }
+  },
+  {
+    id: 22,
+    name: "Nhung Đỏ Burgundy",
+    category: "luxury",
+    tag: "Quyến rũ",
+    desc: "Sắc đỏ rượu vang nhung mịn mang đến tiệc cưới ấm cúng và quý phái.",
+    thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#881337", secondary: "#BE123C", accent: "#4C0519", text: "#3B0716",
+      bg: "from-rose-50 via-stone-100 to-red-100", cardBg: "#FFFFFF", envelopeWax: "#881337",
+      petals: ["#BE123C", "#E11D48", "#FECDD3"]
+    }
+  },
+  {
+    id: 23,
+    name: "Kim Cương Sapphire",
+    category: "luxury",
+    tag: "Xa hoa",
+    desc: "Sắc xanh ngọc sapphire quý hiếm tôn vinh lời thề ước vĩnh cửu.",
+    thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1E3A8A", secondary: "#3B82F6", accent: "#172554", text: "#0F172A",
+      bg: "from-blue-50 via-slate-50 to-indigo-100", cardBg: "#FFFFFF", envelopeWax: "#1E3A8A",
+      petals: ["#93C5FD", "#BFDBFE", "#60A5FA"]
+    }
+  },
+  {
+    id: 24,
+    name: "Đêm Tiệc Emerald",
+    category: "luxury",
+    tag: "Thời thượng",
+    desc: "Màu xanh ngọc lục bảo huyền bí phối ánh kim sa lung linh.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#065F46", secondary: "#10B981", accent: "#064E3B", text: "#022C22",
+      bg: "from-emerald-50 via-stone-50 to-teal-100", cardBg: "#FFFFFF", envelopeWax: "#065F46",
+      petals: ["#6EE7B7", "#A7F3D0", "#D1FAE5"]
+    }
+  },
+  {
+    id: 25,
+    name: "Bạch Kim Hoàng Gia",
+    category: "luxury",
+    tag: "Hiện đại",
+    desc: "Sắc trắng bạc bạch kim tinh xảo cho cặp đôi yêu thích sự thanh tao.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#475569", secondary: "#94A3B8", accent: "#334155", text: "#0F172A",
+      bg: "from-slate-100 via-stone-100 to-zinc-200", cardBg: "#FFFFFF", envelopeWax: "#475569",
+      petals: ["#CBD5E1", "#E2E8F0", "#F1F5F9"]
+    }
+  },
+  {
+    id: 26,
+    name: "Cung Điện Versailles",
+    category: "luxury",
+    tag: "Cổ tích",
+    desc: "Lộng lẫy và hoa lệ như đám cưới quý tộc phương Tây trong lâu đài.",
+    thumb: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#9A3412", secondary: "#D97706", accent: "#7C2D12", text: "#431407",
+      bg: "from-amber-50 via-orange-50/50 to-stone-100", cardBg: "#FFFCF5", envelopeWax: "#D97706",
+      petals: ["#FBBF24", "#FCD34D", "#FED7AA"]
+    }
+  },
+  {
+    id: 27,
+    name: "Thủy Tinh Pha Lê",
+    category: "luxury",
+    tag: "Lấp lánh",
+    desc: "Hiệu ứng phản chiếu ánh sáng pha lê trong suốt tựa pha lê tình yêu.",
+    thumb: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0E7490", secondary: "#22D3EE", accent: "#155E75", text: "#164E63",
+      bg: "from-cyan-50 via-slate-50 to-sky-100", cardBg: "#FFFFFF", envelopeWax: "#0E7490",
+      petals: ["#A5F3FC", "#CFFAFE", "#E0F2FE"]
+    }
+  },
+  {
+    id: 28,
+    name: "Tơ Lụa Champagne",
+    category: "luxury",
+    tag: "Mềm mại",
+    desc: "Nếp lụa satin màu sâm panh mềm mại và ngọt ngào.",
+    thumb: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#A16207", secondary: "#EAB308", accent: "#854D0E", text: "#3B2206",
+      bg: "from-amber-50/80 via-stone-50 to-yellow-100", cardBg: "#FFFEF7", envelopeWax: "#A16207",
+      petals: ["#FDE047", "#FEF08A", "#FDF4E3"]
+    }
+  },
+  {
+    id: 29,
+    name: "Vương Miện Ánh Kim",
+    category: "luxury",
+    tag: "Vương giả",
+    desc: "Đường viền vương miện lấp lánh biểu tượng nàng công chúa và chàng hoàng tử.",
+    thumb: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B45309", secondary: "#F59E0B", accent: "#92400E", text: "#451A03",
+      bg: "from-amber-50 via-stone-50 to-orange-100", cardBg: "#FFFFFF", envelopeWax: "#B45309",
+      petals: ["#FCD34D", "#FDE68A", "#F59E0B"]
+    }
+  },
+  {
+    id: 30,
+    name: "Dạ Khúc Thính Phòng",
+    category: "luxury",
+    tag: "Nghệ thuật",
+    desc: "Giai điệu du dương của tiệc cưới thính phòng sang trọng và lắng đọng.",
+    thumb: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#334155", secondary: "#D4AF37", accent: "#1E293B", text: "#0F172A",
+      bg: "from-slate-100 via-stone-100 to-amber-50/50", cardBg: "#FFFFFF", envelopeWax: "#D4AF37",
+      petals: ["#FCD34D", "#CBD5E1", "#E2E8F0"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 4: RUSTIC & VINTAGE (31 - 40)
+  // =========================================================================
+  {
+    id: 31,
+    name: "Giấy Kraft Mộc Mạc",
+    category: "rustic",
+    tag: "Mộc",
+    desc: "Màu giấy nâu kraft vintage thắt nơ thừng giản dị và chân thành.",
+    thumb: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#854D0E", secondary: "#A16207", accent: "#713F12", text: "#3B2206",
+      bg: "from-[#F3ECE3] via-[#E8DEC8] to-[#D9CCA8]", cardBg: "#FBF7F0", envelopeWax: "#854D0E",
+      petals: ["#D4B89B", "#C2A385", "#E8D8C3"]
+    }
+  },
+  {
+    id: 32,
+    name: "Gỗ Thông Trầm Mặc",
+    category: "rustic",
+    tag: "Ấm cúng",
+    desc: "Vân gỗ thông ấm áp hòa cùng hương thơm của núi rừng Đà Lạt.",
+    thumb: "https://images.unsplash.com/photo-1546804784-896d0dca3805?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#78350F", secondary: "#B45309", accent: "#451A03", text: "#291605",
+      bg: "from-stone-100 via-amber-50 to-orange-100", cardBg: "#FAF6F0", envelopeWax: "#78350F",
+      petals: ["#B45309", "#D97706", "#FDE68A"]
+    }
+  },
+  {
+    id: 33,
+    name: "Bohemian Tự Do",
+    category: "rustic",
+    tag: "Phóng khoáng",
+    desc: "Họa tiết ren đan macrame và lông vũ bay bổng phong cách du mục boho.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#9A3412", secondary: "#EA580C", accent: "#7C2D12", text: "#431407",
+      bg: "from-orange-50 via-stone-100 to-amber-100", cardBg: "#FFFDF9", envelopeWax: "#9A3412",
+      petals: ["#FB923C", "#FED7AA", "#FBBF24"]
+    }
+  },
+  {
+    id: 34,
+    name: "Đèn Dây Fairy Lights",
+    category: "rustic",
+    tag: "Lung linh",
+    desc: "Khu vườn cổ tích lung linh ánh đèn vàng trong đêm tiệc cưới ngoài trời.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#D97706", secondary: "#F59E0B", accent: "#B45309", text: "#1C1917",
+      bg: "from-stone-900 via-zinc-800 to-amber-950", cardBg: "#292524", envelopeWax: "#F59E0B",
+      petals: ["#FDE047", "#FBBF24", "#F59E0B"], isDark: true
+    }
+  },
+  {
+    id: 35,
+    name: "Lá Khô Mùa Thu",
+    category: "rustic",
+    tag: "Trầm ấm",
+    desc: "Sắc lá phong vàng cam rực rỡ của mùa thu dịu ngọt tình yêu chín muồi.",
+    thumb: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#C2410C", secondary: "#EA580C", accent: "#9A3412", text: "#431407",
+      bg: "from-amber-50 via-orange-50 to-stone-100", cardBg: "#FFFDF9", envelopeWax: "#C2410C",
+      petals: ["#F97316", "#FBBF24", "#EA580C"]
+    }
+  },
+  {
+    id: 36,
+    name: "Cỏ Đuôi Phụng Pampas",
+    category: "rustic",
+    tag: "Trendy",
+    desc: "Cành cỏ lau pampas bồng bềnh đậm chất lễ cưới sân vườn hiện đại.",
+    thumb: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#A16207", secondary: "#CA8A04", accent: "#713F12", text: "#3B2206",
+      bg: "from-[#F7F4EF] via-[#EFE8DC] to-[#E5DAC6]", cardBg: "#FFFEFC", envelopeWax: "#A16207",
+      petals: ["#E6D7C3", "#D2C1A8", "#F3EDE2"]
+    }
+  },
+  {
+    id: 37,
+    name: "Lều Trại Du Mục Glamping",
+    category: "rustic",
+    tag: "Độc lạ",
+    desc: "Trải nghiệm tiệc cưới lều trại ngoài trời gần gũi với mây trời.",
+    thumb: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#4D7C0F", secondary: "#84CC16", accent: "#3F6212", text: "#1A2E05",
+      bg: "from-stone-100 via-lime-50/50 to-amber-50", cardBg: "#FFFFFF", envelopeWax: "#4D7C0F",
+      petals: ["#A3E635", "#D9F99D", "#CBD5E1"]
+    }
+  },
+  {
+    id: 38,
+    name: "Hơi Thở Cổ Điển 1980s",
+    category: "rustic",
+    tag: "Hoài niệm",
+    desc: "Phong cách bưu thiếp tem thư thập niên 80 hoài cổ và lãng mạn.",
+    thumb: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#7C2D12", secondary: "#9A3412", accent: "#431407", text: "#271206",
+      bg: "from-amber-50 via-stone-100 to-orange-100", cardBg: "#FAF5ED", envelopeWax: "#7C2D12",
+      petals: ["#EA580C", "#D97706", "#FDE68A"]
+    }
+  },
+  {
+    id: 39,
+    name: "Khí Cầu Bay Lượn",
+    category: "rustic",
+    tag: "Bay bổng",
+    desc: "Hành trình tình yêu cùng nhau ngắm nhìn thế giới từ trên cao.",
+    thumb: "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0369A1", secondary: "#38BDF8", accent: "#075985", text: "#082F49",
+      bg: "from-sky-50 via-stone-50 to-amber-50", cardBg: "#FFFFFF", envelopeWax: "#0369A1",
+      petals: ["#7DD3FC", "#FED7AA", "#BAE6FD"]
+    }
+  },
+  {
+    id: 40,
+    name: "Hoa Dại Đồng Nội",
+    category: "rustic",
+    tag: "Hồn nhiên",
+    desc: "Những đóa hoa dại nhỏ xinh nở rộ trên thảo nguyên xanh ngát.",
+    thumb: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#15803D", secondary: "#EAB308", accent: "#16A34A", text: "#14532D",
+      bg: "from-emerald-50 via-yellow-50/40 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#15803D",
+      petals: ["#86EFAC", "#FDE047", "#FBCFE8"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 5: TỐI GIẢN HIỆN ĐẠI (MINIMALIST) (41 - 50)
+  // =========================================================================
+  {
+    id: 41,
+    name: "Trắng Đen Monochrome",
+    category: "minimalist",
+    tag: "Tối giản",
+    desc: "Sự tương phản kinh điển không bao giờ lỗi thời giữa trắng và đen.",
+    thumb: "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0A0A0A", secondary: "#525252", accent: "#171717", text: "#0A0A0A",
+      bg: "from-stone-50 via-neutral-100 to-stone-200", cardBg: "#FFFFFF", envelopeWax: "#171717",
+      petals: ["#A3A3A3", "#D4D4D4", "#E5E5E5"]
+    }
+  },
+  {
+    id: 42,
+    name: "Nét Vẽ Line Art",
+    category: "minimalist",
+    tag: "Nghệ thuật",
+    desc: "Những đường nét vẽ tay mộc mạc phác họa chân dung hai người.",
+    thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#44403C", secondary: "#78716C", accent: "#292524", text: "#1C1917",
+      bg: "from-stone-50 via-stone-100 to-amber-50/30", cardBg: "#FAFAF9", envelopeWax: "#44403C",
+      petals: ["#A8A29E", "#D6D3D1", "#F5F5F4"]
+    }
+  },
+  {
+    id: 43,
+    name: "Bê Tông & Kính Mờ",
+    category: "minimalist",
+    tag: "Kiến trúc",
+    desc: "Phong cách kiến trúc đương đại vững chãi và tinh tế.",
+    thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#475569", secondary: "#64748B", accent: "#334155", text: "#0F172A",
+      bg: "from-slate-100 via-gray-100 to-zinc-200", cardBg: "#FFFFFF", envelopeWax: "#475569",
+      petals: ["#94A3B8", "#CBD5E1", "#E2E8F0"]
+    }
+  },
+  {
+    id: 44,
+    name: "Typography Đương Đại",
+    category: "minimalist",
+    tag: "Ấn tượng",
+    desc: "Tôn vinh vẻ đẹp của kiểu chữ nghệ thuật và khoảng trống tinh tế.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#18181B", secondary: "#3F3F46", accent: "#27272A", text: "#09090B",
+      bg: "from-zinc-50 via-stone-50 to-neutral-100", cardBg: "#FFFFFF", envelopeWax: "#27272A",
+      petals: ["#71717A", "#A1A1AA", "#E4E4E7"]
+    }
+  },
+  {
+    id: 45,
+    name: "Tối Giản Bắc Âu Nordic",
+    category: "minimalist",
+    tag: "Scandinavian",
+    desc: "Sự ấm cúng Hygge trong không gian sáng thoáng kiểu Bắc Âu.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#065F46", secondary: "#6B7280", accent: "#047857", text: "#1F2937",
+      bg: "from-[#F8FAF9] via-[#F1F5F3] to-[#E7EFEA]", cardBg: "#FFFFFF", envelopeWax: "#065F46",
+      petals: ["#6EE7B7", "#D1D5DB", "#E5E7EB"]
+    }
+  },
+  {
+    id: 46,
+    name: "Khối Màu Color Block",
+    category: "minimalist",
+    tag: "Trẻ trung",
+    desc: "Sắp đặt các mảng màu pastel hình học tạo nên nét chấm phá hiện đại.",
+    thumb: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#4338CA", secondary: "#F43F5E", accent: "#3730A3", text: "#1E1B4B",
+      bg: "from-indigo-50 via-rose-50 to-amber-50", cardBg: "#FFFFFF", envelopeWax: "#4338CA",
+      petals: ["#818CF8", "#FDA4AF", "#FDE68A"]
+    }
+  },
+  {
+    id: 47,
+    name: "Hình Học Geometric",
+    category: "minimalist",
+    tag: "Cân đối",
+    desc: "Khung đa giác mạ vàng cắt gọt sắc nét bao bọc lấy tình yêu đôi lứa.",
+    thumb: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B45309", secondary: "#3F3F46", accent: "#92400E", text: "#18181B",
+      bg: "from-stone-50 via-zinc-100 to-amber-50", cardBg: "#FFFFFF", envelopeWax: "#B45309",
+      petals: ["#FBBF24", "#A1A1AA", "#E4E4E7"]
+    }
+  },
+  {
+    id: 48,
+    name: "Không Gian Âm (Negative Space)",
+    category: "minimalist",
+    tag: "Tinh giản",
+    desc: "Khoảng trắng thở nhẹ nhàng nhường toàn bộ tiêu điểm cho nhân vật chính.",
+    thumb: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#292524", secondary: "#57534E", accent: "#1C1917", text: "#0C0A09",
+      bg: "from-stone-50 via-stone-50 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#292524",
+      petals: ["#A8A29E", "#D6D3D1", "#E7E5E4"]
+    }
+  },
+  {
+    id: 49,
+    name: "Serif Cổ Điển Tinh Tế",
+    category: "minimalist",
+    tag: "Thư thái",
+    desc: "Tập trung vào vẻ đẹp quý tộc của những nét chân chữ thanh mảnh.",
+    thumb: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#4A044E", secondary: "#86198F", accent: "#701A75", text: "#2E0233",
+      bg: "from-fuchsia-50/50 via-stone-50 to-pink-50", cardBg: "#FFFFFF", envelopeWax: "#701A75",
+      petals: ["#E879F9", "#F0ABFC", "#FDF4FF"]
+    }
+  },
+  {
+    id: 50,
+    name: "Wabi-Sabi Nhật Bản",
+    category: "minimalist",
+    tag: "An yên",
+    desc: "Tìm thấy vẻ đẹp hoàn mỹ trong những điều mộc mạc và chân thành nhất.",
+    thumb: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#57534E", secondary: "#847A73", accent: "#44403C", text: "#292524",
+      bg: "from-[#F5F2EB] via-[#ECE7DE] to-[#E0D9CE]", cardBg: "#FCFBF9", envelopeWax: "#57534E",
+      petals: ["#D6D3D1", "#C7BEB5", "#F5F5F4"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 6: BIỂN & MÙA HÈ (51 - 60)
+  // =========================================================================
+  {
+    id: 51,
+    name: "Hoàng Hôn Bãi Biển",
+    category: "ocean",
+    tag: "Lãng mạn",
+    desc: "Bầu trời ửng hồng cam khi ánh hoàng hôn buông xuống mặt biển bao la.",
+    thumb: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#C2410C", secondary: "#F43F5E", accent: "#EA580C", text: "#431407",
+      bg: "from-rose-50 via-orange-50 to-amber-100", cardBg: "#FFFFFF", envelopeWax: "#EA580C",
+      petals: ["#FB923C", "#FDA4AF", "#FDE047"]
+    }
+  },
+  {
+    id: 52,
+    name: "Sóng Biển Xanh Ngọc",
+    category: "ocean",
+    tag: "Tươi mát",
+    desc: "Nước biển xanh ngọc lam trong vắt và bọt sóng vỗ bờ cát trắng.",
+    thumb: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0D9488", secondary: "#2DD4BF", accent: "#0F766E", text: "#134E4A",
+      bg: "from-teal-50 via-cyan-50/50 to-emerald-100", cardBg: "#FFFFFF", envelopeWax: "#0D9488",
+      petals: ["#5EEAD4", "#99F6E4", "#CCFBF1"]
+    }
+  },
+  {
+    id: 53,
+    name: "Vỏ Ốc & San Hô",
+    category: "ocean",
+    tag: "Độc đáo",
+    desc: "Những nhánh san hô cam pastel và vỏ ốc lưu giữ câu chuyện biển cả.",
+    thumb: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#E11D48", secondary: "#FB923C", accent: "#BE123C", text: "#4C0519",
+      bg: "from-rose-50 via-orange-50/40 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#E11D48",
+      petals: ["#FDA4AF", "#FED7AA", "#FECDD3"]
+    }
+  },
+  {
+    id: 54,
+    name: "Gió Biển Địa Trung Hải",
+    category: "ocean",
+    tag: "Tự do",
+    desc: "Tone xanh biển Santorini và tường vôi trắng tinh khôi.",
+    thumb: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0284C7", secondary: "#0369A1", accent: "#075985", text: "#0C4A6E",
+      bg: "from-sky-50 via-blue-50/30 to-slate-100", cardBg: "#FFFFFF", envelopeWax: "#0284C7",
+      petals: ["#7DD3FC", "#BAE6FD", "#E0F2FE"]
+    }
+  },
+  {
+    id: 55,
+    name: "Đảo Nhiệt Đới Bali",
+    category: "ocean",
+    tag: "Nhiệt đới",
+    desc: "Hàng dừa xanh nghiêng bóng bên bờ biển nhiệt đới mộng mơ.",
+    thumb: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#15803D", secondary: "#D97706", accent: "#166534", text: "#14532D",
+      bg: "from-emerald-50 via-amber-50 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#15803D",
+      petals: ["#86EFAC", "#FCD34D", "#BBF7D0"]
+    }
+  },
+  {
+    id: 56,
+    name: "Rạn San Hô Hawaii",
+    category: "ocean",
+    tag: "Sôi động",
+    desc: "Sắc màu rực rỡ của nắng gió và vũ điệu aloha nồng nhiệt.",
+    thumb: "https://images.unsplash.com/photo-1542259009477-d625272157b7?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#BE185D", secondary: "#F59E0B", accent: "#9D174D", text: "#500724",
+      bg: "from-pink-50 via-yellow-50 to-rose-100", cardBg: "#FFFFFF", envelopeWax: "#BE185D",
+      petals: ["#F472B6", "#FDE047", "#FBCFE8"]
+    }
+  },
+  {
+    id: 57,
+    name: "Bờ Cát Trắng Mịn",
+    category: "ocean",
+    tag: "Thư thái",
+    desc: "Cát mịn dưới chân và tiếng sóng thì thầm lời hẹn ước.",
+    thumb: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#9A3412", secondary: "#0284C7", accent: "#7C2D12", text: "#3B2206",
+      bg: "from-amber-50/60 via-sky-50 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#9A3412",
+      petals: ["#FED7AA", "#BAE6FD", "#F3EDE2"]
+    }
+  },
+  {
+    id: 58,
+    name: "Thủy Thủ Dương Buồm",
+    category: "ocean",
+    tag: "Kiên định",
+    desc: "Cánh buồm trắng no gió cùng nhau vượt qua mọi phong ba cuộc đời.",
+    thumb: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1E3A8A", secondary: "#DC2626", accent: "#172554", text: "#0F172A",
+      bg: "from-blue-50 via-slate-50 to-indigo-100", cardBg: "#FFFFFF", envelopeWax: "#1E3A8A",
+      petals: ["#93C5FD", "#FCA5A5", "#BFDBFE"]
+    }
+  },
+  {
+    id: 59,
+    name: "Ánh Dương Mùa Hạ",
+    category: "ocean",
+    tag: "Năng lượng",
+    desc: "Ánh nắng vàng mùa hè rọi sáng nụ cười rạng rỡ của cô dâu chú rể.",
+    thumb: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#EA580C", secondary: "#FACC15", accent: "#C2410C", text: "#431407",
+      bg: "from-orange-50 via-yellow-50 to-amber-100", cardBg: "#FFFFFF", envelopeWax: "#EA580C",
+      petals: ["#FB923C", "#FDE047", "#FED7AA"]
+    }
+  },
+  {
+    id: 60,
+    name: "Đêm Biển Đầy Sao",
+    category: "ocean",
+    tag: "Kỳ ảo",
+    desc: "Ngọn hải đăng dẫn lối tình yêu dưới bầu trời đêm sao trên biển.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0369A1", secondary: "#F59E0B", accent: "#075985", text: "#082F49",
+      bg: "from-slate-900 via-sky-950 to-stone-900", cardBg: "#0F172A", envelopeWax: "#F59E0B",
+      petals: ["#38BDF8", "#FDE047", "#7DD3FC"], isDark: true
+    }
+  },
+
+  // =========================================================================
+  // BỘ 7: PASTEL DỊU NGỌT (61 - 70)
+  // =========================================================================
+  {
+    id: 61,
+    name: "Kem Đào Peach Fuzz",
+    category: "pastel",
+    tag: "Màu của năm",
+    desc: "Tone màu quả đào ấm áp, ngọt lịm và ôm ấp trọn vẹn yêu thương.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#EA580C", secondary: "#FDBA74", accent: "#C2410C", text: "#431407",
+      bg: "from-[#FFF5ED] via-[#FFE8D6] to-[#FED7AA]", cardBg: "#FFFFFF", envelopeWax: "#EA580C",
+      petals: ["#FED7AA", "#FFEDD5", "#FDBA74"]
+    }
+  },
+  {
+    id: 62,
+    name: "Hồng Phấn Blush Pink",
+    category: "pastel",
+    tag: "Ngọt ngào",
+    desc: "Má hồng cô dâu e ấp trong ngày cưới hạnh phúc ngập tràn.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#DB2777", secondary: "#F472B6", accent: "#BE185D", text: "#500724",
+      bg: "from-pink-50 via-rose-50 to-pink-100", cardBg: "#FFFFFF", envelopeWax: "#DB2777",
+      petals: ["#F472B6", "#FBCFE8", "#FDF2F8"]
+    }
+  },
+  {
+    id: 63,
+    name: "Tím Khói Lilac",
+    category: "pastel",
+    tag: "Mộng mơ",
+    desc: "Sắc tím khói bảng lảng dịu êm như bài thơ tình mùa thu.",
+    thumb: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#7C3AED", secondary: "#A78BFA", accent: "#6D28D9", text: "#3B0764",
+      bg: "from-violet-50 via-purple-50/40 to-purple-100", cardBg: "#FFFFFF", envelopeWax: "#7C3AED",
+      petals: ["#C4B5FD", "#DDD6FE", "#EDE9FE"]
+    }
+  },
+  {
+    id: 64,
+    name: "Xanh Bạc Hà Mint",
+    category: "pastel",
+    tag: "Mát lành",
+    desc: "Sự tươi mát sảng khoái và trong trẻo cho một khởi đầu mới.",
+    thumb: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#059669", secondary: "#34D399", accent: "#047857", text: "#064E3B",
+      bg: "from-emerald-50 via-teal-50 to-green-100", cardBg: "#FFFFFF", envelopeWax: "#059669",
+      petals: ["#6EE7B7", "#A7F3D0", "#D1FAE5"]
+    }
+  },
+  {
+    id: 65,
+    name: "Vàng Bơ Buttercream",
+    category: "pastel",
+    tag: "Ấm áp",
+    desc: "Vị ngọt béo của bánh cưới bơ vàng tan chảy trong từng khoảnh khắc.",
+    thumb: "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#D97706", secondary: "#FCD34D", accent: "#B45309", text: "#451A03",
+      bg: "from-amber-50 via-yellow-50 to-orange-50", cardBg: "#FFFDF7", envelopeWax: "#D97706",
+      petals: ["#FDE047", "#FEF08A", "#FEF9C3"]
+    }
+  },
+  {
+    id: 66,
+    name: "Xanh Da Trời Baby Blue",
+    category: "pastel",
+    tag: "Bình yên",
+    desc: "Bầu trời trong xanh dịu nhẹ như ánh mắt người thương ngày đầu gặp gỡ.",
+    thumb: "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0284C7", secondary: "#7DD3FC", accent: "#0369A1", text: "#0C4A6E",
+      bg: "from-sky-50 via-blue-50/40 to-cyan-100", cardBg: "#FFFFFF", envelopeWax: "#0284C7",
+      petals: ["#BAE6FD", "#E0F2FE", "#F0F9FF"]
+    }
+  },
+  {
+    id: 67,
+    name: "Mây Hồng Kẹo Ngọt",
+    category: "pastel",
+    tag: "Dễ thương",
+    desc: "Tình yêu ngọt ngào tựa kẹo bông gòn bềnh bồng giữa mây trời.",
+    thumb: "https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#BE185D", secondary: "#F472B6", accent: "#9D174D", text: "#500724",
+      bg: "from-pink-50 via-fuchsia-50/30 to-rose-100", cardBg: "#FFFFFF", envelopeWax: "#BE185D",
+      petals: ["#F472B6", "#FBCFE8", "#FCE7F3"]
+    }
+  },
+  {
+    id: 68,
+    name: "Trà Chiều Anh Quốc",
+    category: "pastel",
+    tag: "Cổ điển",
+    desc: "Tách trà hoa hồng và bánh scone kiểu Anh thanh lịch tao nhã.",
+    thumb: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#9D5C43", secondary: "#D4AF37", accent: "#824630", text: "#3B2219",
+      bg: "from-[#F9F6F0] via-[#F2ECE1] to-[#E9DFD1]", cardBg: "#FFFFFF", envelopeWax: "#9D5C43",
+      petals: ["#E8D4C8", "#F1E4DC", "#FBF7F4"]
+    }
+  },
+  {
+    id: 69,
+    name: "Bánh Macaron Paris",
+    category: "pastel",
+    tag: "Tinh nghịch",
+    desc: "Sự phối trộn màu pastel của những chiếc bánh macaron kinh đô ánh sáng.",
+    thumb: "https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#C026D3", secondary: "#38BDF8", accent: "#9333EA", text: "#4A044E",
+      bg: "from-pink-50 via-sky-50 to-purple-50", cardBg: "#FFFFFF", envelopeWax: "#C026D3",
+      petals: ["#F0ABFC", "#7DD3FC", "#FDF2F8"]
+    }
+  },
+  {
+    id: 70,
+    name: "Vườn Hồng Sớm Mai",
+    category: "pastel",
+    tag: "Tinh sương",
+    desc: "Những giọt sương mai đọng trên cánh hoa hồng hé nở đầu ngày.",
+    thumb: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#E11D48", secondary: "#10B981", accent: "#BE123C", text: "#4C0519",
+      bg: "from-rose-50 via-emerald-50/20 to-pink-100", cardBg: "#FFFFFF", envelopeWax: "#E11D48",
+      petals: ["#FDA4AF", "#A7F3D0", "#FECDD3"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 8: MÀU NƯỚC & HỘI HỌA (71 - 80)
+  // =========================================================================
+  {
+    id: 71,
+    name: "Màu Nước Loang Xanh Indigo",
+    category: "watercolor",
+    tag: "Nghệ thuật",
+    desc: "Vết loang màu nước tự nhiên tựa bức tranh thủy mặc hiện đại.",
+    thumb: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1E40AF", secondary: "#3B82F6", accent: "#1D4ED8", text: "#172554",
+      bg: "from-blue-50 via-slate-50 to-indigo-100", cardBg: "#FFFFFF", envelopeWax: "#1E40AF",
+      petals: ["#60A5FA", "#93C5FD", "#DBEAFE"]
+    }
+  },
+  {
+    id: 72,
+    name: "Trừu Tượng Sơn Dầu",
+    category: "watercolor",
+    tag: "Sáng tạo",
+    desc: "Những vệt sơn dầu dày dặn phối màu tinh tế như bảo tàng nghệ thuật.",
+    thumb: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#9333EA", secondary: "#F59E0B", accent: "#7E22CE", text: "#3B0764",
+      bg: "from-purple-50 via-amber-50 to-stone-100", cardBg: "#FFFFFF", envelopeWax: "#9333EA",
+      petals: ["#C084FC", "#FCD34D", "#E9D5FF"]
+    }
+  },
+  {
+    id: 73,
+    name: "Vân Đá Cẩm Thạch Marble",
+    category: "watercolor",
+    tag: "Sang trọng",
+    desc: "Vân đá cẩm thạch trắng phối chỉ vàng gold kiêu kỳ và tinh tế.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#78716C", secondary: "#D4AF37", accent: "#57534E", text: "#1C1917",
+      bg: "from-stone-50 via-neutral-100 to-amber-50/40", cardBg: "#FFFFFF", envelopeWax: "#D4AF37",
+      petals: ["#FBBF24", "#D6D3D1", "#E7E5E4"]
+    }
+  },
+  {
+    id: 74,
+    name: "Nghệ Thuật Kintsugi Hàn Vàng",
+    category: "watercolor",
+    tag: "Ý nghĩa sâu sắc",
+    desc: "Hàn gắn bằng vàng ròng, trân quý mọi thử thách để bên nhau vững bền.",
+    thumb: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B45309", secondary: "#292524", accent: "#92400E", text: "#1C1917",
+      bg: "from-stone-100 via-amber-50 to-zinc-200", cardBg: "#FFFFFF", envelopeWax: "#B45309",
+      petals: ["#FCD34D", "#A8A29E", "#FDE68A"]
+    }
+  },
+  {
+    id: 75,
+    name: "Phác Thảo Than Chì",
+    category: "watercolor",
+    tag: "Mộc mạc",
+    desc: "Nét chì phác họa chân dung tình yêu đầy cảm xúc chân phương.",
+    thumb: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#262626", secondary: "#525252", accent: "#171717", text: "#0A0A0A",
+      bg: "from-stone-50 via-zinc-100 to-stone-200", cardBg: "#FAFAF9", envelopeWax: "#262626",
+      petals: ["#737373", "#A3A3A3", "#E5E5E5"]
+    }
+  },
+  {
+    id: 76,
+    name: "Đốm Đá Terrazzo Hiện Đại",
+    category: "watercolor",
+    tag: "Năng động",
+    desc: "Họa tiết đá mài terrazzo rực rỡ sắc màu vui tươi và ấm áp.",
+    thumb: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#C2410C", secondary: "#0D9488", accent: "#EA580C", text: "#431407",
+      bg: "from-orange-50 via-teal-50 to-amber-50", cardBg: "#FFFFFF", envelopeWax: "#C2410C",
+      petals: ["#FB923C", "#5EEAD4", "#FED7AA"]
+    }
+  },
+  {
+    id: 77,
+    name: "Màu Nước Hồng Hoàng Hôn",
+    category: "watercolor",
+    tag: "Ngọt lịm",
+    desc: "Vết loang màu nước hồng cam ấm nóng của buổi chiều hẹn hò.",
+    thumb: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#BE123C", secondary: "#FB923C", accent: "#9F1239", text: "#4C0519",
+      bg: "from-rose-50 via-orange-50 to-pink-100", cardBg: "#FFFFFF", envelopeWax: "#BE123C",
+      petals: ["#FDA4AF", "#FDBA74", "#FECDD3"]
+    }
+  },
+  {
+    id: 78,
+    name: "Sơn Mài Truyền Thống",
+    category: "watercolor",
+    tag: "Dân tộc",
+    desc: "Kỹ thuật sơn mài huyền ảo kết hợp vỏ trứng và vàng quỳ.",
+    thumb: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#991B1B", secondary: "#D97706", accent: "#7F1D1D", text: "#450A0A",
+      bg: "from-red-950 via-stone-900 to-amber-950", cardBg: "#1C1917", envelopeWax: "#D97706",
+      petals: ["#EF4444", "#F59E0B", "#FCD34D"], isDark: true
+    }
+  },
+  {
+    id: 79,
+    name: "Tranh Thủy Mặc Mù Sương",
+    category: "watercolor",
+    tag: "Tĩnh lặng",
+    desc: "Khung cảnh non nước mờ sương như chốn bồng lai tiên cảnh.",
+    thumb: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#334155", secondary: "#64748B", accent: "#1E293B", text: "#0F172A",
+      bg: "from-slate-50 via-stone-100 to-gray-200", cardBg: "#FFFFFF", envelopeWax: "#334155",
+      petals: ["#94A3B8", "#CBD5E1", "#E2E8F0"]
+    }
+  },
+  {
+    id: 80,
+    name: "Lăng Kính Cầu Vồng Prism",
+    category: "watercolor",
+    tag: "Ảo diệu",
+    desc: "Tán sắc ánh sáng qua lăng kính pha lê tạo dải màu lung linh.",
+    thumb: "https://images.unsplash.com/photo-1546804784-896d0dca3805?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#7C3AED", secondary: "#06B6D4", accent: "#6D28D9", text: "#2E1065",
+      bg: "from-violet-50 via-cyan-50 to-pink-50", cardBg: "#FFFFFF", envelopeWax: "#7C3AED",
+      petals: ["#C4B5FD", "#67E8F9", "#FBCFE8"]
+    }
+  },
+
+  // =========================================================================
+  // BỘ 9: DẠ HỘI & NGÂN HÀ (81 - 90)
+  // =========================================================================
+  {
+    id: 81,
+    name: "Bầu Trời Sao Midnight Blue",
+    category: "celestial",
+    tag: "Huyền bí",
+    desc: "Đêm tiệc dạ hội dưới bầu trời đầy sao lấp lánh như viên ngọc.",
+    thumb: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1E3A8A", secondary: "#F59E0B", accent: "#172554", text: "#F8FAFC",
+      bg: "from-slate-950 via-blue-950 to-indigo-950", cardBg: "#0F172A", envelopeWax: "#F59E0B",
+      petals: ["#FDE047", "#60A5FA", "#93C5FD"], isDark: true
+    }
+  },
+  {
+    id: 82,
+    name: "Vũ Trụ Ngân Hà Galaxy",
+    category: "celestial",
+    tag: "Bao la",
+    desc: "Dải ngân hà muôn vì tinh tú chứng giám cho tình yêu vĩnh cửu.",
+    thumb: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#6B21A8", secondary: "#EC4899", accent: "#581C87", text: "#FDF4FF",
+      bg: "from-purple-950 via-slate-950 to-fuchsia-950", cardBg: "#1E112A", envelopeWax: "#A855F7",
+      petals: ["#E879F9", "#F472B6", "#C084FC"], isDark: true
+    }
+  },
+  {
+    id: 83,
+    name: "Trăng Khuyết Ánh Bạc",
+    category: "celestial",
+    tag: "Thơ mộng",
+    desc: "Vầng trăng khuyết dịu dàng soi sáng con đường chung bước tương lai.",
+    thumb: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#334155", secondary: "#E2E8F0", accent: "#1E293B", text: "#F8FAFC",
+      bg: "from-slate-900 via-zinc-900 to-stone-900", cardBg: "#18181B", envelopeWax: "#CBD5E1",
+      petals: ["#E2E8F0", "#F1F5F9", "#94A3B8"], isDark: true
+    }
+  },
+  {
+    id: 84,
+    name: "Cực Quang Aurora",
+    category: "celestial",
+    tag: "Kỳ vĩ",
+    desc: "Ánh sáng cực quang Bắc Cực rực rỡ huyền ảo hiếm có.",
+    thumb: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#059669", secondary: "#06B6D4", accent: "#047857", text: "#ECFDF5",
+      bg: "from-slate-950 via-emerald-950 to-teal-950", cardBg: "#062E25", envelopeWax: "#10B981",
+      petals: ["#34D399", "#22D3EE", "#6EE7B7"], isDark: true
+    }
+  },
+  {
+    id: 85,
+    name: "Đêm Vũ Hội Mặt Nạ",
+    category: "celestial",
+    tag: "Huyền thoại",
+    desc: "Điệu valse say đắm trong đêm tiệc dạ vũ Venice lãng mạn.",
+    thumb: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#831843", secondary: "#D97706", accent: "#700B33", text: "#FFF1F2",
+      bg: "from-stone-950 via-pink-950 to-rose-950", cardBg: "#1C1417", envelopeWax: "#D97706",
+      petals: ["#FB7185", "#FCD34D", "#FDA4AF"], isDark: true
+    }
+  },
+  {
+    id: 86,
+    name: "Pháo Hoa Đón Giao Thừa",
+    category: "celestial",
+    tag: "Bùng nổ",
+    desc: "Những chùm pháo hoa thắp sáng bầu trời mừng ngày về chung một nhà.",
+    thumb: "https://images.unsplash.com/photo-1498931299472-f7a63a5a1cfa?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#B91C1C", secondary: "#F59E0B", accent: "#991B1B", text: "#FFFDF5",
+      bg: "from-stone-950 via-red-950 to-neutral-950", cardBg: "#1C1917", envelopeWax: "#B91C1C",
+      petals: ["#EF4444", "#F59E0B", "#FCD34D"], isDark: true
+    }
+  },
+  {
+    id: 87,
+    name: "Rượu Vang Đêm Muộn",
+    category: "celestial",
+    tag: "Say đắm",
+    desc: "Ly vang đỏ nồng nàn dưới ánh trăng nâng ly chúc phúc tình yêu nồng thắm.",
+    thumb: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#4C0519", secondary: "#E11D48", accent: "#881337", text: "#FFF1F2",
+      bg: "from-zinc-950 via-rose-950 to-stone-950", cardBg: "#1A090D", envelopeWax: "#E11D48",
+      petals: ["#BE123C", "#FB7185", "#FDA4AF"], isDark: true
+    }
+  },
+  {
+    id: 88,
+    name: "Ánh Nến Lung Linh Candlelight",
+    category: "celestial",
+    tag: "Ấm áp",
+    desc: "Hàng trăm ngọn nến thơm thắp sáng không gian tiệc cưới ấm áp thân mật.",
+    thumb: "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#D97706", secondary: "#FBBF24", accent: "#B45309", text: "#FFFBEB",
+      bg: "from-stone-950 via-amber-950 to-zinc-950", cardBg: "#211A13", envelopeWax: "#F59E0B",
+      petals: ["#FCD34D", "#FDE68A", "#F59E0B"], isDark: true
+    }
+  },
+  {
+    id: 89,
+    name: "Chòm Sao Đôi Lứa Constellation",
+    category: "celestial",
+    tag: "Định mệnh",
+    desc: "Hai vì sao định mệnh tìm thấy nhau giữa hàng tỷ tinh tú trên bầu trời.",
+    thumb: "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#4338CA", secondary: "#A5B4FC", accent: "#3730A3", text: "#EEF2FF",
+      bg: "from-slate-950 via-indigo-950 to-stone-950", cardBg: "#11142E", envelopeWax: "#6366F1",
+      petals: ["#818CF8", "#C7D2FE", "#E0E7FF"], isDark: true
+    }
+  },
+  {
+    id: 90,
+    name: "Chiêm Tinh Tình Yêu",
+    category: "celestial",
+    tag: "Kỳ bí",
+    desc: "Bản đồ sao ngày cưới ghi dấu thời khắc hai tâm hồn hòa chung nhịp đập.",
+    thumb: "https://images.unsplash.com/photo-1532767153582-b1a0e5145009?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0F766E", secondary: "#D4AF37", accent: "#115E59", text: "#F0FDFA",
+      bg: "from-zinc-950 via-teal-950 to-stone-950", cardBg: "#0C1F1D", envelopeWax: "#D4AF37",
+      petals: ["#2DD4BF", "#FCD34D", "#99F6E4"], isDark: true
+    }
+  },
+
+  // =========================================================================
+  // BỘ 10: XU HƯỚNG GEN Z & RETRO (91 - 100)
+  // =========================================================================
+  {
+    id: 91,
+    name: "Holographic Cầu Vồng Y2K",
+    category: "trendy",
+    tag: "Gen Z",
+    desc: "Màu ánh kim hologram 7 màu chuyển biến theo góc nhìn cực kỳ thời thượng.",
+    thumb: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#8B5CF6", secondary: "#EC4899", accent: "#06B6D4", text: "#1E1B4B",
+      bg: "from-pink-100 via-purple-100 to-cyan-100", cardBg: "#FFFFFF", envelopeWax: "#8B5CF6",
+      petals: ["#C084FC", "#F472B6", "#67E8F9"]
+    }
+  },
+  {
+    id: 92,
+    name: "Kính Mờ Glassmorphism",
+    category: "trendy",
+    tag: "Hiện đại",
+    desc: "Hiệu ứng kính mờ trong suốt thời thượng của giao diện ứng dụng thế hệ mới.",
+    thumb: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#2563EB", secondary: "#60A5FA", accent: "#1D4ED8", text: "#0F172A",
+      bg: "from-slate-100 via-sky-100 to-indigo-100", cardBg: "rgba(255, 255, 255, 0.8)", envelopeWax: "#2563EB",
+      petals: ["#93C5FD", "#BAE6FD", "#C7D2FE"]
+    }
+  },
+  {
+    id: 93,
+    name: "Nhật Báo Tình Yêu (Newspaper)",
+    category: "trendy",
+    tag: "Vintage báo in",
+    desc: "Thiết kế như trang nhất tờ báo sáng đưa tin mừng ngày cưới trọng đại.",
+    thumb: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1C1917", secondary: "#44403C", accent: "#0C0A09", text: "#1C1917",
+      bg: "from-[#F5EFEB] via-[#EBE2DA] to-[#DFD4C8]", cardBg: "#FDFCFA", envelopeWax: "#1C1917",
+      petals: ["#78716C", "#A8A29E", "#D6D3D1"]
+    }
+  },
+  {
+    id: 94,
+    name: "Vé Máy Bay Hạnh Phúc (Boarding Pass)",
+    category: "trendy",
+    tag: "Du lịch",
+    desc: "Tấm vé máy bay đưa hai bạn cất cánh vào chuyến bay hạnh phúc cuộc đời.",
+    thumb: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#0284C7", secondary: "#EA580C", accent: "#0369A1", text: "#0C4A6E",
+      bg: "from-sky-50 via-slate-50 to-orange-50", cardBg: "#FFFFFF", envelopeWax: "#0284C7",
+      petals: ["#7DD3FC", "#FB923C", "#BAE6FD"]
+    }
+  },
+  {
+    id: 95,
+    name: "Khung Ảnh Polaroid Retro",
+    category: "trendy",
+    tag: "Chụp ảnh lấy liền",
+    desc: "Khung polaroid chụp ảnh lấy liền ghi dấu những kỷ niệm ngọt ngào.",
+    thumb: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#334155", secondary: "#E11D48", accent: "#1E293B", text: "#0F172A",
+      bg: "from-stone-100 via-amber-50/50 to-slate-100", cardBg: "#FFFFFF", envelopeWax: "#E11D48",
+      petals: ["#FDA4AF", "#CBD5E1", "#FECDD3"]
+    }
+  },
+  {
+    id: 96,
+    name: "Đĩa Than Vinyl Cổ Điển",
+    category: "trendy",
+    tag: "Âm nhạc",
+    desc: "Đĩa than vinyl cổ điển quay chậm ngân nga bản tình ca bất hủ.",
+    thumb: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#18181B", secondary: "#D4AF37", accent: "#27272A", text: "#09090B",
+      bg: "from-stone-900 via-zinc-900 to-amber-950/40", cardBg: "#18181B", envelopeWax: "#D4AF37",
+      petals: ["#FCD34D", "#71717A", "#A1A1AA"], isDark: true
+    }
+  },
+  {
+    id: 97,
+    name: "Bản Nhạc Spotify Song",
+    category: "trendy",
+    tag: "Âm nhạc Gen Z",
+    desc: "Giao diện bài hát đôi lứa với mã vạch bài ca tình yêu của hai người.",
+    thumb: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#1DB954", secondary: "#191414", accent: "#1ED760", text: "#FFFFFF",
+      bg: "from-zinc-950 via-neutral-900 to-emerald-950/40", cardBg: "#121212", envelopeWax: "#1DB954",
+      petals: ["#1ED760", "#4ADE80", "#86EFAC"], isDark: true
+    }
+  },
+  {
+    id: 98,
+    name: "Pop Art Tươi Vui",
+    category: "trendy",
+    tag: "Phá cách",
+    desc: "Màu sắc nổi bật phong cách pop art tràn đầy niềm vui và sự lạc quan.",
+    thumb: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#EC4899", secondary: "#FBBF24", accent: "#DB2777", text: "#831843",
+      bg: "from-yellow-100 via-pink-100 to-cyan-100", cardBg: "#FFFFFF", envelopeWax: "#EC4899",
+      petals: ["#F472B6", "#FDE047", "#67E8F9"]
+    }
+  },
+  {
+    id: 99,
+    name: "Sticker Cute Dễ Thương",
+    category: "trendy",
+    tag: "Đáng yêu",
+    desc: "Trang trí với sticker trái tim, nụ cười và icon tình yêu đáng yêu.",
+    thumb: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#F43F5E", secondary: "#FB923C", accent: "#E11D48", text: "#4C0519",
+      bg: "from-rose-50 via-amber-50 to-pink-50", cardBg: "#FFFFFF", envelopeWax: "#F43F5E",
+      petals: ["#FDA4AF", "#FDBA74", "#FED7AA"]
+    }
+  },
+  {
+    id: 100,
+    name: "Cyber Neon Tương Lai",
+    category: "trendy",
+    tag: "Cyberpunk",
+    desc: "Ánh đèn neon hồng tím rực rỡ tượng trưng cho tình yêu thời đại số.",
+    thumb: "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=600&q=80",
+    theme: {
+      primary: "#06B6D4", secondary: "#F43F5E", accent: "#0891B2", text: "#ECFEFF",
+      bg: "from-slate-950 via-purple-950 to-cyan-950", cardBg: "#0B132B", envelopeWax: "#06B6D4",
+      petals: ["#22D3EE", "#FB7185", "#A855F7"], isDark: true
+    }
+  }
+];
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { WEDDING_TEMPLATES, WEDDING_CATEGORIES };
+}
+
+</script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            wedding: {
+              cream: '#FAF7F2',
+              rose: '#EBD8D0',
+              accent: '#B87D65',
+              dark: '#3A2E2B',
+              gold: '#D4AF37',
+              goldLight: '#F5E7B2',
+              sand: '#F3ECE3'
+            }
+          },
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+            script: ['"Alex Brush"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-wedding-cream text-wedding-dark font-sans antialiased overflow-x-hidden selection:bg-wedding-rose selection:text-wedding-dark">
+
+  <!-- ==================== HIỆU ỨNG CÁNH HOA RƠI ==================== -->
+  <div id="petals-container" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
+
+  <!-- ==================== NÚT BẬT KHO 100 MẪU THIỆP & TÙY CHỈNH GÓC TRÊN ==================== -->
+  <button onclick="openTemplateModal()" 
+          class="fixed top-4 left-4 z-40 px-3.5 py-2 rounded-full bg-white/90 backdrop-blur-md border border-wedding-accent/40 text-wedding-dark shadow-xl text-xs font-semibold hover:bg-stone-900 hover:text-white transition-all flex items-center gap-1.5 active:scale-95 group">
+    <i data-lucide="palette" class="w-4 h-4 text-wedding-accent group-hover:text-white transition"></i>
+    <span>100 Mẫu Thiệp</span>
+  </button>
+
+  <button onclick="openConfigModal()" 
+          class="fixed top-4 right-4 z-40 px-3.5 py-2 rounded-full bg-white/90 backdrop-blur-md border border-wedding-accent/40 text-wedding-dark shadow-xl text-xs font-semibold hover:bg-stone-900 hover:text-white transition-all flex items-center gap-1.5 active:scale-95 group">
+    <i data-lucide="sliders" class="w-4 h-4 text-wedding-accent group-hover:text-white transition"></i>
+    <span>Tùy chỉnh thông tin & ảnh</span>
+  </button>
+
+  <!-- ==================== PHẦN MỞ ĐẦU: BÌ THƯ MỜI CƯỚI ==================== -->
+  <div id="envelope-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/80 backdrop-blur-md px-4 transition-all duration-700">
+    <div class="relative w-full max-w-md bg-[#FAF7F2] rounded-3xl p-8 shadow-2xl text-center border border-wedding-rose/60 overflow-hidden transform transition-all duration-500 hover:scale-[1.01]">
+      <div class="absolute -top-10 -right-10 w-36 h-36 bg-wedding-rose/30 rounded-full blur-2xl"></div>
+      <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-wedding-gold/20 rounded-full blur-2xl"></div>
+      
+      <div class="relative z-10 flex flex-col items-center">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-wedding-gold to-wedding-accent flex items-center justify-center text-white shadow-lg shadow-wedding-gold/30 mb-4 animate-pulse">
+          <i data-lucide="heart" class="w-8 h-8 fill-white"></i>
+        </div>
+
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold mb-1">Thiệp Cưới Online</p>
+        <h2 id="envelope-couple-names" class="font-script text-4xl sm:text-5xl text-wedding-dark mb-3">Quốc Huy & Mỹ Linh</h2>
+
+        <!-- Lời mời cá nhân hóa -->
+        <div class="w-full bg-white/80 border border-wedding-accent/30 rounded-2xl py-3 px-4 my-4 shadow-sm">
+          <p class="text-xs text-stone-500 uppercase tracking-wider mb-1">Trân trọng kính mời</p>
+          <p id="guest-name-preview" class="text-xl font-bold text-wedding-accent font-serif">Quý khách quý & Gia đình</p>
+        </div>
+
+        <p class="text-stone-600 text-sm italic mb-6 leading-relaxed">
+          "Hôn lễ của chúng mình sẽ trọn vẹn hơn khi có sự hiện diện và chúc phúc từ bạn."
+        </p>
+
+        <!-- Nút bấm mở thiệp -->
+        <button id="open-envelope-btn" class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-wedding-accent to-stone-700 text-white font-medium text-base tracking-wide shadow-lg shadow-wedding-accent/30 hover:opacity-95 active:scale-95 transition-all flex items-center justify-center gap-2 group">
+          <span>Chạm Để Mở Thiệp Mời</span>
+          <i data-lucide="mail-open" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+        </button>
+
+        <p class="text-[11px] text-stone-400 mt-4 flex items-center gap-1">
+          <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+          Chạm để mở thiệp cùng giai điệu tình yêu
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FLOATING MUSIC BUTTON ==================== -->
+  <button id="music-btn" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-white/90 backdrop-blur border border-wedding-accent/40 shadow-xl flex items-center justify-center text-wedding-accent hover:scale-110 active:scale-95 transition-all duration-300" title="Bật/Tắt nhạc nền">
+    <div id="vinyl-disc" class="w-7 h-7 rounded-full border-2 border-wedding-accent flex items-center justify-center">
+      <i data-lucide="music" class="w-4 h-4"></i>
+    </div>
+  </button>
+  <audio id="wedding-audio" loop preload="auto">
+    <source src="https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-102.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- ==================== FLOATING BOTTOM TOOLBAR ==================== -->
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md border border-wedding-accent/20 px-3 py-1.5 rounded-full shadow-2xl max-w-[96vw]">
+    <button onclick="openTemplateModal()" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-wedding-accent to-stone-800 text-white shadow-sm hover:opacity-95 transition" title="Chọn mẫu trong 100 mẫu thiệp">
+      <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+      <span>100 Mẫu</span>
+    </button>
+    <a href="#rsvp" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-wedding-cream text-stone-800 hover:bg-stone-100 transition">
+      <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-wedding-accent"></i>
+      <span>Xác nhận</span>
+    </a>
+    <a href="#gift" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-wedding-cream text-wedding-accent hover:bg-wedding-rose/40 transition">
+      <i data-lucide="gift" class="w-3.5 h-3.5"></i>
+      <span>Mừng cưới</span>
+    </a>
+    <button onclick="openConfigModal('tab-photos')" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-wedding-cream text-stone-700 hover:text-wedding-accent hover:bg-stone-100 transition" title="Tải ảnh của bạn">
+      <i data-lucide="image-plus" class="w-3.5 h-3.5 text-wedding-accent"></i>
+      <span>Đổi ảnh</span>
+    </button>
+    <button id="btn-share-modal" class="p-2 text-stone-500 hover:text-wedding-accent rounded-full transition" title="Tạo link gửi khách riêng">
+      <i data-lucide="share-2" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- ==================== MAIN INVITATION WRAPPER ==================== -->
+  <div id="main-invitation-wrapper" class="max-w-xl mx-auto min-h-screen bg-wedding-cream shadow-2xl relative pb-28 border-x border-stone-200/40 transition-all duration-500">
+
+    <!-- HERO SECTION -->
+    <header class="relative min-h-[92vh] flex flex-col justify-between text-center px-6 pt-12 pb-16 overflow-hidden">
+      <!-- Background Image with Gradient Overlay -->
+      <div class="absolute inset-0 z-0">
+        <img id="hero-img" 
+             src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" 
+             alt="Ảnh Bìa Cưới" 
+             class="w-full h-full object-cover object-center filter brightness-[0.88] scale-105 animate-subtle-zoom">
+        <div class="absolute inset-0 bg-gradient-to-b from-stone-900/60 via-stone-900/20 to-wedding-cream"></div>
+      </div>
+
+      <!-- Top Text -->
+      <div class="relative z-10 text-white space-y-2">
+        <p class="text-xs uppercase tracking-[0.3em] font-light text-wedding-rose">Save The Date</p>
+        <div class="w-12 h-[1px] bg-wedding-rose/70 mx-auto"></div>
+        <p class="text-sm font-serif italic text-stone-200">Chúng mình sắp về chung một nhà!</p>
+      </div>
+
+      <!-- Center Names -->
+      <div class="relative z-10 text-white space-y-1 my-auto py-8">
+        <h2 id="hero-groom-name" class="font-script text-6xl sm:text-7xl text-white drop-shadow-md">Quốc Huy</h2>
+        <div class="flex items-center justify-center gap-3 my-1">
+          <div class="w-12 h-[1px] bg-wedding-gold/60"></div>
+          <span class="font-script text-3xl text-wedding-gold">&</span>
+          <div class="w-12 h-[1px] bg-wedding-gold/60"></div>
+        </div>
+        <h2 id="hero-bride-name" class="font-script text-6xl sm:text-7xl text-white drop-shadow-md">Mỹ Linh</h2>
+      </div>
+
+      <!-- Bottom Details: Date & Personalized Invitation Box -->
+      <div class="relative z-10 space-y-4">
+        <!-- Badge Lời mời cá nhân -->
+        <div class="bg-white/95 backdrop-blur-md border border-wedding-accent/30 rounded-2xl p-4 shadow-xl text-wedding-dark max-w-sm mx-auto">
+          <p class="text-xs uppercase font-medium tracking-widest text-wedding-accent mb-0.5">Trân trọng kính mời</p>
+          <h3 id="guest-name-hero" class="text-2xl font-bold font-serif text-stone-800">Quý khách quý & Gia đình</h3>
+          <p class="text-xs text-stone-500 mt-1">Tới dự bữa tiệc thân mật mừng lễ thành hôn</p>
+        </div>
+
+        <!-- Big Date -->
+        <div class="text-wedding-dark pt-1">
+          <div class="inline-flex items-center gap-3 text-wedding-accent text-sm font-semibold tracking-widest uppercase">
+            <span id="hero-day-of-week">Thứ Bảy</span>
+            <span>•</span>
+            <span id="hero-date-text" class="text-2xl font-serif text-wedding-dark font-bold tracking-normal">28.11.2026</span>
+            <span>•</span>
+            <span id="hero-time-text">11:00 Trưa</span>
+          </div>
+          <p id="hero-lunar-text" class="text-xs text-stone-500 mt-1 font-serif italic">(Nhằm ngày 20 tháng 10 năm Bính Ngọ)</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: LỜI NGỎ & CÂU CHUYỆN TÌNH YÊU -->
+    <section class="px-6 py-14 text-center">
+      <div class="inline-block p-2 rounded-full bg-wedding-rose/30 mb-3 text-wedding-accent">
+        <i data-lucide="sparkles" class="w-5 h-5"></i>
+      </div>
+      <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Lời Ngỏ Của Đôi Uyên Ương</p>
+      <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1 mb-6">Thương Mến Gửi Bạn</h2>
+      
+      <div class="relative max-w-md mx-auto">
+        <div id="couple-message-body" class="text-stone-600 leading-relaxed font-serif italic text-base space-y-3">
+          <p>"Sau những năm tháng cùng nhau trưởng thành, chia sẻ từng buồn vui trong cuộc sống, ngày hôm nay chúng mình quyết định bước tiếp cùng nhau trên chặng đường mới – hôn nhân.</p>
+          <p>Sự hiện diện, lời chúc phúc và tình cảm của bạn chính là món quà vô giá và ý nghĩa nhất dành cho chúng mình trong ngày trọng đại này."</p>
+        </div>
+        <div id="couple-signature" class="mt-6 flex items-center justify-center gap-2 text-wedding-accent font-script text-3xl">
+          Quốc Huy & Mỹ Linh
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: ĐẾM NGƯỢC NGÀY CƯỚI (COUNTDOWN) -->
+    <section class="px-6 py-10 bg-white/60 border-y border-stone-200/60 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold mb-2">Đếm Ngược Đến Khoảnh Khắc</p>
+      <h3 class="text-2xl font-serif font-bold text-stone-800 mb-6">Cùng Chúng Mình Chờ Đón</h3>
+
+      <div class="grid grid-cols-4 gap-2.5 max-w-sm mx-auto">
+        <div class="bg-wedding-cream border border-wedding-rose rounded-2xl p-3 shadow-sm">
+          <span id="cd-days" class="block text-2xl sm:text-3xl font-bold font-serif text-wedding-accent">00</span>
+          <span class="text-[11px] uppercase tracking-wider text-stone-500 font-medium">Ngày</span>
+        </div>
+        <div class="bg-wedding-cream border border-wedding-rose rounded-2xl p-3 shadow-sm">
+          <span id="cd-hours" class="block text-2xl sm:text-3xl font-bold font-serif text-wedding-accent">00</span>
+          <span class="text-[11px] uppercase tracking-wider text-stone-500 font-medium">Giờ</span>
+        </div>
+        <div class="bg-wedding-cream border border-wedding-rose rounded-2xl p-3 shadow-sm">
+          <span id="cd-minutes" class="block text-2xl sm:text-3xl font-bold font-serif text-wedding-accent">00</span>
+          <span class="text-[11px] uppercase tracking-wider text-stone-500 font-medium">Phút</span>
+        </div>
+        <div class="bg-wedding-cream border border-wedding-rose rounded-2xl p-3 shadow-sm">
+          <span id="cd-seconds" class="block text-2xl sm:text-3xl font-bold font-serif text-wedding-accent">00</span>
+          <span class="text-[11px] uppercase tracking-wider text-stone-500 font-medium">Giây</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: CÔ DÂU & CHÚ RỂ + THÔNG TIN GIA ĐÌNH -->
+    <section class="px-6 py-14">
+      <div class="text-center mb-10">
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Nhân Vật Chính</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Chú Rể & Cô Dâu</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Chú rể -->
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-wedding-rose/40 text-center relative overflow-hidden group">
+          <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-wedding-rose/70 shadow-lg mb-4 relative">
+            <img id="groom-img" 
+                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" 
+                 alt="Chú rể" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-wedding-cream text-wedding-accent mb-2">CHÚ RỂ</span>
+          <h3 id="groom-name-card" class="text-2xl font-serif font-bold text-stone-800">Nguyễn Quốc Huy</h3>
+          <p id="groom-quote-card" class="text-xs text-stone-500 italic mb-4">"Chàng trai luôn muốn mang lại nụ cười cho em"</p>
+          
+          <div class="text-xs text-stone-600 border-t border-stone-100 pt-3 space-y-1">
+            <p class="font-semibold text-wedding-accent uppercase tracking-wider text-[11px]">Gia Đình Nhà Trai</p>
+            <p>Ông: <strong id="groom-father-card">Nguyễn Văn Hùng</strong></p>
+            <p>Bà: <strong id="groom-mother-card">Trần Thị Mai</strong></p>
+            <p id="groom-location-card" class="text-stone-400">TP. Hồ Chí Minh</p>
+          </div>
+        </div>
+
+        <!-- Cô dâu -->
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-wedding-rose/40 text-center relative overflow-hidden group">
+          <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-wedding-rose/70 shadow-lg mb-4 relative">
+            <img id="bride-img" 
+                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                 alt="Cô dâu" 
+                 class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+          </div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-wedding-cream text-wedding-accent mb-2">CÔ DÂU</span>
+          <h3 id="bride-name-card" class="text-2xl font-serif font-bold text-stone-800">Lê Mỹ Linh</h3>
+          <p id="bride-quote-card" class="text-xs text-stone-500 italic mb-4">"Cô gái hạnh phúc nhất khi được đồng hành cùng anh"</p>
+          
+          <div class="text-xs text-stone-600 border-t border-stone-100 pt-3 space-y-1">
+            <p class="font-semibold text-wedding-accent uppercase tracking-wider text-[11px]">Gia Đình Nhà Gái</p>
+            <p>Ông: <strong id="bride-father-card">Lê Hoàng Nam</strong></p>
+            <p>Bà: <strong id="bride-mother-card">Vũ Bích Ngọc</strong></p>
+            <p id="bride-location-card" class="text-stone-400">TP. Hồ Chí Minh</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THỜI GIAN & ĐỊA ĐIỂM TỔ CHỨC -->
+    <section id="calendar" class="px-6 py-14 bg-white/70 border-y border-stone-200/60 scroll-mt-6">
+      <div class="text-center mb-10">
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Chương Trình Sự Kiện</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Thời Gian & Địa Điểm</h2>
+        <p class="text-xs text-stone-500 mt-1">Rất hân hạnh được đón tiếp bạn trong ngày vui</p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Event 1: Tiệc cưới chính -->
+        <div class="bg-wedding-cream rounded-3xl p-6 border border-wedding-rose/80 shadow-md relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-wedding-accent text-white text-[11px] font-bold px-4 py-1 rounded-bl-2xl uppercase tracking-wider">
+            Tiệc Trọng Thể
+          </div>
+          
+          <div class="flex items-center gap-3 text-wedding-accent mb-3">
+            <i data-lucide="cake" class="w-6 h-6"></i>
+            <h3 class="text-xl font-serif font-bold text-wedding-dark">Lễ Thành Hôn & Tiệc Cưới</h3>
+          </div>
+
+          <div class="space-y-2 text-sm text-stone-700">
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="clock" class="w-4 h-4 text-wedding-accent mt-0.5 shrink-0"></i>
+              <div>
+                <strong id="venue-datetime-text">11:00 Trưa - Thứ Bảy, Ngày 28.11.2026</strong>
+                <p id="venue-subtime-text" class="text-xs text-stone-500">(Đón khách từ 10:30 - Khai tiệc lúc 11:30)</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-2.5">
+              <i data-lucide="map-pin" class="w-4 h-4 text-wedding-accent mt-0.5 shrink-0"></i>
+              <div>
+                <strong id="venue-name-card">Trung Tâm Hội Nghị Tiệc Cưới GEM Center</strong>
+                <p id="venue-hall-card" class="text-xs text-stone-600">Sảnh Grand Ballroom - Lầu 3</p>
+                <p id="venue-address-card" class="text-xs text-stone-500">Số 8 Nguyễn Bỉnh Khiêm, P. Đa Kao, Quận 1, TP.HCM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons: Chỉ đường Google Maps + Thêm vào Lịch -->
+          <div class="grid grid-cols-2 gap-3 mt-5">
+            <a id="btn-maps-link" href="https://maps.google.com/?q=GEM+Center+Nguyen+Binh+Khiem" target="_blank" rel="noopener noreferrer" 
+               class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-wedding-accent text-white text-xs font-medium hover:bg-stone-800 transition shadow-sm">
+              <i data-lucide="navigation" class="w-4 h-4"></i>
+              <span>Chỉ Đường Maps</span>
+            </a>
+            <button onclick="addToCalendar()" 
+               class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white border border-wedding-accent/40 text-wedding-accent text-xs font-medium hover:bg-wedding-rose/20 transition shadow-sm">
+              <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+              <span>Thêm Vào Lịch</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Event 2: Lễ Vu Quy -->
+        <div class="bg-wedding-cream rounded-3xl p-6 border border-stone-200 shadow-sm relative">
+          <div class="flex items-center gap-3 text-wedding-accent mb-3">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <h3 class="text-lg font-serif font-bold text-wedding-dark">Lễ Vu Quy (Tư Gia Nhà Gái)</h3>
+          </div>
+          <div class="space-y-1.5 text-xs text-stone-600">
+            <p><strong>Thời gian:</strong> <span id="vuquy-time-text">08:30 Sáng - Ngày 28.11.2026</span></p>
+            <p><strong>Địa chỉ:</strong> <span id="vuquy-address-text">123 Đường Trần Hưng Đạo, P. Cô Giang, Quận 1, TP.HCM</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE CHƯƠNG TRÌNH TRONG NGÀY -->
+      <div class="mt-12">
+        <h4 class="text-center font-serif font-bold text-lg text-wedding-dark mb-6">Lịch Trình Tiệc Cưới</h4>
+        <div class="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-wedding-rose">
+          
+          <div class="relative">
+            <span class="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-wedding-accent ring-4 ring-wedding-cream"></span>
+            <span id="timeline-t1" class="text-xs font-bold text-wedding-accent">10:30</span>
+            <p class="font-medium text-stone-800 text-sm">Đón Khách Quý & Chụp Ảnh Kỷ Niệm</p>
+            <p class="text-xs text-stone-500">Đón tiếp quý khách tại sảnh đón tiệc, dùng tiệc nhẹ trà bánh</p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-wedding-accent ring-4 ring-wedding-cream"></span>
+            <span id="timeline-t2" class="text-xs font-bold text-wedding-accent">11:30</span>
+            <p class="font-medium text-stone-800 text-sm">Nghi Thức Lễ Cưới Bắt Đầu</p>
+            <p class="text-xs text-stone-500">Cô dâu chú rể bước vào lễ đường, trao nhẫn và cắt bánh cưới</p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-wedding-accent ring-4 ring-wedding-cream"></span>
+            <span id="timeline-t3" class="text-xs font-bold text-wedding-accent">12:00</span>
+            <p class="font-medium text-stone-800 text-sm">Khai Tiệc Mừng</p>
+            <p class="text-xs text-stone-500">Mời quý khách cùng nâng ly chúc mừng và thưởng thức tiệc cưới</p>
+          </div>
+
+          <div class="relative">
+            <span class="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-wedding-accent ring-4 ring-wedding-cream"></span>
+            <span class="text-xs font-bold text-wedding-accent">13:30</span>
+            <p class="font-medium text-stone-800 text-sm">Trò Chơi Tương Tác & Chụp Ảnh Bế Mạc</p>
+            <p class="text-xs text-stone-500">Giao lưu ấm cúng cùng cô dâu, chú rể và nhận quà kỷ niệm</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: ALBUM ẢNH CƯỚI (PHOTO GALLERY) -->
+    <section class="px-6 py-14">
+      <div class="text-center mb-8">
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Album Kỷ Niệm</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Khoảnh Khắc Hạnh Phúc</h2>
+        <p class="text-xs text-stone-500 mt-1">Chạm vào từng bức ảnh để phóng to</p>
+      </div>
+
+      <!-- Photo Grid Dynamic -->
+      <div class="grid grid-cols-2 gap-3" id="gallery-container">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+
+      <!-- Button thêm ảnh album -->
+      <div class="mt-6 flex justify-center">
+        <button onclick="openConfigModal('tab-photos')" 
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-wedding-accent/40 text-wedding-accent text-xs font-semibold hover:bg-wedding-rose/20 transition shadow-sm">
+          <i data-lucide="image-plus" class="w-4 h-4"></i>
+          <span>Quản lý / Thêm ảnh mới vào Album</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 6: XÁC NHẬN THAM DỰ (RSVP FORM) -->
+    <section id="rsvp" class="px-6 py-14 bg-white/70 border-y border-stone-200/60 scroll-mt-6">
+      <div class="text-center mb-8">
+        <div class="inline-block p-2 rounded-full bg-wedding-rose/30 mb-2 text-wedding-accent">
+          <i data-lucide="check-check" class="w-5 h-5"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Xác Nhận Tham Dự</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Phản Hồi (RSVP)</h2>
+        <p class="text-xs text-stone-500 mt-1 max-w-xs mx-auto">
+          Để chúng mình chuẩn bị chu đáo nhất, xin vui lòng xác nhận trước ngày tổ chức nhé!
+        </p>
+      </div>
+
+      <div class="bg-wedding-cream border border-wedding-rose rounded-3xl p-6 shadow-md max-w-md mx-auto">
+        <form id="rsvp-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1">Tên của bạn *</label>
+            <input type="text" id="rsvp-name" required placeholder="Ví dụ: Anh Nam / Chị Thảo" 
+                   class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-wedding-accent bg-white text-sm">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1">Khả năng tham dự *</label>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="flex items-center gap-2 p-3 rounded-xl border border-stone-300 bg-white cursor-pointer hover:border-wedding-accent has-[:checked]:border-wedding-accent has-[:checked]:bg-wedding-rose/20 transition">
+                <input type="radio" name="attending" value="yes" checked class="text-wedding-accent focus:ring-wedding-accent">
+                <span class="text-xs font-medium text-stone-800">Sẽ tham dự 🎉</span>
+              </label>
+              <label class="flex items-center gap-2 p-3 rounded-xl border border-stone-300 bg-white cursor-pointer hover:border-wedding-accent has-[:checked]:border-wedding-accent has-[:checked]:bg-wedding-rose/20 transition">
+                <input type="radio" name="attending" value="no" class="text-wedding-accent focus:ring-wedding-accent">
+                <span class="text-xs font-medium text-stone-800">Rất tiếc vắng mặt</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="guest-count-container">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1">Số lượng người tham dự</label>
+            <select id="rsvp-count" class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-wedding-accent bg-white text-sm">
+              <option value="1">1 người (Đi một mình)</option>
+              <option value="2">2 người (Đi cùng người thương/bạn)</option>
+              <option value="gia-dinh">Gia đình (3+ người)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-stone-600 mb-1">Lời nhắn gửi cô dâu chú rể</label>
+            <textarea id="rsvp-message" rows="3" placeholder="Gửi lời chúc tốt đẹp nhất..." 
+                      class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-wedding-accent bg-white text-sm"></textarea>
+          </div>
+
+          <button type="submit" 
+                  class="w-full py-3.5 px-6 rounded-xl bg-wedding-accent text-white font-medium text-sm tracking-wide hover:bg-stone-800 active:scale-95 transition shadow-lg shadow-wedding-accent/20 flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Gửi Phản Hồi Cho Đôi Uyên Ương</span>
+          </button>
+        </form>
+
+        <div id="rsvp-success" class="hidden text-center py-6 space-y-3">
+          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+            <i data-lucide="check" class="w-6 h-6"></i>
+          </div>
+          <h4 class="font-serif font-bold text-xl text-stone-800">Cảm Ơn Bạn Rất Nhiều!</h4>
+          <p class="text-xs text-stone-600 max-w-xs mx-auto">
+            Chúng mình đã nhận được phản hồi của bạn. Hẹn sớm gặp bạn tại buổi tiệc nhé!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: MỪNG CƯỚI ONLINE (HỘP MỪNG CƯỚI & QR CODE) -->
+    <section id="gift" class="px-6 py-14 scroll-mt-6">
+      <div class="text-center mb-8">
+        <div class="inline-block p-2 rounded-full bg-wedding-rose/30 mb-2 text-wedding-accent">
+          <i data-lucide="gift" class="w-5 h-5"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Gửi Trao Yêu Thương</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Hộp Mừng Cưới</h2>
+        <p class="text-xs text-stone-500 mt-2 max-w-sm mx-auto leading-relaxed">
+          Với những người bạn ở xa hoặc không thể tham dự trực tiếp, chúng mình xin phép gửi thông tin mừng cưới online dưới đây. Mọi sự chúc phúc của bạn đều là niềm vui vô giá với chúng mình!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Chú rể QR -->
+        <div class="bg-white rounded-3xl p-6 border border-wedding-rose/70 shadow-md text-center relative overflow-hidden">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-wedding-cream text-wedding-accent mb-2">MỪNG CHÚ RỂ</span>
+          <h3 id="bank-groom-name" class="text-lg font-serif font-bold text-stone-800">Nguyễn Quốc Huy</h3>
+          <p id="bank-groom-bankname" class="text-xs text-stone-500 mb-3">Ngân hàng Quân Đội (MB Bank)</p>
+          
+          <div class="w-48 h-48 mx-auto p-2 border-2 border-dashed border-wedding-accent/40 rounded-2xl bg-stone-50 shadow-inner flex items-center justify-center mb-3">
+            <img id="qr-groom-img" src="" alt="Mã QR Chú Rể" class="w-full h-full object-contain rounded-xl">
+          </div>
+
+          <div class="bg-wedding-cream rounded-xl p-2.5 flex items-center justify-between text-xs text-stone-700">
+            <div class="text-left font-mono">
+              <span class="text-[10px] text-stone-400 block font-sans">SỐ TÀI KHOẢN:</span>
+              <strong id="stk-cr">0987654321</strong>
+            </div>
+            <button onclick="copyAccount('groom')" 
+                    class="px-3 py-1.5 bg-wedding-accent text-white rounded-lg hover:bg-stone-800 transition text-[11px] font-medium flex items-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>Sao chép</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cô dâu QR -->
+        <div class="bg-white rounded-3xl p-6 border border-wedding-rose/70 shadow-md text-center relative overflow-hidden">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-wedding-cream text-wedding-accent mb-2">MỪNG CÔ DÂU</span>
+          <h3 id="bank-bride-name" class="text-lg font-serif font-bold text-stone-800">Lê Mỹ Linh</h3>
+          <p id="bank-bride-bankname" class="text-xs text-stone-500 mb-3">Ngân hàng Ngoại Thương (Vietcombank)</p>
+          
+          <div class="w-48 h-48 mx-auto p-2 border-2 border-dashed border-wedding-accent/40 rounded-2xl bg-stone-50 shadow-inner flex items-center justify-center mb-3">
+            <img id="qr-bride-img" src="" alt="Mã QR Cô Dâu" class="w-full h-full object-contain rounded-xl">
+          </div>
+
+          <div class="bg-wedding-cream rounded-xl p-2.5 flex items-center justify-between text-xs text-stone-700">
+            <div class="text-left font-mono">
+              <span class="text-[10px] text-stone-400 block font-sans">SỐ TÀI KHOẢN:</span>
+              <strong id="stk-cd">1234567890</strong>
+            </div>
+            <button onclick="copyAccount('bride')" 
+                    class="px-3 py-1.5 bg-wedding-accent text-white rounded-lg hover:bg-stone-800 transition text-[11px] font-medium flex items-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>Sao chép</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: SỔ LƯU BÚT & LỜI CHÚC -->
+    <section class="px-6 py-14 bg-white/70 border-t border-stone-200/60">
+      <div class="text-center mb-8">
+        <div class="inline-block p-2 rounded-full bg-wedding-rose/30 mb-2 text-wedding-accent">
+          <i data-lucide="message-square-heart" class="w-5 h-5"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Sổ Lưu Bút</p>
+        <h2 class="text-3xl font-serif font-bold text-wedding-dark mt-1">Gửi Lời Chúc Mừng</h2>
+      </div>
+
+      <div class="bg-wedding-cream border border-wedding-rose rounded-3xl p-5 shadow-sm mb-8">
+        <form id="wishes-form" class="space-y-3">
+          <input type="text" id="wish-author" required placeholder="Tên hoặc biệt danh của bạn..." 
+                 class="w-full px-4 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-wedding-accent focus:outline-none bg-white">
+          <textarea id="wish-text" rows="3" required placeholder="Viết lời chúc yêu thương đến cô dâu & chú rể..." 
+                    class="w-full px-4 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-wedding-accent focus:outline-none bg-white"></textarea>
+          <button type="submit" 
+                  class="w-full py-2.5 px-4 rounded-xl bg-wedding-accent text-white text-xs font-semibold hover:bg-stone-800 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+            <span>Gửi Lời Chúc Vào Sổ Lưu Bút</span>
+          </button>
+        </form>
+      </div>
+
+      <div id="wishes-list" class="space-y-3.5 max-h-[380px] overflow-y-auto pr-1">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-6 py-12 text-center text-stone-500 text-xs space-y-4">
+      <div class="font-script text-4xl text-wedding-accent">Thank You!</div>
+      <p class="font-serif italic max-w-xs mx-auto text-stone-600">
+        "Cảm ơn bạn đã luôn là một phần ý nghĩa trong hành trình thanh xuân và ngày hạnh phúc của chúng mình."
+      </p>
+      <div class="w-16 h-[1px] bg-wedding-rose mx-auto"></div>
+      <p class="text-[11px] text-stone-400">
+        Thiệp Cưới Online © <span id="footer-couple-names">Quốc Huy & Mỹ Linh</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ==================== BẢNG TÙY CHỈNH THIỆP CƯỚI TOÀN DIỆN (MODAL) ==================== -->
+  <div id="config-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-3 sm:p-5 hidden">
+    <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl border border-wedding-rose/60 overflow-hidden text-stone-800">
+      
+      <!-- Header Modal -->
+      <div class="px-6 py-4 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-wedding-accent/15 text-wedding-accent flex items-center justify-center">
+            <i data-lucide="settings-2" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-stone-900">Tùy Chỉnh Thiệp Cưới</h3>
+            <p class="text-[11px] text-stone-500">Chỉnh sửa thông tin, ảnh và tài khoản mừng cưới trực tiếp</p>
+          </div>
+        </div>
+        <button onclick="closeConfigModal()" class="text-stone-400 hover:text-stone-800 p-1.5 rounded-full hover:bg-stone-100 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex border-b border-stone-200 px-4 bg-white overflow-x-auto text-xs font-medium gap-1 py-1">
+        <button id="tab-btn-couple" onclick="switchConfigTab('couple')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-wedding-accent text-white font-semibold">
+          👰🤵 Cô Dâu & Chú Rể
+        </button>
+        <button id="tab-btn-event" onclick="switchConfigTab('event')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          📅 Ngày Giờ & Địa Điểm
+        </button>
+        <button id="tab-btn-photos" onclick="switchConfigTab('photos')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          🖼️ Ảnh & Album
+        </button>
+        <button id="tab-btn-gift" onclick="switchConfigTab('gift')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          🎁 Mừng Cưới (VietQR)
+        </button>
+        <button id="tab-btn-story" onclick="switchConfigTab('story')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          💌 Lời Ngỏ
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 text-xs">
+
+        <!-- TAB 1: CÔ DÂU & CHÚ RỂ -->
+        <div id="tab-panel-couple" class="space-y-6">
+          <!-- Chú rể -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="user" class="w-4 h-4"></i> Thông Tin Chú Rể
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Họ tên chú rể:</label>
+                <input type="text" id="cfg-groom-name" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Câu nói / Châm ngôn:</label>
+                <input type="text" id="cfg-groom-quote" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thân phụ (Bố):</label>
+                <input type="text" id="cfg-groom-father" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thân mẫu (Mẹ):</label>
+                <input type="text" id="cfg-groom-mother" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+            </div>
+          </div>
+
+          <!-- Cô dâu -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="user" class="w-4 h-4"></i> Thông Tin Cô Dâu
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Họ tên cô dâu:</label>
+                <input type="text" id="cfg-bride-name" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Câu nói / Châm ngôn:</label>
+                <input type="text" id="cfg-bride-quote" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thân phụ (Bố):</label>
+                <input type="text" id="cfg-bride-father" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thân mẫu (Mẹ):</label>
+                <input type="text" id="cfg-bride-mother" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: NGÀY GIỜ & ĐỊA ĐIỂM -->
+        <div id="tab-panel-event" class="space-y-4 hidden">
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Thời Gian Hôn Lễ</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thời gian đếm ngược (ISO YYYY-MM-DDTHH:MM):</label>
+                <input type="datetime-local" id="cfg-event-iso" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Ngày hiển thị trên thiệp:</label>
+                <input type="text" id="cfg-event-date-display" placeholder="28.11.2026" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Thứ trong tuần & Giờ:</label>
+                <input type="text" id="cfg-event-day-time" placeholder="Thứ Bảy • 11:00 Trưa" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Ngày Âm Lịch:</label>
+                <input type="text" id="cfg-event-lunar" placeholder="Nhằm ngày 20 tháng 10 năm Bính Ngọ" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Địa Điểm Tổ Chức Tiệc Cưới</h4>
+            <div class="grid grid-cols-1 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Trung tâm / Khách sạn / Nhà hàng:</label>
+                <input type="text" id="cfg-venue-name" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Sảnh tiệc:</label>
+                <input type="text" id="cfg-venue-hall" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Địa chỉ chính xác:</label>
+                <input type="text" id="cfg-venue-address" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Link Google Maps (Dẫn đường):</label>
+                <input type="text" id="cfg-venue-maps" placeholder="https://maps.google.com/?q=..." class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: ẢNH & ALBUM -->
+        <div id="tab-panel-photos" class="space-y-5 hidden">
+          <!-- Ảnh đại diện 3 mục chính -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-4">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Ảnh Bìa & Ảnh Chân Dung</h4>
+            
+            <!-- Hero -->
+            <div class="flex items-center gap-3">
+              <img id="cfg-hero-preview" class="w-14 h-14 object-cover rounded-xl border border-stone-300 shadow-sm shrink-0" src="">
+              <div class="flex-1 space-y-1">
+                <span class="font-semibold text-stone-700 block">Ảnh Bìa Chính (Hero Banner):</span>
+                <div class="flex gap-2">
+                  <input type="file" id="file-hero" accept="image/*" class="hidden" onchange="handleSingleUpload(this, 'hero')">
+                  <button type="button" onclick="document.getElementById('file-hero').click()" class="px-3 py-1.5 bg-stone-800 text-white rounded-lg text-[11px] font-medium hover:bg-wedding-accent transition">
+                    Chọn từ máy tính
+                  </button>
+                  <input type="text" id="cfg-hero-url" placeholder="hoặc dán URL ảnh..." class="flex-1 px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs" oninput="previewUrlInput('hero')">
+                </div>
+              </div>
+            </div>
+
+            <!-- Groom -->
+            <div class="flex items-center gap-3">
+              <img id="cfg-groom-preview" class="w-14 h-14 object-cover rounded-xl border border-stone-300 shadow-sm shrink-0" src="">
+              <div class="flex-1 space-y-1">
+                <span class="font-semibold text-stone-700 block">Ảnh Chú Rể:</span>
+                <div class="flex gap-2">
+                  <input type="file" id="file-groom" accept="image/*" class="hidden" onchange="handleSingleUpload(this, 'groom')">
+                  <button type="button" onclick="document.getElementById('file-groom').click()" class="px-3 py-1.5 bg-stone-800 text-white rounded-lg text-[11px] font-medium hover:bg-wedding-accent transition">
+                    Chọn từ máy tính
+                  </button>
+                  <input type="text" id="cfg-groom-url" placeholder="hoặc dán URL ảnh..." class="flex-1 px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs" oninput="previewUrlInput('groom')">
+                </div>
+              </div>
+            </div>
+
+            <!-- Bride -->
+            <div class="flex items-center gap-3">
+              <img id="cfg-bride-preview" class="w-14 h-14 object-cover rounded-xl border border-stone-300 shadow-sm shrink-0" src="">
+              <div class="flex-1 space-y-1">
+                <span class="font-semibold text-stone-700 block">Ảnh Cô Dâu:</span>
+                <div class="flex gap-2">
+                  <input type="file" id="file-bride" accept="image/*" class="hidden" onchange="handleSingleUpload(this, 'bride')">
+                  <button type="button" onclick="document.getElementById('file-bride').click()" class="px-3 py-1.5 bg-stone-800 text-white rounded-lg text-[11px] font-medium hover:bg-wedding-accent transition">
+                    Chọn từ máy tính
+                  </button>
+                  <input type="text" id="cfg-bride-url" placeholder="hoặc dán URL ảnh..." class="flex-1 px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs" oninput="previewUrlInput('bride')">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Album Gallery Manager -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Album Ảnh Cưới Kỷ Niệm</h4>
+                <p class="text-[11px] text-stone-500">Tải thêm nhiều ảnh từ thiết bị của bạn hoặc dán link ảnh</p>
+              </div>
+              <span id="cfg-gallery-count" class="px-2.5 py-0.5 rounded-full bg-wedding-accent/15 text-wedding-accent font-bold text-[11px]">
+                5 ảnh
+              </span>
+            </div>
+
+            <!-- Drag & Drop / File Input -->
+            <div class="border-2 border-dashed border-stone-300 hover:border-wedding-accent rounded-2xl p-4 text-center transition bg-white cursor-pointer" onclick="document.getElementById('file-gallery-multi').click()">
+              <input type="file" id="file-gallery-multi" accept="image/*" multiple class="hidden" onchange="handleMultipleGalleryUpload(this)">
+              <div class="flex flex-col items-center gap-1.5 text-stone-600">
+                <i data-lucide="cloud-upload" class="w-7 h-7 text-wedding-accent"></i>
+                <p class="font-semibold text-xs text-stone-800">Chạm để chọn ảnh từ máy tính / điện thoại</p>
+                <p class="text-[11px] text-stone-400">Hỗ trợ chọn cùng lúc nhiều ảnh (.jpg, .png, .webp). Tự động tối ưu dung lượng siêu tốc.</p>
+              </div>
+            </div>
+
+            <!-- Hoặc thêm bằng link -->
+            <div class="flex gap-2">
+              <input type="text" id="cfg-new-gallery-url" placeholder="Dán link ảnh online (nếu có)..." class="flex-1 px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              <button type="button" onclick="addGalleryUrl()" class="px-4 py-2 bg-stone-800 text-white rounded-xl text-xs font-medium hover:bg-wedding-accent transition shrink-0">
+                Thêm link
+              </button>
+            </div>
+
+            <!-- Thumbnails grid -->
+            <div id="cfg-gallery-thumbnails" class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 pt-2">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: MỪNG CƯỚI & VIETQR -->
+        <div id="tab-panel-gift" class="space-y-4 hidden">
+          <!-- Chú rể -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Tài Khoản Mừng Chú Rể</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Ngân hàng:</label>
+                <input type="text" id="cfg-bank-groom-name" placeholder="MB Bank" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Mã BIN VietQR (MB: 970422, VCB: 970436, TCB: 970407,...):</label>
+                <input type="text" id="cfg-bank-groom-code" placeholder="970422" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Số Tài Khoản:</label>
+                <input type="text" id="cfg-bank-groom-num" placeholder="0987654321" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Chủ Tài Khoản:</label>
+                <input type="text" id="cfg-bank-groom-holder" placeholder="NGUYEN QUOC HUY" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+            </div>
+          </div>
+
+          <!-- Cô dâu -->
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider">Tài Khoản Mừng Cô Dâu</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Ngân hàng:</label>
+                <input type="text" id="cfg-bank-bride-name" placeholder="Vietcombank" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Mã BIN VietQR (MB: 970422, VCB: 970436, TCB: 970407,...):</label>
+                <input type="text" id="cfg-bank-bride-code" placeholder="970436" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Số Tài Khoản:</label>
+                <input type="text" id="cfg-bank-bride-num" placeholder="1234567890" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tên Chủ Tài Khoản:</label>
+                <input type="text" id="cfg-bank-bride-holder" placeholder="LE MY LINH" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: LỜI NGỎ -->
+        <div id="tab-panel-story" class="space-y-4 hidden">
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-2">
+            <label class="block text-stone-800 font-bold mb-1">Tâm Thư / Lời Ngỏ Của Đôi Uyên Ương:</label>
+            <textarea id="cfg-story-message" rows="6" class="w-full p-3 bg-white border border-stone-300 rounded-xl text-xs leading-relaxed focus:ring-2 focus:ring-wedding-accent focus:outline-none"></textarea>
+            <p class="text-[11px] text-stone-400">Xuống dòng 2 lần để tách thành các đoạn văn riêng.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="px-6 py-4 bg-stone-50 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="resetToDefaultConfig()" class="px-3 py-2 text-stone-500 hover:text-red-600 text-xs font-medium transition flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>Mặc định</span>
+          </button>
+          <button type="button" onclick="exportStaticHtml()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold transition shadow-sm flex items-center gap-1.5" title="Tải về file HTML độc lập chứa toàn bộ dữ liệu & ảnh">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Xuất file HTML tĩnh</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeConfigModal()" class="px-4 py-2 border border-stone-300 text-stone-700 rounded-xl text-xs font-medium hover:bg-stone-100 transition">
+            Hủy
+          </button>
+          <button type="button" onclick="saveAndApplyConfig()" class="px-5 py-2 bg-wedding-accent text-white rounded-xl text-xs font-semibold hover:bg-stone-800 transition shadow-lg shadow-wedding-accent/20 flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Lưu & Áp Dụng Ngay</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL TẠO LINK GỬI KHÁCH ==================== -->
+  <div id="share-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 hidden">
+    <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-wedding-rose/60 space-y-4">
+      <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+        <h3 class="font-serif font-bold text-lg text-wedding-dark flex items-center gap-2">
+          <i data-lucide="link" class="w-4 h-4 text-wedding-accent"></i>
+          Tạo Link Gửi Cho Khách
+        </h3>
+        <button id="close-share-modal" class="text-stone-400 hover:text-stone-700 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-stone-600">
+        Nhập tên khách mời bên dưới để tạo đường link riêng có gắn tên trân trọng khi gửi qua Zalo / Messenger:
+      </p>
+
+      <div>
+        <label class="block text-xs font-semibold text-stone-700 mb-1">Tên khách mời:</label>
+        <input type="text" id="input-guest-name" placeholder="Ví dụ: Anh Tuấn, Cô Lan & Gia đình..." 
+               class="w-full px-4 py-2.5 rounded-xl border border-stone-300 text-sm focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-stone-700 mb-1">Link thiệp cá nhân hóa:</label>
+        <div class="flex items-center gap-2">
+          <input type="text" id="output-guest-url" readonly 
+                 class="w-full px-3 py-2 rounded-xl bg-stone-100 border border-stone-200 text-xs font-mono text-stone-600 truncate">
+          <button onclick="copyGuestUrl()" class="px-3 py-2 bg-wedding-accent text-white rounded-xl text-xs font-medium hover:bg-stone-800 transition shrink-0 flex items-center gap-1">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Chép link</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mã QR Quét mở ngay trên điện thoại -->
+      <div class="p-3 bg-stone-50 rounded-2xl border border-stone-200 flex items-center gap-3">
+        <img id="guest-qr-image" class="w-20 h-20 bg-white p-1 rounded-xl border border-stone-200 shadow-sm shrink-0" src="" alt="QR mở trên điện thoại">
+        <div class="text-xs text-stone-600 space-y-1">
+          <strong class="text-stone-800 font-semibold flex items-center gap-1">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5 text-wedding-accent"></i>
+            Quét mã xem trên điện thoại
+          </strong>
+          <p class="text-[11px] text-stone-500 leading-snug">Mở camera điện thoại hoặc Zalo quét mã này để mở thiệp có gắn tên khách ngay trên điện thoại.</p>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-stone-700 mb-1">Mẫu tin nhắn gửi kèm Zalo / SMS:</label>
+        <div class="relative">
+          <textarea id="sample-message-text" rows="4" readonly 
+                    class="w-full p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-700 leading-relaxed font-sans"></textarea>
+          <button onclick="copySampleMessage()" class="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-stone-800 text-white rounded-lg text-[11px] font-medium hover:bg-wedding-accent transition flex items-center gap-1">
+            <i data-lucide="copy" class="w-3 h-3"></i>
+            <span>Sao chép tin nhắn</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL BỘ SƯU TẬP 100 MẪU THIỆP CƯỚI ==================== -->
+  <div id="template-picker-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-5 hidden">
+    <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl border border-wedding-rose/60 overflow-hidden text-stone-800">
+      
+      <!-- Header -->
+      <div class="px-6 py-4 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-full bg-wedding-accent/15 text-wedding-accent flex items-center justify-center">
+            <i data-lucide="palette" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-lg text-stone-900">Kho 100 Mẫu Thiệp Cưới Độc Bản</h3>
+            <p class="text-[11px] text-stone-500">Đổi phong cách ngay lập tức — Giữ nguyên 100% hình ảnh & nội dung của bạn</p>
+          </div>
+        </div>
+        <button onclick="closeTemplateModal()" class="text-stone-400 hover:text-stone-800 p-1.5 rounded-full hover:bg-stone-100 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="px-6 py-3 border-b border-stone-200 bg-white space-y-3">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"></i>
+          <input type="text" id="template-search-input" placeholder="Tìm theo tên mẫu, màu sắc, phong cách (Song Hỷ, Hoàng Gia, Pastel, Vintage, Minimal...)" 
+                 class="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:bg-white focus:outline-none"
+                 oninput="filterTemplates()">
+        </div>
+
+        <!-- Category Pills -->
+        <div id="template-category-pills" class="flex gap-1.5 overflow-x-auto pb-1 text-xs">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Grid list of templates -->
+      <div class="p-6 overflow-y-auto flex-1 bg-stone-50/50">
+        <div class="flex items-center justify-between mb-3 text-xs text-stone-500">
+          <span id="template-count-display">Hiển thị 100/100 mẫu</span>
+          <span class="text-[11px] text-stone-400">Chạm "Áp dụng" để thay đổi giao diện thiệp</span>
+        </div>
+        <div id="template-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Rendered dynamically by script.js -->
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-6 py-3 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs text-stone-500">
+        <span>Đang áp dụng: <strong id="current-template-name-display" class="text-wedding-accent font-semibold">Hoa Hồng Champagne</strong></span>
+        <button onclick="closeTemplateModal()" class="px-4 py-1.5 bg-stone-800 text-white rounded-xl text-xs font-medium hover:bg-wedding-accent transition">
+          Hoàn tất
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== LIGHTBOX MODAL (XEM ẢNH FULL SCREEN) ==================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white/80 hover:text-white p-2">
+      <i data-lucide="x" class="w-8 h-8"></i>
+    </button>
+    <img id="lightbox-img" src="" alt="Full size photo" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl">
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 bg-stone-900/90 text-white px-5 py-2.5 rounded-full text-xs font-medium shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+    <span id="toast-message">Thông báo</span>
+  </div>
+
+  <script>
+// ==========================================
+// THIỆP MỜI CƯỚI ONLINE - JAVASCRIPT TOÀN DIỆN
+// ==========================================
+
+// CẤU HÌNH MẪU MẶC ĐỊNH (DEFAULT CONFIGURATION)
+const DEFAULT_CONFIG = {
+  groom: {
+    name: "Nguyễn Quốc Huy",
+    shortName: "Quốc Huy",
+    quote: "Chàng trai luôn muốn mang lại nụ cười cho em",
+    father: "Nguyễn Văn Hùng",
+    mother: "Trần Thị Mai",
+    location: "TP. Hồ Chí Minh",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+    bankName: "Ngân hàng Quân Đội (MB Bank)",
+    bankCode: "970422",
+    accountNumber: "0987654321",
+    accountHolder: "NGUYEN QUOC HUY"
+  },
+  bride: {
+    name: "Lê Mỹ Linh",
+    shortName: "Mỹ Linh",
+    quote: "Cô gái hạnh phúc nhất khi được đồng hành cùng anh",
+    father: "Lê Hoàng Nam",
+    mother: "Vũ Bích Ngọc",
+    location: "TP. Hồ Chí Minh",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    bankName: "Ngân hàng Ngoại Thương (Vietcombank)",
+    bankCode: "970436",
+    accountNumber: "1234567890",
+    accountHolder: "LE MY LINH"
+  },
+  event: {
+    heroImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    dateIso: "2026-11-28T11:00",
+    dateDisplay: "28.11.2026",
+    dayOfWeek: "Thứ Bảy",
+    timeDisplay: "11:00 Trưa",
+    lunarDate: "Nhằm ngày 20 tháng 10 năm Bính Ngọ",
+    venueName: "Trung Tâm Hội Nghị Tiệc Cưới GEM Center",
+    venueHall: "Sảnh Grand Ballroom - Lầu 3",
+    venueAddress: "Số 8 Nguyễn Bỉnh Khiêm, P. Đa Kao, Quận 1, TP.HCM",
+    mapsUrl: "https://maps.google.com/?q=GEM+Center+Nguyen+Binh+Khiem",
+    vuquyTime: "08:30 Sáng - Ngày 28.11.2026",
+    vuquyAddress: "123 Đường Trần Hưng Đạo, P. Cô Giang, Quận 1, TP.HCM",
+    storyMessage: "Sau những năm tháng cùng nhau trưởng thành, chia sẻ từng buồn vui trong cuộc sống, ngày hôm nay chúng mình quyết định bước tiếp cùng nhau trên chặng đường mới – hôn nhân.\n\nSự hiện diện, lời chúc phúc và tình cảm của bạn chính là món quà vô giá và ý nghĩa nhất dành cho chúng mình trong ngày trọng đại này."
+  },
+  gallery: [
+    "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80",
+    "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80"
+  ]
+};
+
+// Biến lưu cấu hình hiện tại và bộ đệm ảnh trong lúc mở modal
+let currentConfig = loadStoredConfig();
+let workingGallery = [...currentConfig.gallery];
+let pendingUploads = {};
+
+// Khởi chạy khi DOM sẵn sàng
+document.addEventListener('DOMContentLoaded', () => {
+  renderEntirePage();
+  syncServerConfig(); // Đồng bộ cấu hình từ server nếu có thiết bị khác chỉnh sửa
+  initTemplateEngine(); // Khởi tạo kho 100 mẫu thiệp cưới
+  initGuestPersonalization();
+  initCountdown();
+  initMusicPlayer();
+  initEnvelopeOpener();
+  initFallingPetals();
+  initGuestbook();
+  initRSVPForm();
+  initShareModal();
+});
+
+// Tự động đồng bộ config.json từ máy chủ (để điện thoại mở lên thấy ngay nội dung đã sửa trên PC)
+async function syncServerConfig() {
+  try {
+    const res = await fetch('config.json?v=' + Date.now());
+    if (res.ok) {
+      const remote = await res.json();
+      currentConfig = {
+        ...DEFAULT_CONFIG,
+        ...remote,
+        groom: { ...DEFAULT_CONFIG.groom, ...(remote.groom || {}) },
+        bride: { ...DEFAULT_CONFIG.bride, ...(remote.bride || {}) },
+        event: { ...DEFAULT_CONFIG.event, ...(remote.event || {}) },
+        gallery: (remote.gallery && remote.gallery.length > 0) ? remote.gallery : DEFAULT_CONFIG.gallery
+      };
+      saveConfigToStorage(currentConfig);
+      renderEntirePage();
+    }
+  } catch (e) {
+    // Không có server API hoặc đang mở offline file://
+  }
+}
+
+// ==========================================
+// 1. TẢI VÀ LƯU CẤU HÌNH VÀO LOCALSTORAGE
+// ==========================================
+function loadStoredConfig() {
+  try {
+    const saved = localStorage.getItem('wedding_invitation_config_v2');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Gộp đè lên DEFAULT_CONFIG để đảm bảo đầy đủ thuộc tính
+      return {
+        ...DEFAULT_CONFIG,
+        ...parsed,
+        groom: { ...DEFAULT_CONFIG.groom, ...(parsed.groom || {}) },
+        bride: { ...DEFAULT_CONFIG.bride, ...(parsed.bride || {}) },
+        event: { ...DEFAULT_CONFIG.event, ...(parsed.event || {}) },
+        gallery: (parsed.gallery && parsed.gallery.length > 0) ? parsed.gallery : DEFAULT_CONFIG.gallery
+      };
+    }
+  } catch (e) {
+    console.error("Lỗi khi đọc cấu hình từ localStorage:", e);
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+}
+
+function saveConfigToStorage(config) {
+  try {
+    localStorage.setItem('wedding_invitation_config_v2', JSON.stringify(config));
+  } catch (e) {
+    console.error("Lỗi lưu localStorage (có thể vượt dung lượng ảnh):", e);
+    showToast('Lỗi: Dung lượng ảnh quá lớn cho bộ nhớ trình duyệt!');
+  }
+}
+
+// ==========================================
+// 2. RENDER GIAO DIỆN THEO CẤU HÌNH HIỆN TẠI
+// ==========================================
+function renderEntirePage() {
+  const c = currentConfig;
+
+  // Tiêu đề trang & Tên cặp đôi
+  const coupleText = `${c.groom.shortName || c.groom.name} & ${c.bride.shortName || c.bride.name}`;
+  document.title = `Thiệp Mời Cưới - ${coupleText}`;
+  
+  const elEnvCouple = document.getElementById('envelope-couple-names');
+  if (elEnvCouple) elEnvCouple.textContent = coupleText;
+
+  const elHeroGroom = document.getElementById('hero-groom-name');
+  if (elHeroGroom) elHeroGroom.textContent = c.groom.shortName || c.groom.name;
+
+  const elHeroBride = document.getElementById('hero-bride-name');
+  if (elHeroBride) elHeroBride.textContent = c.bride.shortName || c.bride.name;
+
+  const elCoupleSig = document.getElementById('couple-signature');
+  if (elCoupleSig) elCoupleSig.textContent = coupleText;
+
+  const elFooterNames = document.getElementById('footer-couple-names');
+  if (elFooterNames) elFooterNames.textContent = coupleText;
+
+  // Ảnh chính
+  const elHeroImg = document.getElementById('hero-img');
+  if (elHeroImg) elHeroImg.src = c.event.heroImage;
+
+  const elGroomImg = document.getElementById('groom-img');
+  if (elGroomImg) elGroomImg.src = c.groom.avatar;
+
+  const elBrideImg = document.getElementById('bride-img');
+  if (elBrideImg) elBrideImg.src = c.bride.avatar;
+
+  // Thẻ Chú rể
+  const elGroomNameCard = document.getElementById('groom-name-card');
+  if (elGroomNameCard) elGroomNameCard.textContent = c.groom.name;
+  const elGroomQuote = document.getElementById('groom-quote-card');
+  if (elGroomQuote) elGroomQuote.textContent = `"${c.groom.quote}"`;
+  const elGroomFather = document.getElementById('groom-father-card');
+  if (elGroomFather) elGroomFather.textContent = c.groom.father;
+  const elGroomMother = document.getElementById('groom-mother-card');
+  if (elGroomMother) elGroomMother.textContent = c.groom.mother;
+  const elGroomLoc = document.getElementById('groom-location-card');
+  if (elGroomLoc) elGroomLoc.textContent = c.groom.location;
+
+  // Thẻ Cô dâu
+  const elBrideNameCard = document.getElementById('bride-name-card');
+  if (elBrideNameCard) elBrideNameCard.textContent = c.bride.name;
+  const elBrideQuote = document.getElementById('bride-quote-card');
+  if (elBrideQuote) elBrideQuote.textContent = `"${c.bride.quote}"`;
+  const elBrideFather = document.getElementById('bride-father-card');
+  if (elBrideFather) elBrideFather.textContent = c.bride.father;
+  const elBrideMother = document.getElementById('bride-mother-card');
+  if (elBrideMother) elBrideMother.textContent = c.bride.mother;
+  const elBrideLoc = document.getElementById('bride-location-card');
+  if (elBrideLoc) elBrideLoc.textContent = c.bride.location;
+
+  // Ngày giờ & Địa điểm
+  const elHeroDay = document.getElementById('hero-day-of-week');
+  if (elHeroDay) elHeroDay.textContent = c.event.dayOfWeek;
+  const elHeroDate = document.getElementById('hero-date-text');
+  if (elHeroDate) elHeroDate.textContent = c.event.dateDisplay;
+  const elHeroTime = document.getElementById('hero-time-text');
+  if (elHeroTime) elHeroTime.textContent = c.event.timeDisplay;
+  const elHeroLunar = document.getElementById('hero-lunar-text');
+  if (elHeroLunar) elHeroLunar.textContent = `(${c.event.lunarDate})`;
+
+  const elVenueDt = document.getElementById('venue-datetime-text');
+  if (elVenueDt) elVenueDt.textContent = `${c.event.timeDisplay} - ${c.event.dayOfWeek}, Ngày ${c.event.dateDisplay}`;
+
+  const elVenueName = document.getElementById('venue-name-card');
+  if (elVenueName) elVenueName.textContent = c.event.venueName;
+  const elVenueHall = document.getElementById('venue-hall-card');
+  if (elVenueHall) elVenueHall.textContent = c.event.venueHall;
+  const elVenueAddr = document.getElementById('venue-address-card');
+  if (elVenueAddr) elVenueAddr.textContent = c.event.venueAddress;
+
+  const elMapsBtn = document.getElementById('btn-maps-link');
+  if (elMapsBtn) elMapsBtn.href = c.event.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(c.event.venueName + ' ' + c.event.venueAddress)}`;
+
+  const elVuquyTime = document.getElementById('vuquy-time-text');
+  if (elVuquyTime) elVuquyTime.textContent = c.event.vuquyTime;
+  const elVuquyAddr = document.getElementById('vuquy-address-text');
+  if (elVuquyAddr) elVuquyAddr.textContent = c.event.vuquyAddress;
+
+  // Lời ngỏ
+  const elStory = document.getElementById('couple-message-body');
+  if (elStory && c.event.storyMessage) {
+    const paragraphs = c.event.storyMessage.split('\n\n').filter(p => p.trim().length > 0);
+    elStory.innerHTML = paragraphs.map(p => `<p>"${escapeHtml(p.trim())}"</p>`).join('');
+  }
+
+  // Mừng cưới & VietQR
+  const elBankCrName = document.getElementById('bank-groom-name');
+  if (elBankCrName) elBankCrName.textContent = c.groom.name;
+  const elBankCrBank = document.getElementById('bank-groom-bankname');
+  if (elBankCrBank) elBankCrBank.textContent = c.groom.bankName;
+  const elStkCr = document.getElementById('stk-cr');
+  if (elStkCr) elStkCr.textContent = c.groom.accountNumber;
+
+  const elQrCr = document.getElementById('qr-groom-img');
+  if (elQrCr) {
+    const qrUrlCr = `https://api.vietqr.io/image/${c.groom.bankCode}-${c.groom.accountNumber}-compact.jpg?amount=&addInfo=Mung+cuoi+${encodeURIComponent(c.groom.shortName || c.groom.name)}&accountName=${encodeURIComponent(c.groom.accountHolder)}`;
+    elQrCr.src = qrUrlCr;
+  }
+
+  const elBankCdName = document.getElementById('bank-bride-name');
+  if (elBankCdName) elBankCdName.textContent = c.bride.name;
+  const elBankCdBank = document.getElementById('bank-bride-bankname');
+  if (elBankCdBank) elBankCdBank.textContent = c.bride.bankName;
+  const elStkCd = document.getElementById('stk-cd');
+  if (elStkCd) elStkCd.textContent = c.bride.accountNumber;
+
+  const elQrCd = document.getElementById('qr-bride-img');
+  if (elQrCd) {
+    const qrUrlCd = `https://api.vietqr.io/image/${c.bride.bankCode}-${c.bride.accountNumber}-compact.jpg?amount=&addInfo=Mung+cuoi+${encodeURIComponent(c.bride.shortName || c.bride.name)}&accountName=${encodeURIComponent(c.bride.accountHolder)}`;
+    elQrCd.src = qrUrlCd;
+  }
+
+  // Album ảnh cưới (Gallery)
+  renderGalleryGrid(c.gallery);
+
+  // Cập nhật lại Icon Lucide
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+// Render lưới ảnh cưới trong Album
+function renderGalleryGrid(images) {
+  const container = document.getElementById('gallery-container');
+  if (!container) return;
+
+  container.innerHTML = '';
+  if (!images || images.length === 0) {
+    container.innerHTML = `<div class="col-span-2 text-center py-8 text-stone-400 text-xs">Chưa có ảnh nào trong album. Hãy bấm nút quản lý ảnh để thêm ảnh nhé!</div>`;
+    return;
+  }
+
+  images.forEach((imgUrl, index) => {
+    const item = document.createElement('div');
+    // Bức ảnh thứ 3 (index 2) hoặc mỗi 5 ảnh thì dàn full 2 cột cho đẹp bố cục
+    const isFullWidth = (index === 2) || (index > 4 && index % 4 === 0);
+    item.className = `${isFullWidth ? 'col-span-2' : ''} overflow-hidden rounded-2xl shadow-sm cursor-pointer group bg-stone-100 relative`;
+    item.onclick = function() { openLightbox(this); };
+
+    item.innerHTML = `
+      <img src="${escapeHtml(imgUrl)}" 
+           alt="Ảnh cưới ${index + 1}" 
+           class="w-full ${isFullWidth ? 'h-64 sm:h-80' : 'h-52 sm:h-60'} object-cover group-hover:scale-105 transition duration-500">
+      <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+        <i data-lucide="zoom-in" class="w-6 h-6 drop-shadow"></i>
+      </div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+// ==========================================
+// 3. TIỆN ÍCH NÉN ẢNH (CANVAS COMPRESSOR)
+// ==========================================
+// Giúp giảm dung lượng ảnh chụp 10-20MB từ điện thoại/máy ảnh xuống cỡ ~150KB
+function compressImage(file, maxDimension = 1200, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+
+        if (w > maxDimension || h > maxDimension) {
+          if (w > h) {
+            h = Math.round((h * maxDimension) / w);
+            w = maxDimension;
+          } else {
+            w = Math.round((w * maxDimension) / h);
+            h = maxDimension;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ==========================================
+// 4. QUẢN LÝ BẢNG TÙY CHỈNH (MODAL CONFIG)
+// ==========================================
+function openConfigModal(activeTab) {
+  const modal = document.getElementById('config-modal');
+  if (!modal) return;
+
+  // Nạp dữ liệu vào form
+  const c = currentConfig;
+  workingGallery = [...c.gallery];
+  pendingUploads = {};
+
+  // Tab 1
+  document.getElementById('cfg-groom-name').value = c.groom.name || '';
+  document.getElementById('cfg-groom-quote').value = c.groom.quote || '';
+  document.getElementById('cfg-groom-father').value = c.groom.father || '';
+  document.getElementById('cfg-groom-mother').value = c.groom.mother || '';
+
+  document.getElementById('cfg-bride-name').value = c.bride.name || '';
+  document.getElementById('cfg-bride-quote').value = c.bride.quote || '';
+  document.getElementById('cfg-bride-father').value = c.bride.father || '';
+  document.getElementById('cfg-bride-mother').value = c.bride.mother || '';
+
+  // Tab 2
+  document.getElementById('cfg-event-iso').value = c.event.dateIso ? c.event.dateIso.slice(0, 16) : '2026-11-28T11:00';
+  document.getElementById('cfg-event-date-display').value = c.event.dateDisplay || '';
+  document.getElementById('cfg-event-day-time').value = `${c.event.dayOfWeek} • ${c.event.timeDisplay}`;
+  document.getElementById('cfg-event-lunar').value = c.event.lunarDate || '';
+  document.getElementById('cfg-venue-name').value = c.event.venueName || '';
+  document.getElementById('cfg-venue-hall').value = c.event.venueHall || '';
+  document.getElementById('cfg-venue-address').value = c.event.venueAddress || '';
+  document.getElementById('cfg-venue-maps').value = c.event.mapsUrl || '';
+
+  // Tab 3
+  document.getElementById('cfg-hero-preview').src = c.event.heroImage;
+  document.getElementById('cfg-hero-url').value = c.event.heroImage;
+  document.getElementById('cfg-groom-preview').src = c.groom.avatar;
+  document.getElementById('cfg-groom-url').value = c.groom.avatar;
+  document.getElementById('cfg-bride-preview').src = c.bride.avatar;
+  document.getElementById('cfg-bride-url').value = c.bride.avatar;
+  renderGalleryThumbnails();
+
+  // Tab 4
+  document.getElementById('cfg-bank-groom-name').value = c.groom.bankName || '';
+  document.getElementById('cfg-bank-groom-code').value = c.groom.bankCode || '';
+  document.getElementById('cfg-bank-groom-num').value = c.groom.accountNumber || '';
+  document.getElementById('cfg-bank-groom-holder').value = c.groom.accountHolder || '';
+
+  document.getElementById('cfg-bank-bride-name').value = c.bride.bankName || '';
+  document.getElementById('cfg-bank-bride-code').value = c.bride.bankCode || '';
+  document.getElementById('cfg-bank-bride-num').value = c.bride.accountNumber || '';
+  document.getElementById('cfg-bank-bride-holder').value = c.bride.accountHolder || '';
+
+  // Tab 5
+  document.getElementById('cfg-story-message').value = c.event.storyMessage || '';
+
+  modal.classList.remove('hidden');
+
+  if (activeTab === 'tab-photos') {
+    switchConfigTab('photos');
+  } else {
+    switchConfigTab('couple');
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeConfigModal() {
+  const modal = document.getElementById('config-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function switchConfigTab(tabName) {
+  const tabs = ['couple', 'event', 'photos', 'gift', 'story'];
+  tabs.forEach(t => {
+    const btn = document.getElementById(`tab-btn-${t}`);
+    const panel = document.getElementById(`tab-panel-${t}`);
+    if (btn && panel) {
+      if (t === tabName) {
+        btn.className = "px-3.5 py-2 rounded-xl transition whitespace-nowrap bg-wedding-accent text-white font-semibold shadow-sm";
+        panel.classList.remove('hidden');
+      } else {
+        btn.className = "px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100";
+        panel.classList.add('hidden');
+      }
+    }
+  });
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// Xử lý upload ảnh đơn (Hero, Chú rể, Cô dâu)
+async function handleSingleUpload(input, type) {
+  if (!input.files || input.files.length === 0) return;
+  const file = input.files[0];
+  showToast('Đang tối ưu & nén ảnh...');
+
+  try {
+    const dataUrl = await compressImage(file, 1200, 0.85);
+    pendingUploads[type] = dataUrl;
+
+    if (type === 'hero') {
+      document.getElementById('cfg-hero-preview').src = dataUrl;
+      document.getElementById('cfg-hero-url').value = dataUrl;
+    } else if (type === 'groom') {
+      document.getElementById('cfg-groom-preview').src = dataUrl;
+      document.getElementById('cfg-groom-url').value = dataUrl;
+    } else if (type === 'bride') {
+      document.getElementById('cfg-bride-preview').src = dataUrl;
+      document.getElementById('cfg-bride-url').value = dataUrl;
+    }
+    showToast('Đã tải ảnh lên thành công!');
+  } catch (err) {
+    console.error(err);
+    showToast('Lỗi khi xử lý tệp ảnh!');
+  }
+}
+
+function previewUrlInput(type) {
+  const url = document.getElementById(`cfg-${type}-url`).value.trim();
+  if (url) {
+    document.getElementById(`cfg-${type}-preview`).src = url;
+    pendingUploads[type] = url;
+  }
+}
+
+// Xử lý upload nhiều ảnh vào Album (Multiple Gallery)
+async function handleMultipleGalleryUpload(input) {
+  if (!input.files || input.files.length === 0) return;
+  const files = Array.from(input.files);
+
+  showToast(`Đang tải & nén ${files.length} bức ảnh...`);
+
+  for (const file of files) {
+    try {
+      const dataUrl = await compressImage(file, 1200, 0.82);
+      workingGallery.push(dataUrl);
+    } catch (e) {
+      console.error("Lỗi nén ảnh:", e);
+    }
+  }
+
+  renderGalleryThumbnails();
+  showToast(`Đã thêm thành công ${files.length} ảnh vào album!`);
+  input.value = ''; // Reset input để có thể chọn tiếp
+}
+
+function addGalleryUrl() {
+  const input = document.getElementById('cfg-new-gallery-url');
+  const url = input.value.trim();
+  if (!url) return;
+
+  workingGallery.push(url);
+  input.value = '';
+  renderGalleryThumbnails();
+  showToast('Đã thêm ảnh vào album!');
+}
+
+function removeGalleryImage(index) {
+  workingGallery.splice(index, 1);
+  renderGalleryThumbnails();
+}
+
+function renderGalleryThumbnails() {
+  const container = document.getElementById('cfg-gallery-thumbnails');
+  const counter = document.getElementById('cfg-gallery-count');
+  if (counter) counter.textContent = `${workingGallery.length} ảnh`;
+  if (!container) return;
+
+  container.innerHTML = '';
+  workingGallery.forEach((imgUrl, idx) => {
+    const thumb = document.createElement('div');
+    thumb.className = "relative rounded-xl overflow-hidden aspect-square border border-stone-200 bg-stone-100 group";
+    thumb.innerHTML = `
+      <img src="${escapeHtml(imgUrl)}" class="w-full h-full object-cover">
+      <button type="button" onclick="removeGalleryImage(${idx})" 
+              class="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center opacity-80 hover:opacity-100 transition shadow">
+        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+      </button>
+      <span class="absolute bottom-1 left-1 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded font-mono">#${idx + 1}</span>
+    `;
+    container.appendChild(thumb);
+  });
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+// Lưu & Áp Dụng Cấu Hình
+function saveAndApplyConfig() {
+  // 1. Chú rể
+  const groomName = document.getElementById('cfg-groom-name').value.trim() || currentConfig.groom.name;
+  const groomQuote = document.getElementById('cfg-groom-quote').value.trim() || currentConfig.groom.quote;
+  const groomFather = document.getElementById('cfg-groom-father').value.trim() || currentConfig.groom.father;
+  const groomMother = document.getElementById('cfg-groom-mother').value.trim() || currentConfig.groom.mother;
+
+  // 2. Cô dâu
+  const brideName = document.getElementById('cfg-bride-name').value.trim() || currentConfig.bride.name;
+  const brideQuote = document.getElementById('cfg-bride-quote').value.trim() || currentConfig.bride.quote;
+  const brideFather = document.getElementById('cfg-bride-father').value.trim() || currentConfig.bride.father;
+  const brideMother = document.getElementById('cfg-bride-mother').value.trim() || currentConfig.bride.mother;
+
+  // Tách tên ngắn
+  const getShortName = (fullName) => {
+    const parts = fullName.split(' ');
+    return parts.length > 2 ? parts.slice(-2).join(' ') : fullName;
+  };
+
+  // 3. Sự kiện
+  const dateIso = document.getElementById('cfg-event-iso').value || currentConfig.event.dateIso;
+  const dateDisplay = document.getElementById('cfg-event-date-display').value.trim() || currentConfig.event.dateDisplay;
+  const dayTimeRaw = document.getElementById('cfg-event-day-time').value.trim();
+  let dayOfWeek = currentConfig.event.dayOfWeek;
+  let timeDisplay = currentConfig.event.timeDisplay;
+  if (dayTimeRaw.includes('•')) {
+    const split = dayTimeRaw.split('•');
+    dayOfWeek = split[0].trim();
+    timeDisplay = split[1].trim();
+  }
+
+  const lunarDate = document.getElementById('cfg-event-lunar').value.trim() || currentConfig.event.lunarDate;
+  const venueName = document.getElementById('cfg-venue-name').value.trim() || currentConfig.event.venueName;
+  const venueHall = document.getElementById('cfg-venue-hall').value.trim() || currentConfig.event.venueHall;
+  const venueAddress = document.getElementById('cfg-venue-address').value.trim() || currentConfig.event.venueAddress;
+  const mapsUrl = document.getElementById('cfg-venue-maps').value.trim() || currentConfig.event.mapsUrl;
+  const storyMessage = document.getElementById('cfg-story-message').value.trim() || currentConfig.event.storyMessage;
+
+  // 4. Mừng cưới
+  const bankCrName = document.getElementById('cfg-bank-groom-name').value.trim() || currentConfig.groom.bankName;
+  const bankCrCode = document.getElementById('cfg-bank-groom-code').value.trim() || currentConfig.groom.bankCode;
+  const bankCrNum = document.getElementById('cfg-bank-groom-num').value.trim() || currentConfig.groom.accountNumber;
+  const bankCrHolder = document.getElementById('cfg-bank-groom-holder').value.trim() || currentConfig.groom.accountHolder;
+
+  const bankCdName = document.getElementById('cfg-bank-bride-name').value.trim() || currentConfig.bride.bankName;
+  const bankCdCode = document.getElementById('cfg-bank-bride-code').value.trim() || currentConfig.bride.bankCode;
+  const bankCdNum = document.getElementById('cfg-bank-bride-num').value.trim() || currentConfig.bride.accountNumber;
+  const bankCdHolder = document.getElementById('cfg-bank-bride-holder').value.trim() || currentConfig.bride.accountHolder;
+
+  // 5. Ảnh
+  const heroImage = pendingUploads['hero'] || document.getElementById('cfg-hero-url').value.trim() || currentConfig.event.heroImage;
+  const groomAvatar = pendingUploads['groom'] || document.getElementById('cfg-groom-url').value.trim() || currentConfig.groom.avatar;
+  const brideAvatar = pendingUploads['bride'] || document.getElementById('cfg-bride-url').value.trim() || currentConfig.bride.avatar;
+
+  // Cập nhật state
+  currentConfig = {
+    groom: {
+      ...currentConfig.groom,
+      name: groomName,
+      shortName: getShortName(groomName),
+      quote: groomQuote,
+      father: groomFather,
+      mother: groomMother,
+      avatar: groomAvatar,
+      bankName: bankCrName,
+      bankCode: bankCrCode,
+      accountNumber: bankCrNum,
+      accountHolder: bankCrHolder
+    },
+    bride: {
+      ...currentConfig.bride,
+      name: brideName,
+      shortName: getShortName(brideName),
+      quote: brideQuote,
+      father: brideFather,
+      mother: brideMother,
+      avatar: brideAvatar,
+      bankName: bankCdName,
+      bankCode: bankCdCode,
+      accountNumber: bankCdNum,
+      accountHolder: bankCdHolder
+    },
+    event: {
+      ...currentConfig.event,
+      heroImage: heroImage,
+      dateIso: dateIso,
+      dateDisplay: dateDisplay,
+      dayOfWeek: dayOfWeek,
+      timeDisplay: timeDisplay,
+      lunarDate: lunarDate,
+      venueName: venueName,
+      venueHall: venueHall,
+      venueAddress: venueAddress,
+      mapsUrl: mapsUrl,
+      storyMessage: storyMessage
+    },
+    gallery: workingGallery
+  };
+
+  saveConfigToStorage(currentConfig);
+  
+  // Gửi lên server để lưu vào config.json và build thiep-cuoi.html cho thiết bị di động
+  fetch('/api/save-config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(currentConfig)
+  }).then(res => res.json()).then(data => {
+    console.log("Server response:", data);
+  }).catch(() => {
+    // Chế độ tĩnh hoặc không có server API
+  });
+
+  renderEntirePage();
+  closeConfigModal();
+  triggerWeddingConfetti();
+  showToast('Đã lưu & cập nhật thiệp cưới thành công!');
+}
+
+function resetToDefaultConfig() {
+  if (confirm("Bạn có chắc chắn muốn khôi phục về nội dung và ảnh mẫu ban đầu không?")) {
+    currentConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    try {
+      localStorage.removeItem('wedding_invitation_config_v2');
+    } catch (e) {}
+    renderEntirePage();
+    closeConfigModal();
+    showToast('Đã khôi phục cài đặt mặc định!');
+  }
+}
+
+// ==========================================
+// 5. CÁ NHÂN HÓA TÊN KHÁCH MỜI
+// ==========================================
+function initGuestPersonalization() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const guestParam = urlParams.get('to') || urlParams.get('guest') || urlParams.get('khach');
+  
+  if (guestParam) {
+    const cleanGuestName = guestParam.trim();
+    const guestPreview = document.getElementById('guest-name-preview');
+    const guestHero = document.getElementById('guest-name-hero');
+    const rsvpName = document.getElementById('rsvp-name');
+
+    if (guestPreview) guestPreview.textContent = cleanGuestName;
+    if (guestHero) guestHero.textContent = cleanGuestName;
+    if (rsvpName) rsvpName.value = cleanGuestName;
+  }
+}
+
+// ==========================================
+// 6. MỞ THIỆP & PHÁT NHẠC
+// ==========================================
+function initEnvelopeOpener() {
+  const openBtn = document.getElementById('open-envelope-btn');
+  const overlay = document.getElementById('envelope-overlay');
+  const audio = document.getElementById('wedding-audio');
+  const vinyl = document.getElementById('vinyl-disc');
+
+  if (!openBtn || !overlay) return;
+
+  openBtn.addEventListener('click', () => {
+    triggerWeddingConfetti();
+
+    if (audio) {
+      audio.play().then(() => {
+        if (vinyl) vinyl.classList.add('spin-music');
+      }).catch(err => {
+        console.log("Autoplay bị hạn chế:", err);
+      });
+    }
+
+    overlay.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 700);
+  });
+}
+
+function initMusicPlayer() {
+  const musicBtn = document.getElementById('music-btn');
+  const audio = document.getElementById('wedding-audio');
+  const vinyl = document.getElementById('vinyl-disc');
+
+  if (!musicBtn || !audio) return;
+
+  musicBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      if (vinyl) vinyl.classList.add('spin-music');
+      showToast('Đang phát nhạc nền');
+    } else {
+      audio.pause();
+      if (vinyl) vinyl.classList.remove('spin-music');
+      showToast('Đã tạm dừng nhạc');
+    }
+  });
+}
+
+// ==========================================
+// 7. ĐẾM NGƯỢC THỜI GIAN THỰC
+// ==========================================
+function initCountdown() {
+  function update() {
+    const isoString = currentConfig.event.dateIso || '2026-11-28T11:00';
+    const targetDate = new Date(isoString).getTime();
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      document.getElementById('cd-days').textContent = '00';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-minutes').textContent = '00';
+      document.getElementById('cd-seconds').textContent = '00';
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const pad = (num) => String(num).padStart(2, '0');
+
+    const elDays = document.getElementById('cd-days');
+    const elHours = document.getElementById('cd-hours');
+    const elMin = document.getElementById('cd-minutes');
+    const elSec = document.getElementById('cd-seconds');
+
+    if (elDays) elDays.textContent = pad(days);
+    if (elHours) elHours.textContent = pad(hours);
+    if (elMin) elMin.textContent = pad(minutes);
+    if (elSec) elSec.textContent = pad(seconds);
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
+// ==========================================
+// 8. CÁNH HOA RƠI LÃNG MẠN
+// ==========================================
+function initFallingPetals() {
+  const container = document.getElementById('petals-container');
+  if (!container) return;
+
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.classList.add('petal');
+
+    const size = Math.random() * 10 + 10;
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size * 1.3}px`;
+    petal.style.left = `${Math.random() * 100}vw`;
+    petal.style.animationDuration = `${Math.random() * 4 + 6}s`;
+    petal.style.opacity = (Math.random() * 0.4 + 0.3).toString();
+
+    const colors = (typeof activePetalColors !== 'undefined' && activePetalColors.length > 0)
+      ? activePetalColors 
+      : ['#fbcfe8', '#f472b6', '#fed7aa', '#fde047', '#fecdd3'];
+    petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    container.appendChild(petal);
+    setTimeout(() => { petal.remove(); }, 10000);
+  }
+
+  setInterval(createPetal, 850);
+}
+
+// ==========================================
+// 9. CONFETTI CHÚC MỪNG
+// ==========================================
+function triggerWeddingConfetti() {
+  if (typeof confetti !== 'function') return;
+
+  const count = 200;
+  const defaults = { origin: { y: 0.7 } };
+
+  function fire(particleRatio, opts) {
+    confetti(Object.assign({}, defaults, opts, {
+      particleCount: Math.floor(count * particleRatio)
+    }));
+  }
+
+  fire(0.25, { spread: 26, startVelocity: 55, colors: ['#D4AF37', '#B87D65', '#FAF7F2'] });
+  fire(0.2, { spread: 60, colors: ['#e11d48', '#fb7185', '#fda4af'] });
+  fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+  fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+  fire(0.1, { spread: 120, startVelocity: 45 });
+}
+
+// ==========================================
+// 10. SỔ LƯU BÚT (GUESTBOOK)
+// ==========================================
+const DEFAULT_WISHES = [
+  {
+    name: "Hoàng Long & Thu Hương",
+    text: "Chúc hai bạn trăm năm hạnh phúc, mãi mãi đồng lòng và yêu thương nhau như ngày đầu!",
+    time: "2 giờ trước"
+  },
+  {
+    name: "Anh Tuấn (Bạn chú rể)",
+    text: "Chúc mừng người anh em đã chính thức 'theo nàng về dinh'! Chúc tổ ấm nhỏ luôn rộn vang tiếng cười.",
+    time: "Hôm qua"
+  },
+  {
+    name: "Huyền Trang & Nhóm bạn cấp 3",
+    text: "Cô dâu xinh đẹp tuyệt vời! Chúc hai vợ chồng sớm có thêm thiên thần nhỏ nhé!",
+    time: "2 ngày trước"
+  }
+];
+
+function initGuestbook() {
+  const form = document.getElementById('wishes-form');
+  const list = document.getElementById('wishes-list');
+  if (!list) return;
+
+  let wishes = [];
+  try {
+    const saved = localStorage.getItem('wedding_wishes_huy_linh');
+    wishes = saved ? JSON.parse(saved) : DEFAULT_WISHES;
+  } catch (e) {
+    wishes = DEFAULT_WISHES;
+  }
+
+  function renderWishes() {
+    list.innerHTML = '';
+    wishes.forEach(item => {
+      const card = document.createElement('div');
+      card.className = "bg-white p-3.5 rounded-2xl border border-stone-200/80 shadow-sm text-xs";
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-1.5">
+          <strong class="font-serif text-sm text-stone-800">${escapeHtml(item.name)}</strong>
+          <span class="text-[10px] text-stone-400">${item.time || 'Vừa xong'}</span>
+        </div>
+        <p class="text-stone-600 leading-relaxed font-sans">${escapeHtml(item.text)}</p>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  renderWishes();
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const author = document.getElementById('wish-author').value.trim();
+      const text = document.getElementById('wish-text').value.trim();
+
+      if (!author || !text) return;
+
+      const newWish = { name: author, text: text, time: 'Vừa xong' };
+      wishes.unshift(newWish);
+      try {
+        localStorage.setItem('wedding_wishes_huy_linh', JSON.stringify(wishes));
+      } catch (e) {}
+
+      renderWishes();
+      form.reset();
+      showToast('Cảm ơn lời chúc ngọt ngào của bạn!');
+      triggerWeddingConfetti();
+    });
+  }
+}
+
+// ==========================================
+// 11. RSVP FORM
+// ==========================================
+function initRSVPForm() {
+  const form = document.getElementById('rsvp-form');
+  const successBox = document.getElementById('rsvp-success');
+
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('rsvp-name').value.trim();
+    const attending = form.querySelector('input[name="attending"]:checked')?.value;
+    const count = document.getElementById('rsvp-count').value;
+    const message = document.getElementById('rsvp-message').value.trim();
+
+    const responseData = { name, attending, count, message, timestamp: new Date().toISOString() };
+    try {
+      const existing = JSON.parse(localStorage.getItem('wedding_rsvp_huy_linh') || '[]');
+      existing.push(responseData);
+      localStorage.setItem('wedding_rsvp_huy_linh', JSON.stringify(existing));
+    } catch (e) {}
+
+    form.classList.add('hidden');
+    if (successBox) successBox.classList.remove('hidden');
+
+    triggerWeddingConfetti();
+    showToast('Xác nhận thành công! Rất mong được đón tiếp bạn.');
+  });
+}
+
+// ==========================================
+// 12. TẠO LINK GỬI KHÁCH CÁ NHÂN HÓA
+// ==========================================
+function initShareModal() {
+  const shareBtn = document.getElementById('btn-share-modal');
+  const modal = document.getElementById('share-modal');
+  const closeBtn = document.getElementById('close-share-modal');
+  const inputName = document.getElementById('input-guest-name');
+  const outputUrl = document.getElementById('output-guest-url');
+  const sampleMsg = document.getElementById('sample-message-text');
+  const qrImg = document.getElementById('guest-qr-image');
+
+  if (!shareBtn || !modal) return;
+
+  function updateOutput() {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    // Nếu chạy cục bộ thì dùng IP mạng LAN 192.168.31.79 để điện thoại quét mở được
+    const host = isLocal ? '192.168.31.79:8080' : window.location.host;
+    const protocol = window.location.protocol.startsWith('http') ? window.location.protocol : 'http:';
+    const baseUrl = `${protocol}//${host}${window.location.pathname}`;
+
+    const name = inputName.value.trim() || 'Bạn & Người thương';
+    const personalizedUrl = `${baseUrl}?to=${encodeURIComponent(name)}`;
+    const coupleText = `${currentConfig.groom.shortName || currentConfig.groom.name} & ${currentConfig.bride.shortName || currentConfig.bride.name}`;
+
+    outputUrl.value = personalizedUrl;
+    sampleMsg.value = `Thương gửi ${name},\n${coupleText} trân trọng kính mời bạn đến chung vui cùng gia đình chúng mình vào ${currentConfig.event.dayOfWeek}, ${currentConfig.event.dateDisplay}.\nXem thiệp mời trực tiếp tại:\n${personalizedUrl}\nRất mong được đón tiếp bạn! ❤️`;
+
+    // Cập nhật mã QR để quét xem trực tiếp trên điện thoại
+    if (qrImg) {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(personalizedUrl)}`;
+    }
+  }
+
+  shareBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    updateOutput();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', () => { modal.classList.add('hidden'); });
+  if (inputName) inputName.addEventListener('input', updateOutput);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+}
+
+function copyGuestUrl() {
+  const outputUrl = document.getElementById('output-guest-url');
+  if (outputUrl && outputUrl.value) {
+    copyToClipboard(outputUrl.value, 'Đã sao chép đường link thiệp!');
+  }
+}
+
+function copySampleMessage() {
+  const sampleMsg = document.getElementById('sample-message-text');
+  if (sampleMsg && sampleMsg.value) {
+    copyToClipboard(sampleMsg.value, 'Đã sao chép tin nhắn Zalo/SMS!');
+  }
+}
+
+// ==========================================
+// 13. SAO CHÉP STK THEO CHỦ THỂ
+// ==========================================
+function copyAccount(type) {
+  if (type === 'groom') {
+    copyToClipboard(currentConfig.groom.accountNumber, `Đã sao chép STK Chú Rể (${currentConfig.groom.bankName})!`);
+  } else {
+    copyToClipboard(currentConfig.bride.accountNumber, `Đã sao chép STK Cô Dâu (${currentConfig.bride.bankName})!`);
+  }
+}
+
+// ==========================================
+// 14. LIGHTBOX & GOOGLE CALENDAR
+// ==========================================
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  if (!img) return;
+
+  const modal = document.getElementById('lightbox-modal');
+  const modalImg = document.getElementById('lightbox-img');
+
+  if (modal && modalImg) {
+    modalImg.src = img.src;
+    modal.classList.remove('hidden');
+  }
+}
+
+function closeLightbox() {
+  const modal = document.getElementById('lightbox-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function addToCalendar() {
+  const c = currentConfig;
+  const title = encodeURIComponent(`Lễ Thành Hôn: ${c.groom.shortName || c.groom.name} & ${c.bride.shortName || c.bride.name}`);
+  const details = encodeURIComponent(`Trân trọng kính mời bạn đến dự lễ thành hôn và tiệc cưới tại ${c.event.venueName}!`);
+  const location = encodeURIComponent(`${c.event.venueName}, ${c.event.venueAddress}`);
+
+  let startTime = "20261128T040000Z";
+  let endTime = "20261128T070000Z";
+
+  if (c.event.dateIso) {
+    try {
+      const d = new Date(c.event.dateIso);
+      const isoStart = new Date(d.getTime() - (7 * 3600 * 1000)); // sang UTC
+      startTime = isoStart.toISOString().replace(/-|:|\.\d\d\d/g, "");
+      const isoEnd = new Date(isoStart.getTime() + (3 * 3600 * 1000));
+      endTime = isoEnd.toISOString().replace(/-|:|\.\d\d\d/g, "");
+    } catch(e) {}
+  }
+
+  const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startTime}/${endTime}&details=${details}&location=${location}`;
+  window.open(googleCalUrl, '_blank');
+}
+
+// ==========================================
+// 15. TIỆN ÍCH COPY & TOAST
+// ==========================================
+function copyToClipboard(text, successMsg) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(successMsg || 'Đã sao chép vào bộ nhớ tạm!');
+  }).catch(() => {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showToast(successMsg || 'Đã sao chép vào bộ nhớ tạm!');
+  });
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toast-message');
+  if (!toast || !toastMsg) return;
+
+  toastMsg.textContent = message;
+  toast.classList.remove('opacity-0', 'pointer-events-none');
+  toast.classList.add('opacity-100');
+
+  setTimeout(() => {
+    toast.classList.remove('opacity-100');
+    toast.classList.add('opacity-0', 'pointer-events-none');
+  }, 2800);
+}
+
+function escapeHtml(string) {
+  if (!string) return '';
+  const div = document.createElement('div');
+  div.textContent = string;
+  return div.innerHTML;
+}
+
+// ==========================================
+// 16. XUẤT FILE HTML TĨNH ĐỘC LẬP (STANDALONE HTML EXPORT)
+// ==========================================
+async function exportStaticHtml() {
+  showToast('Đang đóng gói file HTML tĩnh...');
+
+  // Lưu lại cấu hình mới nhất từ form nếu đang mở modal
+  const modal = document.getElementById('config-modal');
+  if (modal && !modal.classList.contains('hidden')) {
+    saveAndApplyConfig();
+  }
+
+  try {
+    // 1. Lấy mã nguồn CSS
+    let cssText = `
+html { scroll-behavior: smooth; }
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.spin-music { animation: spin-slow 4s linear infinite; }
+@keyframes subtleZoom { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+.animate-subtle-zoom { animation: subtleZoom 25s ease-in-out infinite alternate; }
+.petal { position: absolute; background-color: #ffd1dc; border-radius: 150% 0 150% 0; opacity: 0.6; pointer-events: none; animation: fall linear forwards; }
+@keyframes fall { 0% { top: -10%; transform: translateX(0) rotate(0deg); } 100% { top: 110%; transform: translateX(80px) rotate(360deg); } }
+.envelope-opening { transform: scale(1.1); opacity: 0; pointer-events: none; }
+#wishes-list::-webkit-scrollbar { width: 4px; }
+#wishes-list::-webkit-scrollbar-track { background: #f1ede8; border-radius: 4px; }
+#wishes-list::-webkit-scrollbar-thumb { background: #d4b8a8; border-radius: 4px; }
+button, a { -webkit-tap-highlight-color: transparent; }
+`;
+
+    // 2. Lấy HTML hiện tại của trang
+    let htmlContent = document.documentElement.outerHTML;
+
+    // Nhúng CSS vào thay cho thẻ link style.css
+    htmlContent = htmlContent.replace(
+      /<link rel="stylesheet" href="style\.css">/i,
+      `<style>\n${cssText}\n</style>`
+    );
+
+    // 3. Đảm bảo DOCTYPE đầy đủ
+    if (!htmlContent.startsWith('<!DOCTYPE html>')) {
+      htmlContent = '<!DOCTYPE html>\n' + htmlContent;
+    }
+
+    // 4. Lấy mã script và thay DEFAULT_CONFIG thành cấu hình tùy chỉnh mới nhất
+    let jsCode = '';
+    try {
+      const res = await fetch('script.js');
+      if (res.ok) {
+        jsCode = await res.text();
+      }
+    } catch (e) {
+      console.log("Không thể fetch trực tiếp script.js, sử dụng script nhúng dự phòng");
+    }
+
+    if (jsCode) {
+      // Thay thế biến DEFAULT_CONFIG trong script bằng currentConfig hiện tại
+      const bakedConfig = `const DEFAULT_CONFIG = ${JSON.stringify(currentConfig, null, 2)};`;
+      jsCode = jsCode.replace(/const DEFAULT_CONFIG = \{[\s\S]*?\n\};\n/, bakedConfig + '\n');
+
+      htmlContent = htmlContent.replace(
+        /<script src="script\.js"><\/script>/i,
+        `<script>\n${jsCode}\n</script>`
+      );
+    }
+
+    // 5. Tạo tên file thân thiện theo tên Cô dâu & Chú rể
+    const removeAccents = (str) => {
+      return str.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .replace(/[^a-zA-Z0-9]/g, '-')
+        .toLowerCase()
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+    };
+
+    const crName = removeAccents(currentConfig.groom.shortName || 'chure');
+    const cdName = removeAccents(currentConfig.bride.shortName || 'codau');
+    const filename = `thiep-cuoi-${crName}-${cdName}.html`;
+
+    // 6. Kích hoạt tải về tự động
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.href = url;
+    downloadAnchor.download = filename;
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    document.body.removeChild(downloadAnchor);
+    URL.revokeObjectURL(url);
+
+    showToast(`Đã xuất file thành công: ${filename}`);
+  } catch (err) {
+    console.error("Lỗi xuất file HTML tĩnh:", err);
+    showToast('Có lỗi xảy ra khi xuất file HTML!');
+  }
+}
+
+// ==========================================
+// 17. BỘ CHUYỂN ĐỔI 100 MẪU THIỆP CƯỚI (100 TEMPLATES ENGINE)
+// ==========================================
+let activePetalColors = ['#fbcfe8', '#f472b6', '#fed7aa', '#fde047', '#fecdd3'];
+let activeCategoryFilter = 'all';
+
+function initTemplateEngine() {
+  const tId = currentConfig.templateId || 11;
+  applyTemplate(tId, true);
+  renderCategoryPills();
+  if (typeof WEDDING_TEMPLATES !== 'undefined') {
+    renderTemplateGrid(WEDDING_TEMPLATES);
+  }
+}
+
+function applyTemplate(templateId, isInit = false) {
+  if (typeof WEDDING_TEMPLATES === 'undefined') return;
+  const tmpl = WEDDING_TEMPLATES.find(t => t.id === templateId) || WEDDING_TEMPLATES[10];
+  if (!tmpl) return;
+
+  currentConfig.templateId = tmpl.id;
+
+  // Cập nhật biến CSS trên Document
+  const root = document.documentElement;
+  root.style.setProperty('--theme-primary', tmpl.theme.primary);
+  root.style.setProperty('--theme-secondary', tmpl.theme.secondary);
+  root.style.setProperty('--theme-accent', tmpl.theme.accent);
+  root.style.setProperty('--theme-text', tmpl.theme.text);
+  root.style.setProperty('--theme-wax', tmpl.theme.envelopeWax);
+  root.style.setProperty('--theme-card-bg', tmpl.theme.cardBg);
+
+  // Cập nhật màu cánh hoa rơi
+  if (tmpl.theme.petals && tmpl.theme.petals.length > 0) {
+    activePetalColors = tmpl.theme.petals;
+  }
+
+  // Cập nhật background wrapper thiệp
+  const wrapper = document.getElementById('main-invitation-wrapper');
+  if (wrapper) {
+    wrapper.className = `max-w-xl mx-auto min-h-screen bg-gradient-to-b ${tmpl.theme.bg} shadow-2xl relative pb-28 border-x border-stone-200/40 transition-all duration-500`;
+  }
+
+  // Cập nhật màu con dấu sáp
+  const sealIcon = document.querySelector('#envelope-overlay .animate-pulse');
+  if (sealIcon) {
+    sealIcon.style.background = tmpl.theme.envelopeWax;
+  }
+
+  // Cập nhật tên mẫu đang chọn
+  const displayLabel = document.getElementById('current-template-name-display');
+  if (displayLabel) {
+    displayLabel.textContent = `${tmpl.name} (#${tmpl.id})`;
+  }
+
+  if (!isInit) {
+    saveConfigToStorage(currentConfig);
+    // Gửi sync server
+    fetch('/api/save-config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(currentConfig)
+    }).catch(() => {});
+
+    triggerWeddingConfetti();
+    showToast(`Đã áp dụng mẫu: ${tmpl.name}!`);
+    renderTemplateGrid(getFilteredTemplates());
+  }
+}
+
+function openTemplateModal() {
+  const modal = document.getElementById('template-picker-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  renderCategoryPills();
+  filterTemplates();
+  if (window.lucide) window.lucide.createIcons();
+}
+
+function closeTemplateModal() {
+  const modal = document.getElementById('template-picker-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+}
+
+function renderCategoryPills() {
+  const container = document.getElementById('template-category-pills');
+  if (!container || typeof WEDDING_CATEGORIES === 'undefined') return;
+
+  container.innerHTML = '';
+  WEDDING_CATEGORIES.forEach(cat => {
+    const btn = document.createElement('button');
+    const isActive = activeCategoryFilter === cat.id;
+    btn.className = `px-3 py-1.5 rounded-full transition whitespace-nowrap flex items-center gap-1.5 font-medium ${
+      isActive 
+        ? 'bg-wedding-accent text-white shadow-sm' 
+        : 'bg-stone-100 hover:bg-stone-200 text-stone-600'
+    }`;
+    btn.innerHTML = `<span>${cat.name}</span>`;
+    btn.onclick = () => {
+      activeCategoryFilter = cat.id;
+      renderCategoryPills();
+      filterTemplates();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function filterTemplates() {
+  const searchInput = document.getElementById('template-search-input');
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+  if (typeof WEDDING_TEMPLATES === 'undefined') return;
+
+  const filtered = WEDDING_TEMPLATES.filter(t => {
+    const matchCat = (activeCategoryFilter === 'all') || (t.category === activeCategoryFilter);
+    const matchQuery = !query || 
+      t.name.toLowerCase().includes(query) || 
+      t.desc.toLowerCase().includes(query) || 
+      t.tag.toLowerCase().includes(query);
+    return matchCat && matchQuery;
+  });
+
+  const countDisplay = document.getElementById('template-count-display');
+  if (countDisplay) {
+    countDisplay.textContent = `Hiển thị ${filtered.length}/100 mẫu`;
+  }
+
+  renderTemplateGrid(filtered);
+}
+
+function getFilteredTemplates() {
+  if (typeof WEDDING_TEMPLATES === 'undefined') return [];
+  const searchInput = document.getElementById('template-search-input');
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+  return WEDDING_TEMPLATES.filter(t => {
+    const matchCat = (activeCategoryFilter === 'all') || (t.category === activeCategoryFilter);
+    const matchQuery = !query || 
+      t.name.toLowerCase().includes(query) || 
+      t.desc.toLowerCase().includes(query) || 
+      t.tag.toLowerCase().includes(query);
+    return matchCat && matchQuery;
+  });
+}
+
+function renderTemplateGrid(list) {
+  const grid = document.getElementById('template-grid-container');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+  if (!list || list.length === 0) {
+    grid.innerHTML = `<div class="col-span-full text-center py-12 text-stone-400 text-xs">Không tìm thấy mẫu thiệp phù hợp. Hãy thử từ khóa khác!</div>`;
+    return;
+  }
+
+  list.forEach(t => {
+    const isCurrent = (currentConfig.templateId || 11) === t.id;
+    const card = document.createElement('div');
+    card.className = `rounded-2xl border p-3 flex flex-col justify-between transition-all duration-300 bg-white shadow-sm hover:shadow-md ${
+      isCurrent ? 'ring-2 ring-wedding-accent border-wedding-accent' : 'border-stone-200 hover:border-wedding-accent/50'
+    }`;
+
+    card.innerHTML = `
+      <div class="space-y-2.5">
+        <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-stone-100">
+          <img src="${escapeHtml(t.thumb)}" alt="${escapeHtml(t.name)}" class="w-full h-full object-cover">
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/60 backdrop-blur-sm text-white">
+            #${t.id} • ${escapeHtml(t.tag)}
+          </span>
+          ${isCurrent ? '<span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500 text-white shadow">Đang dùng</span>' : ''}
+        </div>
+
+        <div>
+          <h4 class="font-serif font-bold text-sm text-stone-900">${escapeHtml(t.name)}</h4>
+          <p class="text-[11px] text-stone-500 line-clamp-2 mt-0.5">${escapeHtml(t.desc)}</p>
+        </div>
+
+        <!-- Color palette swatches -->
+        <div class="flex items-center gap-1.5 pt-1">
+          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.primary}" title="Chủ đạo"></span>
+          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.secondary}" title="Màu phụ"></span>
+          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.envelopeWax}" title="Màu con dấu"></span>
+          <span class="text-[10px] text-stone-400 ml-1">Tone màu</span>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-stone-100 mt-3">
+        <button onclick="applyTemplate(${t.id})" 
+                class="w-full py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
+                  isCurrent 
+                    ? 'bg-green-50 text-green-700 border border-green-200 cursor-default' 
+                    : 'bg-wedding-accent hover:bg-stone-800 text-white shadow-sm'
+                }">
+          ${isCurrent ? '<i data-lucide="check" class="w-3.5 h-3.5"></i> Đang kích hoạt' : 'Áp dụng mẫu này'}
+        </button>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+</script>
+</body>
+</html>
