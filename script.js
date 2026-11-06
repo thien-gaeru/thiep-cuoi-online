@@ -45,6 +45,21 @@ const DEFAULT_CONFIG = {
     vuquyAddress: "123 Đường Trần Hưng Đạo, P. Cô Giang, Quận 1, TP.HCM",
     storyMessage: "Sau những năm tháng cùng nhau trưởng thành, chia sẻ từng buồn vui trong cuộc sống, ngày hôm nay chúng mình quyết định bước tiếp cùng nhau trên chặng đường mới – hôn nhân.\n\nSự hiện diện, lời chúc phúc và tình cảm của bạn chính là món quà vô giá và ý nghĩa nhất dành cho chúng mình trong ngày trọng đại này."
   },
+  video: {
+    enabled: true,
+    title: "Thước Phim Tình Yêu",
+    subtitle: "Cùng dõi theo những khoảnh khắc ngọt ngào nhất trong hành trình yêu của chúng mình.",
+    url: "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
+  },
+  effects: {
+    transition: "cinematic-fade",
+    particle: "petals",
+    fontFamily: "font-script",
+    audioUrl: "https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-102.mp3",
+    primaryColor: "#B87D65",
+    waxColor: "#B87D65"
+  },
+  templateId: 11,
   gallery: [
     "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80",
     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
@@ -86,6 +101,8 @@ async function syncServerConfig() {
         groom: { ...DEFAULT_CONFIG.groom, ...(remote.groom || {}) },
         bride: { ...DEFAULT_CONFIG.bride, ...(remote.bride || {}) },
         event: { ...DEFAULT_CONFIG.event, ...(remote.event || {}) },
+        video: { ...DEFAULT_CONFIG.video, ...(remote.video || {}) },
+        effects: { ...DEFAULT_CONFIG.effects, ...(remote.effects || {}) },
         gallery: (remote.gallery && remote.gallery.length > 0) ? remote.gallery : DEFAULT_CONFIG.gallery
       };
       saveConfigToStorage(currentConfig);
@@ -111,6 +128,8 @@ function loadStoredConfig() {
         groom: { ...DEFAULT_CONFIG.groom, ...(parsed.groom || {}) },
         bride: { ...DEFAULT_CONFIG.bride, ...(parsed.bride || {}) },
         event: { ...DEFAULT_CONFIG.event, ...(parsed.event || {}) },
+        video: { ...DEFAULT_CONFIG.video, ...(parsed.video || {}) },
+        effects: { ...DEFAULT_CONFIG.effects, ...(parsed.effects || {}) },
         gallery: (parsed.gallery && parsed.gallery.length > 0) ? parsed.gallery : DEFAULT_CONFIG.gallery
       };
     }
@@ -253,11 +272,170 @@ function renderEntirePage() {
   // Album ảnh cưới (Gallery)
   renderGalleryGrid(c.gallery);
 
+  // Video cưới kỷ niệm tùy chỉnh
+  renderWeddingVideo(c.video);
+
+  // Áp dụng các hiệu ứng chuyển cảnh, hạt rơi, phông chữ và màu sắc tùy chỉnh
+  if (c.effects) {
+    applyTransitionEffect(c.effects.transition);
+    applyParticleEffect(c.effects.particle);
+    applyFontFamily(c.effects.fontFamily);
+    applyCustomColors(c.effects.primaryColor, c.effects.waxColor);
+  }
+
   // Cập nhật lại Icon Lucide
   if (window.lucide) {
     window.lucide.createIcons();
   }
 }
+
+// ==========================================
+// 2B. XỬ LÝ VIDEO CƯỚI (EMBED YOUTUBE, VIMEO, MP4)
+// ==========================================
+function renderWeddingVideo(videoConfig) {
+  const section = document.getElementById('wedding-video-section');
+  const container = document.getElementById('wedding-video-frame-container');
+  const titleEl = document.getElementById('video-section-title');
+  const subtitleEl = document.getElementById('video-section-subtitle');
+
+  if (!section || !container) return;
+
+  const v = videoConfig || (currentConfig && currentConfig.video);
+  if (!v || v.enabled === false || !v.url) {
+    section.classList.add('hidden');
+    return;
+  }
+
+  section.classList.remove('hidden');
+  if (titleEl) titleEl.textContent = v.title || 'Thước Phim Tình Yêu';
+  if (subtitleEl) subtitleEl.textContent = v.subtitle || 'Cùng dõi theo những khoảnh khắc ngọt ngào nhất trong hành trình yêu của chúng mình.';
+
+  container.innerHTML = getEmbedVideoHtml(v.url);
+}
+
+function getEmbedVideoHtml(url) {
+  if (!url) return '';
+  const cleanUrl = url.trim();
+
+  // 1. YouTube (youtube.com/watch?v=, youtu.be/, shorts/, embed/)
+  const ytMatch = cleanUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+  if (ytMatch && ytMatch[1]) {
+    const videoId = ytMatch[1];
+    return `<iframe class="w-full h-full rounded-2xl" src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1" title="Wedding Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  }
+
+  // 2. Vimeo
+  const vimeoMatch = cleanUrl.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/);
+  if (vimeoMatch && vimeoMatch[1]) {
+    const vimeoId = vimeoMatch[1];
+    return `<iframe class="w-full h-full rounded-2xl" src="https://player.vimeo.com/video/${vimeoId}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
+  }
+
+  // 3. Tệp video trực tiếp (MP4, WebM, OGG...)
+  const poster = (currentConfig && currentConfig.event && currentConfig.event.heroImage) ? currentConfig.event.heroImage : '';
+  return `<video class="w-full h-full object-cover rounded-2xl" controls playsinline preload="metadata" poster="${escapeHtml(poster)}">
+    <source src="${escapeHtml(cleanUrl)}" type="video/mp4">
+    <source src="${escapeHtml(cleanUrl)}" type="video/webm">
+    Trình duyệt không hỗ trợ thẻ video HTML5.
+  </video>`;
+}
+
+function setSampleVideo(url) {
+  const input = document.getElementById('cfg-video-url');
+  if (input) {
+    input.value = url;
+    showToast('Đã chọn video mẫu thành công!');
+  }
+}
+
+function changeAudioPreset(val) {
+  const customBox = document.getElementById('cfg-custom-audio-box');
+  const customInput = document.getElementById('cfg-custom-audio-url');
+  if (val === 'custom') {
+    if (customBox) customBox.classList.remove('hidden');
+    if (customInput) customInput.focus();
+  } else {
+    if (customBox) customBox.classList.add('hidden');
+    if (customInput) customInput.value = '';
+  }
+}
+
+// ==========================================
+// 2C. HIỆU ỨNG CHUYỂN CẢNH, PHÔNG CHỮ & MÀU SẮC
+// ==========================================
+function applyTransitionEffect(transitionType) {
+  const wrapper = document.getElementById('main-invitation-wrapper');
+  if (!wrapper) return;
+
+  const allTransitions = [
+    'transition-cinematic-fade',
+    'transition-parallax-zoom',
+    'transition-slide-up',
+    'transition-card-flip',
+    'transition-curtain-reveal',
+    'transition-soft-float',
+    'transition-origami-fold',
+    'transition-zoom-burst',
+    'transition-ribbon-unroll'
+  ];
+
+  allTransitions.forEach(cls => wrapper.classList.remove(cls));
+
+  const tType = transitionType || (currentConfig && currentConfig.effects && currentConfig.effects.transition) || 'cinematic-fade';
+  if (tType && tType !== 'none') {
+    wrapper.classList.add(`transition-${tType}`);
+  }
+}
+
+function applyFontFamily(fontFamily) {
+  const f = fontFamily || (currentConfig && currentConfig.effects && currentConfig.effects.fontFamily) || 'font-script';
+  
+  const allFonts = [
+    'font-script',
+    'font-alex-brush',
+    'font-great-vibes',
+    'font-playfair',
+    'font-ephesis',
+    'font-cormorant',
+    'font-serif-royal',
+    'font-dancing',
+    'font-montserrat',
+    'font-sans-vietnam',
+    'font-sans'
+  ];
+
+  const targetSelectors = [
+    '#envelope-couple-names',
+    '#hero-groom-name',
+    '#hero-bride-name',
+    '#couple-signature',
+    '#footer-couple-names'
+  ];
+
+  targetSelectors.forEach(sel => {
+    const el = document.getElementById(sel.replace('#', ''));
+    if (el) {
+      allFonts.forEach(cls => el.classList.remove(cls));
+      el.classList.add(f);
+    }
+  });
+}
+
+function applyCustomColors(primaryColor, waxColor) {
+  const root = document.documentElement;
+  if (primaryColor) {
+    root.style.setProperty('--theme-primary', primaryColor);
+    root.style.setProperty('--theme-accent', primaryColor);
+  }
+  if (waxColor) {
+    root.style.setProperty('--theme-wax', waxColor);
+    const sealIcon = document.querySelector('#envelope-overlay .animate-pulse');
+    if (sealIcon) {
+      sealIcon.style.background = waxColor;
+    }
+  }
+}
+
 
 // Render lưới ảnh cưới trong Album
 function renderGalleryGrid(images) {
@@ -385,10 +563,54 @@ function openConfigModal(activeTab) {
   // Tab 5
   document.getElementById('cfg-story-message').value = c.event.storyMessage || '';
 
+  // Tab 6: Video Cưới
+  const vid = c.video || DEFAULT_CONFIG.video;
+  const vidEnabledEl = document.getElementById('cfg-video-enabled');
+  if (vidEnabledEl) vidEnabledEl.checked = vid.enabled !== false;
+  const vidTitleEl = document.getElementById('cfg-video-title');
+  if (vidTitleEl) vidTitleEl.value = vid.title || '';
+  const vidSubEl = document.getElementById('cfg-video-subtitle');
+  if (vidSubEl) vidSubEl.value = vid.subtitle || '';
+  const vidUrlEl = document.getElementById('cfg-video-url');
+  if (vidUrlEl) vidUrlEl.value = vid.url || '';
+
+  // Tab 7: Hiệu Ứng & Phông Chữ
+  const eff = c.effects || DEFAULT_CONFIG.effects;
+  const effTransEl = document.getElementById('cfg-effect-transition');
+  if (effTransEl) effTransEl.value = eff.transition || 'cinematic-fade';
+  const effPartEl = document.getElementById('cfg-effect-particle');
+  if (effPartEl) effPartEl.value = eff.particle || 'petals';
+  const effFontEl = document.getElementById('cfg-font-family');
+  if (effFontEl) effFontEl.value = eff.fontFamily || 'font-script';
+
+  const effAudioEl = document.getElementById('cfg-audio-preset');
+  const customAudioBox = document.getElementById('cfg-custom-audio-box');
+  const customAudioUrl = document.getElementById('cfg-custom-audio-url');
+  if (effAudioEl) {
+    const isPreset = Array.from(effAudioEl.options).some(o => o.value === eff.audioUrl);
+    if (isPreset) {
+      effAudioEl.value = eff.audioUrl;
+      if (customAudioBox) customAudioBox.classList.add('hidden');
+    } else if (eff.audioUrl) {
+      effAudioEl.value = 'custom';
+      if (customAudioBox) customAudioBox.classList.remove('hidden');
+      if (customAudioUrl) customAudioUrl.value = eff.audioUrl;
+    }
+  }
+
+  const primaryColorEl = document.getElementById('cfg-custom-color-primary');
+  if (primaryColorEl) primaryColorEl.value = eff.primaryColor || '#B87D65';
+  const waxColorEl = document.getElementById('cfg-custom-color-wax');
+  if (waxColorEl) waxColorEl.value = eff.waxColor || '#B87D65';
+
   modal.classList.remove('hidden');
 
-  if (activeTab === 'tab-photos') {
+  if (activeTab === 'tab-photos' || activeTab === 'photos') {
     switchConfigTab('photos');
+  } else if (activeTab === 'tab-video' || activeTab === 'video') {
+    switchConfigTab('video');
+  } else if (activeTab === 'tab-effects' || activeTab === 'effects') {
+    switchConfigTab('effects');
   } else {
     switchConfigTab('couple');
   }
@@ -402,7 +624,7 @@ function closeConfigModal() {
 }
 
 function switchConfigTab(tabName) {
-  const tabs = ['couple', 'event', 'photos', 'gift', 'story'];
+  const tabs = ['couple', 'event', 'photos', 'gift', 'story', 'video', 'effects'];
   tabs.forEach(t => {
     const btn = document.getElementById(`tab-btn-${t}`);
     const panel = document.getElementById(`tab-panel-${t}`);
@@ -570,6 +792,24 @@ function saveAndApplyConfig() {
   const groomAvatar = pendingUploads['groom'] || document.getElementById('cfg-groom-url').value.trim() || currentConfig.groom.avatar;
   const brideAvatar = pendingUploads['bride'] || document.getElementById('cfg-bride-url').value.trim() || currentConfig.bride.avatar;
 
+  // 6. Video cưới kỷ niệm
+  const videoEnabled = document.getElementById('cfg-video-enabled') ? document.getElementById('cfg-video-enabled').checked : true;
+  const videoTitle = document.getElementById('cfg-video-title')?.value.trim() || 'Thước Phim Tình Yêu';
+  const videoSubtitle = document.getElementById('cfg-video-subtitle')?.value.trim() || '';
+  const videoUrl = document.getElementById('cfg-video-url')?.value.trim() || '';
+
+  // 7. Hiệu ứng & Phông chữ & Nhạc
+  const effectTransition = document.getElementById('cfg-effect-transition')?.value || 'cinematic-fade';
+  const effectParticle = document.getElementById('cfg-effect-particle')?.value || 'petals';
+  const effectFont = document.getElementById('cfg-font-family')?.value || 'font-script';
+  
+  let audioUrl = document.getElementById('cfg-audio-preset')?.value || (currentConfig.effects && currentConfig.effects.audioUrl);
+  if (audioUrl === 'custom') {
+    audioUrl = document.getElementById('cfg-custom-audio-url')?.value.trim() || (currentConfig.effects && currentConfig.effects.audioUrl);
+  }
+  const primaryColor = document.getElementById('cfg-custom-color-primary')?.value || (currentConfig.effects && currentConfig.effects.primaryColor) || '#B87D65';
+  const waxColor = document.getElementById('cfg-custom-color-wax')?.value || (currentConfig.effects && currentConfig.effects.waxColor) || '#B87D65';
+
   // Cập nhật state
   currentConfig = {
     groom: {
@@ -612,8 +852,28 @@ function saveAndApplyConfig() {
       mapsUrl: mapsUrl,
       storyMessage: storyMessage
     },
+    video: {
+      enabled: videoEnabled,
+      title: videoTitle,
+      subtitle: videoSubtitle,
+      url: videoUrl
+    },
+    effects: {
+      transition: effectTransition,
+      particle: effectParticle,
+      fontFamily: effectFont,
+      audioUrl: audioUrl,
+      primaryColor: primaryColor,
+      waxColor: waxColor
+    },
     gallery: workingGallery
   };
+
+  // Cập nhật nhạc nền ngay lập tức nếu đổi link bài hát
+  const audioEl = document.getElementById('wedding-audio');
+  if (audioEl && audioUrl && !audioEl.src.includes(audioUrl)) {
+    audioEl.src = audioUrl;
+  }
 
   saveConfigToStorage(currentConfig);
   
@@ -755,13 +1015,76 @@ function initCountdown() {
 }
 
 // ==========================================
-// 8. CÁNH HOA RƠI LÃNG MẠN
+// 8. HIỆU ỨNG HẠT RƠI (PETALS, HEARTS, SNOW, SPARKLES, FIREFLIES)
 // ==========================================
+let currentParticleType = 'petals';
+
+function applyParticleEffect(particleType) {
+  currentParticleType = particleType || (currentConfig && currentConfig.effects && currentConfig.effects.particle) || 'petals';
+}
+
 function initFallingPetals() {
   const container = document.getElementById('petals-container');
   if (!container) return;
 
-  function createPetal() {
+  function createParticle() {
+    if (currentParticleType === 'none') return;
+
+    // 1. Trái tim bay tình yêu
+    if (currentParticleType === 'hearts') {
+      const heart = document.createElement('div');
+      heart.className = 'particle-heart';
+      const heartSymbols = ['❤️', '💖', '💕', '💓', '🌸'];
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = `${Math.random() * 95}vw`;
+      heart.style.fontSize = `${Math.random() * 10 + 14}px`;
+      heart.style.animationDuration = `${Math.random() * 3 + 5}s`;
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+      return;
+    }
+
+    // 2. Bông tuyết mùa đông
+    if (currentParticleType === 'snow') {
+      const snow = document.createElement('div');
+      snow.className = 'particle-snow';
+      const size = Math.random() * 6 + 4;
+      snow.style.width = `${size}px`;
+      snow.style.height = `${size}px`;
+      snow.style.left = `${Math.random() * 100}vw`;
+      snow.style.animationDuration = `${Math.random() * 4 + 6}s`;
+      container.appendChild(snow);
+      setTimeout(() => snow.remove(), 10000);
+      return;
+    }
+
+    // 3. Bụi sao vàng lấp lánh (Gold Sparkles)
+    if (currentParticleType === 'gold-sparkles') {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'particle-sparkle';
+      const size = Math.random() * 6 + 4;
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      sparkle.style.left = `${Math.random() * 100}vw`;
+      sparkle.style.animationDuration = `0.8s, ${Math.random() * 3 + 5}s`;
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 8000);
+      return;
+    }
+
+    // 4. Đom đóm đêm kỳ ảo (Fireflies)
+    if (currentParticleType === 'fireflies') {
+      const ff = document.createElement('div');
+      ff.className = 'particle-firefly';
+      ff.style.left = `${Math.random() * 95}vw`;
+      ff.style.top = `${Math.random() * 85 + 5}vh`;
+      ff.style.animationDuration = `2.5s, ${Math.random() * 5 + 7}s`;
+      container.appendChild(ff);
+      setTimeout(() => ff.remove(), 12000);
+      return;
+    }
+
+    // 5. Mặc định: Cánh hoa rơi lãng mạn (Petals)
     const petal = document.createElement('div');
     petal.classList.add('petal');
 
@@ -781,7 +1104,7 @@ function initFallingPetals() {
     setTimeout(() => { petal.remove(); }, 10000);
   }
 
-  setInterval(createPetal, 850);
+  setInterval(createParticle, 750);
 }
 
 // ==========================================
@@ -1165,18 +1488,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 // ==========================================
-// 17. BỘ CHUYỂN ĐỔI 100 MẪU THIỆP CƯỚI (100 TEMPLATES ENGINE)
+// 17. BỘ CHUYỂN ĐỔI 1.000 MẪU THIỆP CƯỚI CHUYÊN NGHIỆP (1,000 TEMPLATES ENGINE)
 // ==========================================
 let activePetalColors = ['#fbcfe8', '#f472b6', '#fed7aa', '#fde047', '#fecdd3'];
 let activeCategoryFilter = 'all';
+let currentTemplatePage = 1;
+const TEMPLATES_PER_PAGE = 24;
+let currentFilteredTemplates = [];
 
 function initTemplateEngine() {
   const tId = currentConfig.templateId || 11;
   applyTemplate(tId, true);
   renderCategoryPills();
-  if (typeof WEDDING_TEMPLATES !== 'undefined') {
-    renderTemplateGrid(WEDDING_TEMPLATES);
-  }
+  filterTemplates();
 }
 
 function applyTemplate(templateId, isInit = false) {
@@ -1198,6 +1522,20 @@ function applyTemplate(templateId, isInit = false) {
   // Cập nhật màu cánh hoa rơi
   if (tmpl.theme.petals && tmpl.theme.petals.length > 0) {
     activePetalColors = tmpl.theme.petals;
+  }
+
+  // Cập nhật hiệu ứng chuyển cảnh độc quyền của mẫu nếu có
+  if (tmpl.transition) {
+    currentConfig.effects = currentConfig.effects || {};
+    currentConfig.effects.transition = tmpl.transition;
+    applyTransitionEffect(tmpl.transition);
+  }
+
+  // Cập nhật hiệu ứng hạt rơi tương ứng của mẫu nếu có
+  if (tmpl.particle) {
+    currentConfig.effects = currentConfig.effects || {};
+    currentConfig.effects.particle = tmpl.particle;
+    applyParticleEffect(tmpl.particle);
   }
 
   // Cập nhật background wrapper thiệp
@@ -1228,8 +1566,8 @@ function applyTemplate(templateId, isInit = false) {
     }).catch(() => {});
 
     triggerWeddingConfetti();
-    showToast(`Đã áp dụng mẫu: ${tmpl.name}!`);
-    renderTemplateGrid(getFilteredTemplates());
+    showToast(`Đã áp dụng mẫu #${tmpl.id}: ${tmpl.name}!`);
+    renderTemplatePage();
   }
 }
 
@@ -1277,36 +1615,53 @@ function filterTemplates() {
 
   if (typeof WEDDING_TEMPLATES === 'undefined') return;
 
-  const filtered = WEDDING_TEMPLATES.filter(t => {
+  currentFilteredTemplates = WEDDING_TEMPLATES.filter(t => {
     const matchCat = (activeCategoryFilter === 'all') || (t.category === activeCategoryFilter);
     const matchQuery = !query || 
       t.name.toLowerCase().includes(query) || 
       t.desc.toLowerCase().includes(query) || 
-      t.tag.toLowerCase().includes(query);
+      t.tag.toLowerCase().includes(query) ||
+      (t.transition && t.transition.toLowerCase().includes(query)) ||
+      (t.particle && t.particle.toLowerCase().includes(query));
     return matchCat && matchQuery;
   });
 
+  currentTemplatePage = 1;
+  renderTemplatePage();
+}
+
+function renderTemplatePage() {
+  const grid = document.getElementById('template-grid-container');
   const countDisplay = document.getElementById('template-count-display');
+  const loadMoreBox = document.getElementById('template-load-more-box');
+  if (!grid) return;
+
+  const totalCount = currentFilteredTemplates.length;
+  const totalAll = typeof WEDDING_TEMPLATES !== 'undefined' ? WEDDING_TEMPLATES.length : 1000;
+  const itemsToShow = currentFilteredTemplates.slice(0, currentTemplatePage * TEMPLATES_PER_PAGE);
+
   if (countDisplay) {
-    countDisplay.textContent = `Hiển thị ${filtered.length}/100 mẫu`;
+    countDisplay.textContent = `Hiển thị ${itemsToShow.length}/${totalCount} mẫu (Tổng kho ${totalAll.toLocaleString()} mẫu)`;
   }
 
-  renderTemplateGrid(filtered);
+  if (loadMoreBox) {
+    if (itemsToShow.length < totalCount) {
+      loadMoreBox.classList.remove('hidden');
+    } else {
+      loadMoreBox.classList.add('hidden');
+    }
+  }
+
+  renderTemplateGrid(itemsToShow);
+}
+
+function loadMoreTemplates() {
+  currentTemplatePage++;
+  renderTemplatePage();
 }
 
 function getFilteredTemplates() {
-  if (typeof WEDDING_TEMPLATES === 'undefined') return [];
-  const searchInput = document.getElementById('template-search-input');
-  const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-  return WEDDING_TEMPLATES.filter(t => {
-    const matchCat = (activeCategoryFilter === 'all') || (t.category === activeCategoryFilter);
-    const matchQuery = !query || 
-      t.name.toLowerCase().includes(query) || 
-      t.desc.toLowerCase().includes(query) || 
-      t.tag.toLowerCase().includes(query);
-    return matchCat && matchQuery;
-  });
+  return currentFilteredTemplates;
 }
 
 function renderTemplateGrid(list) {
@@ -1326,27 +1681,38 @@ function renderTemplateGrid(list) {
       isCurrent ? 'ring-2 ring-wedding-accent border-wedding-accent' : 'border-stone-200 hover:border-wedding-accent/50'
     }`;
 
+    // Icon mô tả hạt rơi
+    const particleIcon = t.particle === 'hearts' ? '❤️' :
+                         t.particle === 'snow' ? '❄️' :
+                         t.particle === 'gold-sparkles' ? '✨' :
+                         t.particle === 'fireflies' ? '🌟' : '🌸';
+
     card.innerHTML = `
       <div class="space-y-2.5">
         <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-stone-100">
-          <img src="${escapeHtml(t.thumb)}" alt="${escapeHtml(t.name)}" class="w-full h-full object-cover">
-          <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/60 backdrop-blur-sm text-white">
+          <img src="${escapeHtml(t.thumb)}" alt="${escapeHtml(t.name)}" class="w-full h-full object-cover" loading="lazy">
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/65 backdrop-blur-sm text-white">
             #${t.id} • ${escapeHtml(t.tag)}
           </span>
           ${isCurrent ? '<span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500 text-white shadow">Đang dùng</span>' : ''}
         </div>
 
         <div>
-          <h4 class="font-serif font-bold text-sm text-stone-900">${escapeHtml(t.name)}</h4>
+          <div class="flex items-center justify-between gap-1">
+            <h4 class="font-serif font-bold text-sm text-stone-900 line-clamp-1">${escapeHtml(t.name)}</h4>
+            <span class="text-xs shrink-0" title="Hạt rơi: ${t.particle}">${particleIcon}</span>
+          </div>
           <p class="text-[11px] text-stone-500 line-clamp-2 mt-0.5">${escapeHtml(t.desc)}</p>
         </div>
 
-        <!-- Color palette swatches -->
-        <div class="flex items-center gap-1.5 pt-1">
-          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.primary}" title="Chủ đạo"></span>
-          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.secondary}" title="Màu phụ"></span>
-          <span class="w-4 h-4 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.envelopeWax}" title="Màu con dấu"></span>
-          <span class="text-[10px] text-stone-400 ml-1">Tone màu</span>
+        <!-- Badges hiệu ứng chuyển cảnh & màu sắc -->
+        <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+          <span class="text-[9px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 font-mono">🎬 ${t.transition || 'cinematic'}</span>
+          <div class="flex items-center gap-1 ml-auto">
+            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.primary}" title="Chủ đạo"></span>
+            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.secondary}" title="Màu phụ"></span>
+            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.envelopeWax}" title="Màu con dấu"></span>
+          </div>
         </div>
       </div>
 

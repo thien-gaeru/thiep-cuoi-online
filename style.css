@@ -23,34 +23,113 @@ html {
 
 /* Hiệu ứng xoay đĩa than âm nhạc */
 @keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .spin-music {
   animation: spin-slow 4s linear infinite;
 }
 
-/* Hiệu ứng zoom nhẹ ảnh Hero */
-@keyframes subtleZoom {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+/* ==========================================================================
+   CÁC HIỆU ỨNG CHUYỂN CẢNH ĐA DẠNG (TRANSITION & ANIMATION EFFECTS)
+   ========================================================================== */
 
+/* 1. Zoom tinh tế */
+@keyframes subtleZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
 .animate-subtle-zoom {
   animation: subtleZoom 25s ease-in-out infinite alternate;
 }
+
+/* 2. Cinematic Fade */
+@keyframes cinematicFadeIn {
+  0% { opacity: 0; filter: blur(8px); transform: scale(0.97); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+.transition-cinematic-fade {
+  animation: cinematicFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. Parallax Zoom */
+@keyframes parallaxZoom {
+  0% { transform: scale(1.08); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.transition-parallax-zoom {
+  animation: parallaxZoom 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 4. Slide Up Mềm Mại */
+@keyframes slideUpSmooth {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+.transition-slide-up {
+  animation: slideUpSmooth 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 5. 3D Card Flip */
+@keyframes cardFlip3D {
+  0% { transform: perspective(1000px) rotateY(15deg) scale(0.95); opacity: 0; }
+  100% { transform: perspective(1000px) rotateY(0deg) scale(1); opacity: 1; }
+}
+.transition-card-flip {
+  animation: cardFlip3D 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 6. Curtain Reveal */
+@keyframes curtainReveal {
+  0% { clip-path: inset(0 50% 0 50%); opacity: 0; }
+  100% { clip-path: inset(0 0% 0 0%); opacity: 1; }
+}
+.transition-curtain-reveal {
+  animation: curtainReveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* 7. Soft Float (Lơ lửng bồng bềnh) */
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.transition-soft-float {
+  animation: softFloat 6s ease-in-out infinite;
+}
+
+/* 8. Origami Fold */
+@keyframes origamiFold {
+  0% { transform: perspective(800px) rotateX(-20deg) scale(0.92); opacity: 0; }
+  100% { transform: perspective(800px) rotateX(0deg) scale(1); opacity: 1; }
+}
+.transition-origami-fold {
+  animation: origamiFold 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* 9. Zoom Burst */
+@keyframes zoomBurst {
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.transition-zoom-burst {
+  animation: zoomBurst 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 10. Ribbon Unroll */
+@keyframes ribbonUnroll {
+  0% { transform: scaleY(0.7); opacity: 0; transform-origin: top; }
+  100% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+}
+.transition-ribbon-unroll {
+  animation: ribbonUnroll 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   CÁC HIỆU ỨNG HẠT RƠI ĐA DẠNG (PARTICLE EFFECTS)
+   ========================================================================== */
 
 /* Cánh hoa rơi lãng mạn */
 .petal {
@@ -73,6 +152,93 @@ html {
   }
 }
 
+/* Trái tim bay */
+.particle-heart {
+  position: absolute;
+  pointer-events: none;
+  animation: heartFloatUp linear forwards;
+  opacity: 0.7;
+}
+
+@keyframes heartFloatUp {
+  0% {
+    bottom: -5%;
+    transform: translateX(0) scale(0.6) rotate(-15deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(30px) scale(1) rotate(15deg);
+  }
+  100% {
+    bottom: 110%;
+    transform: translateX(-20px) scale(0.8) rotate(-10deg);
+    opacity: 0;
+  }
+}
+
+/* Bông tuyết trắng */
+.particle-snow {
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: snowFall linear forwards;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes snowFall {
+  0% {
+    top: -5%;
+    transform: translateX(0);
+    opacity: 0.9;
+  }
+  100% {
+    top: 105%;
+    transform: translateX(50px);
+    opacity: 0.2;
+  }
+}
+
+/* Bụi sao vàng lấp lánh (Gold Sparkles) */
+.particle-sparkle {
+  position: absolute;
+  background: radial-gradient(circle, #fde047 0%, #ca8a04 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkleTwinkle ease-in-out infinite alternate, fall 8s linear forwards;
+  box-shadow: 0 0 8px #facc15;
+}
+
+@keyframes sparkleTwinkle {
+  0% { transform: scale(0.5); opacity: 0.3; }
+  100% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Đom đóm đêm (Fireflies) */
+.particle-firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #fef08a;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #fde047, 0 0 20px #eab308;
+  pointer-events: none;
+  animation: fireflyGlow 2.5s ease-in-out infinite alternate, floatRandom 12s ease-in-out infinite;
+}
+
+@keyframes fireflyGlow {
+  0% { opacity: 0.2; filter: blur(1px); }
+  100% { opacity: 0.95; filter: blur(0); }
+}
+
+@keyframes floatRandom {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(25px, -35px); }
+  50% { transform: translate(-30px, -60px); }
+  75% { transform: translate(20px, -90px); }
+  100% { transform: translate(0, -120px); }
+}
+
 /* Animation mở phong bì thư */
 .envelope-opening {
   transform: scale(1.1);
@@ -80,7 +246,7 @@ html {
   pointer-events: none;
 }
 
-/* Custom scrollbar cho sổ lưu bút và modal */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -97,7 +263,42 @@ html {
   background: rgba(184, 125, 101, 0.8);
 }
 
-/* Nút hiệu ứng chạm bấm trên điện thoại */
 button, a {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ==========================================================================
+   PHÔNG CHỮ NGHỆ THUẬT (TYPOGRAPHY FONTS)
+   ========================================================================== */
+.font-script, .font-alex-brush {
+  font-family: 'Alex Brush', cursive, serif !important;
+}
+
+.font-great-vibes {
+  font-family: 'Great Vibes', cursive, serif !important;
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+.font-ephesis {
+  font-family: 'Ephesis', cursive, serif !important;
+}
+
+.font-cormorant, .font-serif-royal {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+.font-dancing {
+  font-family: 'Dancing Script', cursive, sans-serif !important;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', system-ui, sans-serif !important;
+}
+
+.font-sans-vietnam {
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif !important;
+}
+

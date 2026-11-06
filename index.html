@@ -12,10 +12,10 @@
   <meta property="og:image" id="og-img" content="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80">
   <meta name="theme-color" content="#b97a57">
 
-  <!-- Google Fonts: Playfair Display + Alex Brush + Be Vietnam Pro -->
+  <!-- Google Fonts: Playfair Display + Alex Brush + Be Vietnam Pro + Cormorant Garamond + Dancing Script + Ephesis + Great Vibes + Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&family=Ephesis&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -419,6 +419,32 @@
       </div>
     </section>
 
+    <!-- SECTION 5B: VIDEO CƯỚI KỶ NIỆM (PRE-WEDDING FILM) -->
+    <section id="wedding-video-section" class="px-6 py-14 scroll-mt-6 border-t border-stone-200/60">
+      <div class="text-center mb-8">
+        <div class="inline-block p-2 rounded-full bg-wedding-rose/30 mb-2 text-wedding-accent">
+          <i data-lucide="clapperboard" class="w-5 h-5"></i>
+        </div>
+        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold">Khoảnh Khắc Đáng Nhớ</p>
+        <h2 id="video-section-title" class="text-3xl font-serif font-bold text-wedding-dark mt-1">Thước Phim Tình Yêu</h2>
+        <p id="video-section-subtitle" class="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
+          Cùng dõi theo những khoảnh khắc ngọt ngào nhất trong hành trình yêu của chúng mình.
+        </p>
+      </div>
+
+      <!-- Video Player Container (Cinema style) -->
+      <div class="relative bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-wedding-rose/50 aspect-video group" id="wedding-video-frame-container">
+        <!-- Rendered dynamically by script.js: either YouTube iframe or HTML5 <video> -->
+      </div>
+
+      <div class="mt-4 text-center">
+        <button onclick="openConfigModal('tab-video')" class="text-xs text-stone-500 hover:text-wedding-accent inline-flex items-center gap-1 transition">
+          <i data-lucide="video" class="w-3.5 h-3.5"></i>
+          <span>Đổi video hoặc tải video của bạn lên</span>
+        </button>
+      </div>
+    </section>
+
     <!-- SECTION 6: XÁC NHẬN THAM DỰ (RSVP FORM) -->
     <section id="rsvp" class="px-6 py-14 bg-white/70 border-y border-stone-200/60 scroll-mt-6">
       <div class="text-center mb-8">
@@ -629,6 +655,12 @@
         </button>
         <button id="tab-btn-story" onclick="switchConfigTab('story')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
           💌 Lời Ngỏ
+        </button>
+        <button id="tab-btn-video" onclick="switchConfigTab('video')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          🎬 Video Cưới
+        </button>
+        <button id="tab-btn-effects" onclick="switchConfigTab('effects')" class="px-3.5 py-2 rounded-xl transition whitespace-nowrap text-stone-600 hover:bg-stone-100">
+          ✨ Hiệu Ứng & Font
         </button>
       </div>
 
@@ -882,6 +914,130 @@
           </div>
         </div>
 
+        <!-- TAB 6: VIDEO CƯỚI -->
+        <div id="tab-panel-video" class="space-y-4 hidden">
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="video" class="w-4 h-4"></i> Cài Đặt Video Kỷ Niệm
+              </h4>
+              <label class="flex items-center gap-2 cursor-pointer text-xs">
+                <input type="checkbox" id="cfg-video-enabled" checked class="rounded text-wedding-accent focus:ring-wedding-accent">
+                <span class="font-medium text-stone-700">Hiển thị video trên thiệp</span>
+              </label>
+            </div>
+
+            <div class="space-y-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Tiêu đề phần video:</label>
+                <input type="text" id="cfg-video-title" placeholder="Thước Phim Tình Yêu" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Mô tả ngắn:</label>
+                <input type="text" id="cfg-video-subtitle" placeholder="Cùng dõi theo những khoảnh khắc ngọt ngào nhất..." class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+              </div>
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Đường link Video (YouTube, Vimeo hoặc file MP4 trực tiếp):</label>
+                <input type="text" id="cfg-video-url" placeholder="https://www.youtube.com/watch?v=... hoặc link mp4" 
+                       class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:outline-none">
+                <p class="text-[11px] text-stone-400 mt-1">Hỗ trợ đầy đủ link YouTube thường, YouTube Shorts, Vimeo hoặc video MP4.</p>
+              </div>
+
+              <!-- Thử video mẫu -->
+              <div class="pt-2">
+                <span class="text-[11px] text-stone-500 block mb-1.5">Hoặc chọn nhanh video mẫu lãng mạn:</span>
+                <div class="flex flex-wrap gap-2">
+                  <button type="button" onclick="setSampleVideo('https://www.youtube.com/watch?v=kJQP7kiw5Fk')" class="px-2.5 py-1 bg-white border border-stone-200 hover:border-wedding-accent rounded-lg text-[11px] text-stone-700 transition">
+                    🎬 Sample 1 (Lễ cưới biển)
+                  </button>
+                  <button type="button" onclick="setSampleVideo('https://assets.mixkit.co/videos/preview/mixkit-bride-and-groom-holding-hands-41489-large.mp4')" class="px-2.5 py-1 bg-white border border-stone-200 hover:border-wedding-accent rounded-lg text-[11px] text-stone-700 transition">
+                    🎬 Sample 2 (Nắm tay hoàng hôn MP4)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7: HIỆU ỨNG & PHÔNG CHỮ -->
+        <div id="tab-panel-effects" class="space-y-4 hidden">
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 space-y-3">
+            <h4 class="font-bold text-sm text-wedding-accent uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> Hiệu Ứng Chuyển Cảnh & Hạt Rơi
+            </h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Hiệu ứng chuyển cảnh trang:</label>
+                <select id="cfg-effect-transition" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent">
+                  <option value="cinematic-fade">Cinematic Fade (Mờ dần điện ảnh)</option>
+                  <option value="parallax-zoom">Parallax Zoom (Phóng to chiều sâu)</option>
+                  <option value="slide-up">Slide Up (Trượt lên mềm mại)</option>
+                  <option value="card-flip">3D Card Flip (Lật thẻ 3D)</option>
+                  <option value="curtain-reveal">Curtain Reveal (Mở rèm nhung)</option>
+                  <option value="soft-float">Soft Float (Bồng bềnh lơ lửng)</option>
+                  <option value="origami-fold">Origami Fold (Gấp giấy nghệ thuật)</option>
+                  <option value="zoom-burst">Zoom Burst (Bùng nổ ấn tượng)</option>
+                  <option value="ribbon-unroll">Ribbon Unroll (Mở dải ruy băng)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Hiệu ứng hạt rơi:</label>
+                <select id="cfg-effect-particle" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent">
+                  <option value="petals">🌸 Cánh hoa hồng rơi lãng mạn</option>
+                  <option value="hearts">❤️ Trái tim bay tình yêu</option>
+                  <option value="snow">❄️ Bông tuyết trắng mùa đông</option>
+                  <option value="gold-sparkles">✨ Bụi sao vàng lấp lánh (Gold Sparkles)</option>
+                  <option value="fireflies">🌟 Đom đóm đêm kỳ ảo (Fireflies)</option>
+                  <option value="none">🚫 Không hiệu ứng hạt</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Phông chữ tiêu đề cặp đôi:</label>
+                <select id="cfg-font-family" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent">
+                  <option value="font-script">Alex Brush (Chữ viết tay bay bổng)</option>
+                  <option value="font-playfair">Playfair Display (Serif cổ điển sang trọng)</option>
+                  <option value="font-great-vibes">Great Vibes (Thư pháp uyển chuyển)</option>
+                  <option value="font-ephesis">Ephesis (Chữ ký nghệ thuật)</option>
+                  <option value="font-cormorant">Cormorant Garamond (Hoàng gia châu Âu)</option>
+                  <option value="font-dancing">Dancing Script (Trẻ trung vui vẻ)</option>
+                  <option value="font-sans">Be Vietnam Pro (Tối giản thanh lịch)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-stone-600 font-medium mb-1">Nhạc nền cưới (Audio):</label>
+                <select id="cfg-audio-preset" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent" onchange="changeAudioPreset(this.value)">
+                  <option value="https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-102.mp3">Mixkit Wedding Waltz (Piano ngọt ngào)</option>
+                  <option value="https://assets.mixkit.co/music/preview/mixkit-romantic-moment-114.mp3">Romantic Moment (Lãng mạn ấm áp)</option>
+                  <option value="https://assets.mixkit.co/music/preview/mixkit-peaceful-piano-love-202.mp3">Peaceful Piano Love (Bình yên)</option>
+                  <option value="custom">Tự nhập link MP3 riêng...</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="cfg-custom-audio-box" class="hidden pt-1">
+              <label class="block text-stone-600 font-medium mb-1">Link MP3 riêng của bạn:</label>
+              <input type="text" id="cfg-custom-audio-url" placeholder="https://.../bai-hat.mp3" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs">
+            </div>
+
+            <div class="pt-2 border-t border-stone-200 flex items-center gap-4">
+              <div class="flex items-center gap-2">
+                <label class="text-stone-600 font-medium">Màu chủ đạo:</label>
+                <input type="color" id="cfg-custom-color-primary" value="#B87D65" class="w-8 h-8 rounded-lg cursor-pointer border border-stone-200 p-0.5">
+              </div>
+              <div class="flex items-center gap-2">
+                <label class="text-stone-600 font-medium">Màu con dấu:</label>
+                <input type="color" id="cfg-custom-color-wax" value="#B87D65" class="w-8 h-8 rounded-lg cursor-pointer border border-stone-200 p-0.5">
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Footer Buttons -->
@@ -983,8 +1139,8 @@
             <i data-lucide="palette" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="font-serif font-bold text-lg text-stone-900">Kho 100 Mẫu Thiệp Cưới Độc Bản</h3>
-            <p class="text-[11px] text-stone-500">Đổi phong cách ngay lập tức — Giữ nguyên 100% hình ảnh & nội dung của bạn</p>
+            <h3 class="font-serif font-bold text-lg text-stone-900">Kho 1,000 Mẫu Thiệp Cưới Chuyên Nghiệp</h3>
+            <p class="text-[11px] text-stone-500">20 Bộ sưu tập x 50 mẫu phong cách đa dạng — Giữ nguyên 100% ảnh & thông tin</p>
           </div>
         </div>
         <button onclick="closeTemplateModal()" class="text-stone-400 hover:text-stone-800 p-1.5 rounded-full hover:bg-stone-100 transition">
@@ -996,7 +1152,7 @@
       <div class="px-6 py-3 border-b border-stone-200 bg-white space-y-3">
         <div class="relative">
           <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400"></i>
-          <input type="text" id="template-search-input" placeholder="Tìm theo tên mẫu, màu sắc, phong cách (Song Hỷ, Hoàng Gia, Pastel, Vintage, Minimal...)" 
+          <input type="text" id="template-search-input" placeholder="Tìm theo tên mẫu, phong cách, hiệu ứng (Song Hỷ, Luxury, Pastel, Vintage, Minimal, Cyber...)" 
                  class="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:ring-2 focus:ring-wedding-accent focus:bg-white focus:outline-none"
                  oninput="filterTemplates()">
         </div>
@@ -1010,11 +1166,17 @@
       <!-- Grid list of templates -->
       <div class="p-6 overflow-y-auto flex-1 bg-stone-50/50">
         <div class="flex items-center justify-between mb-3 text-xs text-stone-500">
-          <span id="template-count-display">Hiển thị 100/100 mẫu</span>
-          <span class="text-[11px] text-stone-400">Chạm "Áp dụng" để thay đổi giao diện thiệp</span>
+          <span id="template-count-display">Hiển thị 1,000 mẫu</span>
+          <span class="text-[11px] text-stone-400">Chạm "Áp dụng" để thay đổi giao diện & hiệu ứng</span>
         </div>
         <div id="template-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <!-- Rendered dynamically by script.js -->
+        </div>
+
+        <div id="template-load-more-box" class="pt-6 pb-2 text-center">
+          <button type="button" onclick="loadMoreTemplates()" class="px-6 py-2.5 rounded-full bg-white border border-stone-300 text-stone-700 hover:border-wedding-accent hover:text-wedding-accent font-semibold text-xs shadow-sm transition">
+            Xem thêm mẫu tiếp theo...
+          </button>
         </div>
       </div>
 
