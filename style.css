@@ -740,5 +740,91 @@ button, a {
   border: 3.5px solid #6366F1 !important;
 }
 
+/* ==================== 21. ARCHETYPE KOREAN ENVELOPE (PHONG CÁCH TIKTOK MINH ANH) ==================== */
+[data-archetype="korean-envelope"] #classic-hero-bg {
+  display: none !important;
+}
+[data-archetype="korean-envelope"] #classic-hero-elements {
+  display: none !important;
+}
+[data-archetype="korean-envelope"] #classic-countdown-title {
+  display: none !important;
+}
+[data-archetype="korean-envelope"] #classic-characters-title {
+  display: none !important;
+}
+[data-archetype="korean-envelope"] #classic-footer {
+  display: none !important;
+}
+
+[data-archetype="korean-envelope"] #korean-envelope-hero {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-date-quote-block {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-countdown-heart {
+  display: flex !important;
+}
+[data-archetype="korean-envelope"] #korean-countdown-title {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-countdown-sub {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-invite-header {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-calla-lily-sprig {
+  display: block !important;
+}
+[data-archetype="korean-envelope"] #korean-thankyou-block {
+  display: block !important;
+}
+
+/* Thẻ thiệp phong cách Hàn Quốc */
+[data-archetype="korean-envelope"] .wedding-card {
+  background: #FFFDF9 !important;
+  border: 1px solid rgba(220, 205, 195, 0.6) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 24px rgba(140, 110, 95, 0.08) !important;
+  color: #38312E !important;
+}
+
+/* Khung ảnh Polaroid cô dâu chú rể nghiêng nghệ thuật */
+[data-archetype="korean-envelope"] #groom-avatar-frame {
+  border-radius: 4px !important;
+  border: 8px solid #FFFFFF !important;
+  border-bottom: 28px solid #FFFFFF !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12) !important;
+  transform: rotate(-3deg);
+  transition: transform 0.3s ease;
+}
+[data-archetype="korean-envelope"] #groom-avatar-frame:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+[data-archetype="korean-envelope"] #bride-avatar-frame {
+  border-radius: 4px !important;
+  border: 8px solid #FFFFFF !important;
+  border-bottom: 28px solid #FFFFFF !important;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12) !important;
+  transform: rotate(3deg);
+  transition: transform 0.3s ease;
+}
+[data-archetype="korean-envelope"] #bride-avatar-frame:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+/* Nút xoay quay đĩa nhạc */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.music-playing-spin {
+  animation: spin-slow 8s linear infinite !important;
+}
+
+
 
 

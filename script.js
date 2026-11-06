@@ -287,6 +287,72 @@ function renderEntirePage() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+
+  // Đồng bộ cho giao diện Bao thư hoa Hàn Quốc (TikTok Minh Anh)
+  syncKoreanEnvelopeWithConfig(c);
+}
+
+let isKoreanEnvelopeOpen = true;
+function toggleKoreanEnvelope() {
+  const slider = document.getElementById('korean-cards-slider');
+  if (!slider) return;
+  isKoreanEnvelopeOpen = !isKoreanEnvelopeOpen;
+  if (isKoreanEnvelopeOpen) {
+    slider.style.transform = 'translateY(-65px)';
+    triggerWeddingConfetti();
+  } else {
+    slider.style.transform = 'translateY(15px)';
+  }
+}
+
+function syncKoreanEnvelopeWithConfig(c) {
+  if (!c) c = currentConfig;
+  if (!c) return;
+  
+  const groomName = (c.couple && c.couple.groomName) || (c.groom && c.groom.name) || 'HỮU QUỐC';
+  const brideName = (c.couple && c.couple.brideName) || (c.bride && c.bride.name) || 'MINH ANH';
+  const eventDate = (c.event && (c.event.dateDisplay || c.event.date)) || '23.05.2026';
+  
+  const kGroom = document.getElementById('korean-hero-groom');
+  if (kGroom) kGroom.textContent = groomName;
+  const kBride = document.getElementById('korean-hero-bride');
+  if (kBride) kBride.textContent = brideName;
+
+  const qGroom = document.getElementById('korean-quote-groom');
+  if (qGroom) qGroom.textContent = groomName;
+  const qBride = document.getElementById('korean-quote-bride');
+  if (qBride) qBride.textContent = brideName;
+
+  const stubEl = document.getElementById('korean-ticket-stub');
+  if (stubEl) {
+    const gShort = groomName.split(' ').pop().toUpperCase();
+    const bShort = brideName.split(' ').pop().toUpperCase();
+    stubEl.textContent = `${gShort} - ${bShort}`;
+  }
+
+  const ticketDate = document.getElementById('korean-ticket-date');
+  if (ticketDate) ticketDate.textContent = eventDate;
+
+  const qDay = document.getElementById('korean-quote-day');
+  const qMonth = document.getElementById('korean-quote-month');
+  if (qDay && qMonth) {
+    const parts = eventDate.split(/[\.\/\-]/);
+    if (parts.length >= 2) {
+      qDay.textContent = parts[0];
+      const mNum = parseInt(parts[1], 10);
+      const mNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      qMonth.textContent = mNames[mNum - 1] || 'May';
+    }
+  }
+
+  const p1 = document.getElementById('korean-polaroid-img-1');
+  if (p1 && c.groom && c.groom.img) p1.src = c.groom.img;
+  const p2 = document.getElementById('korean-polaroid-img-2');
+  if (p2 && c.bride && c.bride.img) p2.src = c.bride.img;
+  const qImg = document.getElementById('korean-quote-couple-img');
+  if (qImg && c.event && c.event.heroImg) qImg.src = c.event.heroImg;
+  const tyImg = document.getElementById('korean-thankyou-img');
+  if (tyImg && c.event && c.event.heroImg) tyImg.src = c.event.heroImg;
 }
 
 // ==========================================
@@ -961,14 +1027,19 @@ function initMusicPlayer() {
 
   if (!musicBtn || !audio) return;
 
+  audio.addEventListener('play', () => musicBtn.classList.add('music-playing-spin'));
+  audio.addEventListener('pause', () => musicBtn.classList.remove('music-playing-spin'));
+
   musicBtn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
       if (vinyl) vinyl.classList.add('spin-music');
+      musicBtn.classList.add('music-playing-spin');
       showToast('Đang phát nhạc nền');
     } else {
       audio.pause();
       if (vinyl) vinyl.classList.remove('spin-music');
+      musicBtn.classList.remove('music-playing-spin');
       showToast('Đã tạm dừng nhạc');
     }
   });
@@ -1542,9 +1613,22 @@ function applyTemplate(templateId, isInit = false) {
   const wrapper = document.getElementById('main-invitation-wrapper');
   if (wrapper) {
     wrapper.className = `max-w-xl mx-auto min-h-screen bg-gradient-to-b ${tmpl.theme.bg} shadow-2xl relative pb-28 border-x border-stone-200/40 transition-all duration-500`;
-    wrapper.setAttribute('data-archetype', tmpl.archetype || 'botanical-garden');
+    wrapper.setAttribute('data-archetype', tmpl.archetype || 'korean-envelope');
     wrapper.setAttribute('data-border-style', tmpl.borderStyle || 'classic');
     wrapper.setAttribute('data-avatar-frame', tmpl.avatarFrame || 'circle-gold');
+  }
+
+  // Nếu là Archetype Korean Envelope (TikTok Minh Anh)
+  if (tmpl.archetype === 'korean-envelope') {
+    const envBg = document.getElementById('korean-envelope-bg');
+    if (envBg && tmpl.envelopeColor) envBg.style.backgroundColor = tmpl.envelopeColor;
+    const qText = document.getElementById('korean-quote-text');
+    if (qText && tmpl.quote) qText.textContent = `"${tmpl.quote}"`;
+    syncKoreanEnvelopeWithConfig(currentConfig);
+    setTimeout(() => {
+      const slider = document.getElementById('korean-cards-slider');
+      if (slider) slider.style.transform = 'translateY(-65px)';
+    }, 400);
   }
 
   // Render huy hiệu biểu tượng độc bản tại Hero Section
@@ -1954,6 +2038,7 @@ function getFilteredTemplates() {
 }
 
 const ARCHETYPE_INFO = {
+  'korean-envelope': { label: 'Bao Thư Hoa TikTok', icon: '🌸', color: 'bg-rose-50 text-rose-700 border-rose-300' },
   'oriental-silk': { label: 'Á Đông Cổ Điển', icon: '🏮', color: 'bg-red-50 text-red-700 border-red-200' },
   'botanical-garden': { label: 'Vườn Hoa Cỏ', icon: '🌿', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
   'royal-luxury': { label: 'Hoàng Gia Gold', icon: '👑', color: 'bg-amber-50 text-amber-800 border-amber-300' },
