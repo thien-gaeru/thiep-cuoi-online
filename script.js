@@ -78,7 +78,7 @@ let pendingUploads = {};
 document.addEventListener('DOMContentLoaded', () => {
   renderEntirePage();
   syncServerConfig(); // Đồng bộ cấu hình từ server nếu có thiết bị khác chỉnh sửa
-  initTemplateEngine(); // Khởi tạo kho 100 mẫu thiệp cưới
+  initTemplateEngine(); // Khởi tạo kho 1.000 mẫu thiệp cưới chuyên nghiệp
   initGuestPersonalization();
   initCountdown();
   initMusicPlayer();
