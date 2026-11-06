@@ -292,16 +292,140 @@ function renderEntirePage() {
   syncKoreanEnvelopeWithConfig(c);
 }
 
-let isKoreanEnvelopeOpen = true;
-function toggleKoreanEnvelope() {
+let isEnvelopeOpened = false;
+
+function openEnvelopeAndReveal() {
+  if (isEnvelopeOpened) {
+    scrollToFullContent();
+    return;
+  }
+  isEnvelopeOpened = true;
+
+  // 1. Mở nắp phong bì 3D
+  const topFlap = document.getElementById('korean-envelope-top-flap');
+  if (topFlap) topFlap.classList.add('open');
+
+  // 2. Làm vỡ / ẩn con dấu sáp
+  const waxSeal = document.getElementById('korean-wax-seal');
+  if (waxSeal) waxSeal.classList.add('broken');
+
+  // 3. Trượt ảnh Polaroid và vé Save The Date nhô lên
   const slider = document.getElementById('korean-cards-slider');
-  if (!slider) return;
-  isKoreanEnvelopeOpen = !isKoreanEnvelopeOpen;
-  if (isKoreanEnvelopeOpen) {
-    slider.style.transform = 'translateY(-65px)';
-    triggerWeddingConfetti();
+  if (slider) slider.style.transform = 'translateY(-75px)';
+
+  // 4. Phát nhạc nền & pháo hoa giấy chúc phúc
+  playWeddingAudio();
+  triggerWeddingConfetti();
+
+  // 5. Bung ra toàn bộ nội dung thiệp mời
+  const fullContent = document.getElementById('invitation-full-content');
+  if (fullContent) {
+    fullContent.classList.remove('hidden');
+    fullContent.classList.add('animate-fade-in');
+  }
+
+  // 6. Điều chỉnh header cho phép cuộn tự nhiên
+  const header = document.getElementById('main-hero-header');
+  if (header) {
+    header.classList.remove('h-[100dvh]', 'max-h-[100dvh]', 'overflow-hidden');
+    header.classList.add('min-h-[85vh]', 'overflow-visible');
+  }
+
+  // 7. Hiện thanh điều hướng phía dưới
+  const toolbar = document.getElementById('floating-bottom-toolbar');
+  if (toolbar) toolbar.classList.remove('hidden');
+
+  // 8. Ẩn nút mở thiệp, hiện hướng dẫn cuộn
+  const btnOpen = document.getElementById('btn-open-envelope') || document.getElementById('open-envelope-btn');
+  if (btnOpen) btnOpen.classList.add('hidden');
+  const btnClassicOpen = document.getElementById('open-classic-btn');
+  if (btnClassicOpen) btnClassicOpen.classList.add('hidden');
+
+  const scrollPrompt = document.getElementById('korean-scroll-prompt');
+  if (scrollPrompt) scrollPrompt.classList.remove('hidden');
+
+  if (window.lucide) window.lucide.createIcons();
+
+  // 9. Tự động cuộn mượt xuống nội dung thiệp sau 750ms
+  setTimeout(() => {
+    scrollToFullContent();
+  }, 750);
+}
+
+function scrollToFullContent() {
+  const target = document.getElementById('korean-date-quote-block') || 
+                 document.getElementById('invitation-full-content');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function resetEnvelope() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  setTimeout(() => {
+    isEnvelopeOpened = false;
+
+    const topFlap = document.getElementById('korean-envelope-top-flap');
+    if (topFlap) topFlap.classList.remove('open');
+
+    const waxSeal = document.getElementById('korean-wax-seal');
+    if (waxSeal) waxSeal.classList.remove('broken');
+
+    const slider = document.getElementById('korean-cards-slider');
+    if (slider) slider.style.transform = 'translateY(0px)';
+
+    const fullContent = document.getElementById('invitation-full-content');
+    if (fullContent) {
+      fullContent.classList.add('hidden');
+      fullContent.classList.remove('animate-fade-in');
+    }
+
+    const header = document.getElementById('main-hero-header');
+    if (header) {
+      header.classList.remove('min-h-[85vh]', 'overflow-visible');
+      header.classList.add('h-[100dvh]', 'min-h-[100dvh]', 'max-h-[100dvh]', 'overflow-hidden');
+    }
+
+    const toolbar = document.getElementById('floating-bottom-toolbar');
+    if (toolbar) toolbar.classList.add('hidden');
+
+    const btnOpen = document.getElementById('btn-open-envelope') || document.getElementById('open-envelope-btn');
+    if (btnOpen) btnOpen.classList.remove('hidden');
+    const btnClassicOpen = document.getElementById('open-classic-btn');
+    if (btnClassicOpen) btnClassicOpen.classList.remove('hidden');
+
+    const scrollPrompt = document.getElementById('korean-scroll-prompt');
+    if (scrollPrompt) scrollPrompt.classList.add('hidden');
+
+    if (window.lucide) window.lucide.createIcons();
+    showToast('Đã đóng phong bì mời!');
+  }, 400);
+}
+
+function handleEnvelopeBoxClick() {
+  if (!isEnvelopeOpened) {
+    openEnvelopeAndReveal();
   } else {
-    slider.style.transform = 'translateY(15px)';
+    scrollToFullContent();
+  }
+}
+
+function toggleKoreanEnvelope() {
+  handleEnvelopeBoxClick();
+}
+
+function playWeddingAudio() {
+  const audio = document.getElementById('wedding-audio');
+  const vinyl = document.getElementById('vinyl-disc');
+  const musicBtn = document.getElementById('music-btn');
+  if (audio) {
+    audio.play().then(() => {
+      if (vinyl) vinyl.classList.add('spin-music');
+      if (musicBtn) musicBtn.classList.add('music-playing-spin');
+    }).catch(err => {
+      console.log("Autoplay bị hạn chế:", err);
+    });
   }
 }
 
@@ -495,9 +619,9 @@ function applyCustomColors(primaryColor, waxColor) {
   }
   if (waxColor) {
     root.style.setProperty('--theme-wax', waxColor);
-    const sealIcon = document.querySelector('#envelope-overlay .animate-pulse');
-    if (sealIcon) {
-      sealIcon.style.background = waxColor;
+    const sealBadge = document.querySelector('#korean-wax-seal .wax-seal-badge');
+    if (sealBadge) {
+      sealBadge.style.background = waxColor;
     }
   }
 }
@@ -995,29 +1119,28 @@ function initGuestPersonalization() {
 // 6. MỞ THIỆP & PHÁT NHẠC
 // ==========================================
 function initEnvelopeOpener() {
-  const openBtn = document.getElementById('open-envelope-btn');
-  const overlay = document.getElementById('envelope-overlay');
-  const audio = document.getElementById('wedding-audio');
-  const vinyl = document.getElementById('vinyl-disc');
+  const openBtn = document.getElementById('btn-open-envelope') || document.getElementById('open-envelope-btn');
+  const classicBtn = document.getElementById('open-classic-btn');
+  const waxSeal = document.getElementById('korean-wax-seal');
 
-  if (!openBtn || !overlay) return;
-
-  openBtn.addEventListener('click', () => {
-    triggerWeddingConfetti();
-
-    if (audio) {
-      audio.play().then(() => {
-        if (vinyl) vinyl.classList.add('spin-music');
-      }).catch(err => {
-        console.log("Autoplay bị hạn chế:", err);
-      });
-    }
-
-    overlay.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 700);
-  });
+  if (openBtn) {
+    openBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openEnvelopeAndReveal();
+    });
+  }
+  if (classicBtn) {
+    classicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openEnvelopeAndReveal();
+    });
+  }
+  if (waxSeal) {
+    waxSeal.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openEnvelopeAndReveal();
+    });
+  }
 }
 
 function initMusicPlayer() {
@@ -1562,13 +1685,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 // 17. BỘ CHUYỂN ĐỔI 1.000 MẪU THIỆP CƯỚI CHUYÊN NGHIỆP (1,000 TEMPLATES ENGINE)
 // ==========================================
 let activePetalColors = ['#fbcfe8', '#f472b6', '#fed7aa', '#fde047', '#fecdd3'];
-let activeCategoryFilter = 'all';
+let activeCategoryFilter = 'korean_envelope';
 let currentTemplatePage = 1;
 const TEMPLATES_PER_PAGE = 24;
 let currentFilteredTemplates = [];
 
 function initTemplateEngine() {
-  const tId = currentConfig.templateId || 11;
+  const tId = currentConfig.templateId || 1;
   applyTemplate(tId, true);
   renderCategoryPills();
   filterTemplates();
@@ -1576,7 +1699,7 @@ function initTemplateEngine() {
 
 function applyTemplate(templateId, isInit = false) {
   if (typeof WEDDING_TEMPLATES === 'undefined') return;
-  const tmpl = WEDDING_TEMPLATES.find(t => t.id === templateId) || WEDDING_TEMPLATES[10];
+  const tmpl = WEDDING_TEMPLATES.find(t => t.id === templateId) || WEDDING_TEMPLATES[0];
   if (!tmpl) return;
 
   currentConfig.templateId = tmpl.id;
@@ -1622,13 +1745,21 @@ function applyTemplate(templateId, isInit = false) {
   if (tmpl.archetype === 'korean-envelope') {
     const envBg = document.getElementById('korean-envelope-bg');
     if (envBg && tmpl.envelopeColor) envBg.style.backgroundColor = tmpl.envelopeColor;
+    const topFlapBg = document.getElementById('korean-top-flap-bg');
+    if (topFlapBg && tmpl.envelopeColor) topFlapBg.style.backgroundColor = tmpl.envelopeColor;
+    const frontPocket = document.getElementById('korean-front-pocket');
+    if (frontPocket && tmpl.envelopeColor) frontPocket.style.backgroundColor = tmpl.envelopeColor;
+
     const qText = document.getElementById('korean-quote-text');
     if (qText && tmpl.quote) qText.textContent = `"${tmpl.quote}"`;
     syncKoreanEnvelopeWithConfig(currentConfig);
-    setTimeout(() => {
-      const slider = document.getElementById('korean-cards-slider');
-      if (slider) slider.style.transform = 'translateY(-65px)';
-    }, 400);
+
+    if (isEnvelopeOpened) {
+      setTimeout(() => {
+        const slider = document.getElementById('korean-cards-slider');
+        if (slider) slider.style.transform = 'translateY(-75px)';
+      }, 300);
+    }
   }
 
   // Render huy hiệu biểu tượng độc bản tại Hero Section
@@ -1644,9 +1775,9 @@ function applyTemplate(templateId, isInit = false) {
   }
 
   // Cập nhật màu con dấu sáp
-  const sealIcon = document.querySelector('#envelope-overlay .animate-pulse');
-  if (sealIcon) {
-    sealIcon.style.background = tmpl.theme.envelopeWax;
+  const sealBadge = document.querySelector('#korean-wax-seal .wax-seal-badge');
+  if (sealBadge && tmpl.theme && tmpl.theme.envelopeWax) {
+    sealBadge.style.background = tmpl.theme.envelopeWax;
   }
 
   // Cập nhật tên mẫu đang chọn

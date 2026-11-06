@@ -47,9 +47,9 @@
     "url": "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
   },
   "effects": {
-    "transition": "card-flip",
-    "particle": "gold-sparkles",
-    "fontFamily": "font-script",
+    "transition": "curtain-reveal",
+    "particle": "petals",
+    "fontFamily": "font-cormorant",
     "audioUrl": "https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-102.mp3",
     "primaryColor": "#B87D65",
     "waxColor": "#B87D65"

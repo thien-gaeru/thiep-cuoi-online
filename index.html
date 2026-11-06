@@ -60,11 +60,11 @@
   <!-- ==================== HIỆU ỨNG CÁNH HOA RƠI ==================== -->
   <div id="petals-container" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
 
-  <!-- ==================== NÚT BẬT KHO 1.000 MẪU THIỆP & TÙY CHỈNH GÓC TRÊN ==================== -->
+  <!-- ==================== NÚT BẬT KHO 100 MẪU THIỆP & TÙY CHỈNH GÓC TRÊN ==================== -->
   <button onclick="openTemplateModal()" 
           class="fixed top-4 left-4 z-40 px-3.5 py-2 rounded-full bg-white/90 backdrop-blur-md border border-wedding-accent/40 text-wedding-dark shadow-xl text-xs font-semibold hover:bg-stone-900 hover:text-white transition-all flex items-center gap-1.5 active:scale-95 group">
     <i data-lucide="palette" class="w-4 h-4 text-wedding-accent group-hover:text-white transition"></i>
-    <span>1.000 Mẫu Thiệp</span>
+    <span id="btn-top-template-text">100 Mẫu Thiệp</span>
   </button>
 
   <button onclick="openConfigModal()" 
@@ -72,44 +72,6 @@
     <i data-lucide="sliders" class="w-4 h-4 text-wedding-accent group-hover:text-white transition"></i>
     <span>Tùy chỉnh thông tin & ảnh</span>
   </button>
-
-  <!-- ==================== PHẦN MỞ ĐẦU: BÌ THƯ MỜI CƯỚI ==================== -->
-  <div id="envelope-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/80 backdrop-blur-md px-4 transition-all duration-700">
-    <div class="relative w-full max-w-md bg-[#FAF7F2] rounded-3xl p-8 shadow-2xl text-center border border-wedding-rose/60 overflow-hidden transform transition-all duration-500 hover:scale-[1.01]">
-      <div class="absolute -top-10 -right-10 w-36 h-36 bg-wedding-rose/30 rounded-full blur-2xl"></div>
-      <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-wedding-gold/20 rounded-full blur-2xl"></div>
-      
-      <div class="relative z-10 flex flex-col items-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-wedding-gold to-wedding-accent flex items-center justify-center text-white shadow-lg shadow-wedding-gold/30 mb-4 animate-pulse">
-          <i data-lucide="heart" class="w-8 h-8 fill-white"></i>
-        </div>
-
-        <p class="text-xs uppercase tracking-[0.25em] text-wedding-accent font-semibold mb-1">Thiệp Cưới Online</p>
-        <h2 id="envelope-couple-names" class="font-script text-4xl sm:text-5xl text-wedding-dark mb-3">Quốc Huy & Mỹ Linh</h2>
-
-        <!-- Lời mời cá nhân hóa -->
-        <div class="w-full bg-white/80 border border-wedding-accent/30 rounded-2xl py-3 px-4 my-4 shadow-sm">
-          <p class="text-xs text-stone-500 uppercase tracking-wider mb-1">Trân trọng kính mời</p>
-          <p id="guest-name-preview" class="text-xl font-bold text-wedding-accent font-serif">Quý khách quý & Gia đình</p>
-        </div>
-
-        <p class="text-stone-600 text-sm italic mb-6 leading-relaxed">
-          "Hôn lễ của chúng mình sẽ trọn vẹn hơn khi có sự hiện diện và chúc phúc từ bạn."
-        </p>
-
-        <!-- Nút bấm mở thiệp -->
-        <button id="open-envelope-btn" class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-wedding-accent to-stone-700 text-white font-medium text-base tracking-wide shadow-lg shadow-wedding-accent/30 hover:opacity-95 active:scale-95 transition-all flex items-center justify-center gap-2 group">
-          <span>Chạm Để Mở Thiệp Mời</span>
-          <i data-lucide="mail-open" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-        </button>
-
-        <p class="text-[11px] text-stone-400 mt-4 flex items-center gap-1">
-          <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-          Chạm để mở thiệp cùng giai điệu tình yêu
-        </p>
-      </div>
-    </div>
-  </div>
 
   <!-- ==================== FLOATING MUSIC BUTTON ==================== -->
   <button id="music-btn" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-white/90 backdrop-blur border border-wedding-accent/40 shadow-xl flex items-center justify-center text-wedding-accent hover:scale-110 active:scale-95 transition-all duration-300" title="Bật/Tắt nhạc nền">
@@ -121,11 +83,11 @@
     <source src="https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-102.mp3" type="audio/mp3">
   </audio>
 
-  <!-- ==================== FLOATING BOTTOM TOOLBAR ==================== -->
-  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md border border-wedding-accent/20 px-3 py-1.5 rounded-full shadow-2xl max-w-[96vw]">
-    <button onclick="openTemplateModal()" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-wedding-accent to-stone-800 text-white shadow-sm hover:opacity-95 transition" title="Chọn mẫu trong 1.000 mẫu thiệp">
+  <!-- ==================== FLOATING BOTTOM TOOLBAR (CHỈ HIỆN KHI ĐÃ MỞ PHONG BÌ) ==================== -->
+  <div id="floating-bottom-toolbar" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md border border-wedding-accent/20 px-3 py-1.5 rounded-full shadow-2xl max-w-[96vw] hidden transition-all duration-500">
+    <button onclick="openTemplateModal()" class="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-wedding-accent to-stone-800 text-white shadow-sm hover:opacity-95 transition" title="Chọn mẫu trong 100 mẫu thiệp">
       <i data-lucide="palette" class="w-3.5 h-3.5"></i>
-      <span>1.000 Mẫu</span>
+      <span id="btn-bottom-template-text">100 Mẫu</span>
     </button>
     <a href="#rsvp" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full bg-wedding-cream text-stone-800 hover:bg-stone-100 transition">
       <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-wedding-accent"></i>
@@ -147,8 +109,8 @@
   <!-- ==================== MAIN INVITATION WRAPPER ==================== -->
   <div id="main-invitation-wrapper" class="max-w-xl mx-auto min-h-screen bg-wedding-cream shadow-2xl relative pb-28 border-x border-stone-200/40 transition-all duration-500">
 
-    <!-- HERO SECTION -->
-    <header id="main-hero-header" class="relative min-h-[92vh] flex flex-col justify-between text-center px-6 pt-12 pb-16 overflow-hidden">
+    <!-- HERO SECTION: TRANG MỞ PHONG BÌ ĐỘC LẬP 100DVH -->
+    <header id="main-hero-header" class="relative h-[100dvh] min-h-[100dvh] max-h-[100dvh] flex flex-col justify-between items-center text-center px-4 pt-14 pb-6 overflow-hidden transition-all duration-700">
       <!-- Background Image with Gradient Overlay (Chỉ dùng cho các theme cổ điển) -->
       <div id="classic-hero-bg" class="absolute inset-0 z-0">
         <img id="hero-img" 
@@ -159,8 +121,9 @@
       </div>
 
       <!-- KOREAN ENVELOPE HERO (DÀNH CHO 100 MẪU PHONG CÁCH TIKTOK MINH ANH) -->
-      <div id="korean-envelope-hero" class="relative z-10 w-full max-w-sm mx-auto my-auto pt-4 pb-2 hidden">
-        <div class="relative w-full aspect-[4/3] max-w-[340px] mx-auto">
+      <div id="korean-envelope-hero" class="relative z-10 w-full max-w-sm mx-auto my-auto flex flex-col items-center justify-center hidden">
+        <!-- Envelope Container with Corner Bouquets -->
+        <div class="relative w-full aspect-[4/3] max-w-[320px] sm:max-w-[340px] mx-auto my-1">
           <!-- Bouquet Top Left -->
           <div class="absolute -top-10 -left-6 w-24 h-24 z-30 pointer-events-none drop-shadow-md">
             <svg viewBox="0 0 100 100" class="w-full h-full">
@@ -207,20 +170,20 @@
           </div>
 
           <!-- THE INTERACTIVE SLIDING ENVELOPE -->
-          <div id="korean-envelope-box" class="relative w-full h-full rounded-2xl shadow-2xl overflow-hidden cursor-pointer" onclick="toggleKoreanEnvelope()">
+          <div id="korean-envelope-box" class="relative w-full h-full rounded-2xl shadow-2xl cursor-pointer" onclick="handleEnvelopeBoxClick()">
             <!-- Envelope Interior / Back Flap -->
-            <div id="korean-envelope-bg" class="absolute inset-0 bg-[#F4D2D8] border border-stone-200/40"></div>
+            <div id="korean-envelope-bg" class="absolute inset-0 bg-[#F4D2D8] border border-stone-200/40 rounded-2xl"></div>
             
             <!-- Sliding Cards Container (Polaroids & Ticket) -->
-            <div id="korean-cards-slider" class="absolute inset-x-0 bottom-4 flex justify-center items-end transform -translate-y-4 transition-transform duration-700 ease-out z-10 pointer-events-none">
-              <!-- Polaroid Groom & Bride Left (tilted -7deg) -->
+            <div id="korean-cards-slider" class="absolute inset-x-0 bottom-4 flex justify-center items-end transform translate-y-0 transition-transform duration-700 ease-out z-10 pointer-events-none">
+              <!-- Polaroid Groom Left (tilted -6deg) -->
               <div class="w-28 bg-white p-1.5 pb-5 shadow-lg rounded-sm transform -rotate-6 -mr-4 border border-stone-200/50">
                 <div class="aspect-[3/4] bg-stone-100 overflow-hidden">
                   <img id="korean-polaroid-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
                 </div>
               </div>
 
-              <!-- Polaroid Bride & Groom Right (tilted +6deg) -->
+              <!-- Polaroid Bride Right (tilted +6deg) -->
               <div class="w-28 bg-white p-1.5 pb-5 shadow-lg rounded-sm transform rotate-6 -ml-4 border border-stone-200/50">
                 <div class="aspect-[3/4] bg-stone-100 overflow-hidden">
                   <img id="korean-polaroid-img-2" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
@@ -245,20 +208,49 @@
             </div>
 
             <!-- Envelope Front Pocket (V-shaped flap covering bottom half) -->
-            <div class="absolute inset-x-0 bottom-0 h-44 bg-[#F8DCE2] border-t border-white/50 shadow-inner z-20" style="clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);"></div>
+            <div id="korean-front-pocket" class="absolute inset-x-0 bottom-0 h-44 bg-[#F8DCE2] border-t border-white/50 shadow-inner z-20 rounded-b-2xl pointer-events-none" style="clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);"></div>
+
+            <!-- Envelope Top Flap (3D Flip Animation) -->
+            <div id="korean-envelope-top-flap" class="envelope-top-flap absolute inset-x-0 top-0 h-[52%] z-25 pointer-events-none">
+              <div id="korean-top-flap-bg" class="w-full h-full bg-[#EABFC9] shadow-md border-b border-white/30 rounded-t-2xl" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+            </div>
+
+            <!-- Wax Seal Con Dấu Sáp -->
+            <div id="korean-wax-seal" class="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 z-30 transition-all duration-500 hover:scale-110 active:scale-95 cursor-pointer">
+              <div class="wax-seal-badge w-11 h-11 rounded-full bg-gradient-to-br from-rose-600 to-amber-700 text-white shadow-xl shadow-rose-900/40 flex items-center justify-center border-2 border-white/90 animate-pulse">
+                <i data-lucide="heart" class="w-5 h-5 fill-white text-white"></i>
+              </div>
+              <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-stone-900/80 text-white text-[8px] uppercase tracking-wider font-medium shadow">
+                Chạm Mở
+              </span>
+            </div>
           </div>
         </div>
 
-        <!-- Names Below Envelope -->
-        <div class="text-center mt-6 space-y-1">
-          <h1 class="font-serif tracking-widest uppercase text-lg sm:text-xl font-bold text-stone-800">
+        <!-- Names & Invitation Info Below Envelope -->
+        <div class="text-center mt-2 space-y-1.5 w-full">
+          <h1 class="font-serif tracking-widest uppercase text-base sm:text-lg font-bold text-stone-800">
             <span id="korean-hero-groom">HỮU QUỐC</span> 
             <span class="font-script lowercase text-2xl font-normal text-rose-500 mx-1">and</span> 
             <span id="korean-hero-bride">MINH ANH</span>
           </h1>
-          <!-- Bouncing Scroll Chevron -->
-          <div class="pt-4 flex justify-center text-stone-400 animate-bounce cursor-pointer" onclick="document.getElementById('korean-date-quote-block').scrollIntoView({behavior:'smooth'})">
-            <svg class="w-6 h-6 stroke-stone-500" fill="none" viewBox="0 0 24 24">
+
+          <!-- Guest Greeting Card on Envelope Screen -->
+          <div class="bg-white/90 backdrop-blur-sm border border-stone-200/80 rounded-2xl py-2 px-4 shadow-sm max-w-xs mx-auto">
+            <p class="text-[9px] uppercase tracking-wider text-stone-500 font-semibold mb-0.5">Trân trọng kính mời</p>
+            <p id="guest-name-preview" class="text-sm sm:text-base font-bold text-stone-900 font-serif">Quý khách quý & Gia đình</p>
+          </div>
+
+          <!-- Nút Chạm Để Mở Thiệp Mời -->
+          <button id="btn-open-envelope" onclick="openEnvelopeAndReveal()" class="mt-2 px-6 py-2.5 rounded-full bg-stone-900 text-white font-medium text-xs tracking-wider shadow-xl hover:bg-stone-800 active:scale-95 transition-all flex items-center justify-center gap-2 mx-auto group">
+            <span>CHẠM ĐỂ MỞ THIỆP MỜI</span>
+            <i data-lucide="mail-open" class="w-4 h-4 text-rose-300 group-hover:translate-x-0.5 transition-transform"></i>
+          </button>
+
+          <!-- Bouncing Scroll Chevron (Ẩn ban đầu, chỉ hiện sau khi mở) -->
+          <div id="korean-scroll-prompt" class="pt-2 hidden flex-col items-center justify-center text-stone-500 animate-bounce cursor-pointer" onclick="scrollToFullContent()">
+            <span class="text-[10px] uppercase tracking-widest font-sans font-medium text-stone-500">Cuộn xuống để xem thiệp</span>
+            <svg class="w-5 h-5 stroke-stone-500 mx-auto mt-0.5" fill="none" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7"></path>
             </svg>
           </div>
@@ -266,10 +258,9 @@
       </div>
 
       <!-- CLASSIC HERO ELEMENTS (Ẩn khi ở archetype korean-envelope) -->
-      <div id="classic-hero-elements" class="relative z-10 flex flex-col justify-between flex-1">
+      <div id="classic-hero-elements" class="relative z-10 flex flex-col justify-between flex-1 py-4 w-full">
         <!-- Top Text -->
         <div class="text-white space-y-2">
-          <!-- ARCHETYPE DYNAMIC EMBLEM / HEADER BADGE -->
           <div id="archetype-hero-badge" class="transition-all duration-500 mb-2"></div>
           <p class="text-xs uppercase tracking-[0.3em] font-light text-wedding-rose">Save The Date</p>
           <div class="w-12 h-[1px] bg-wedding-rose/70 mx-auto"></div>
@@ -277,7 +268,7 @@
         </div>
 
         <!-- Center Names -->
-        <div class="text-white space-y-1 my-auto py-8">
+        <div class="text-white space-y-1 my-auto py-6">
           <h2 id="hero-groom-name" class="font-script text-6xl sm:text-7xl text-white drop-shadow-md">Quốc Huy</h2>
           <div class="flex items-center justify-center gap-3 my-1">
             <div class="w-12 h-[1px] bg-wedding-gold/60"></div>
@@ -287,29 +278,37 @@
           <h2 id="hero-bride-name" class="font-script text-6xl sm:text-7xl text-white drop-shadow-md">Mỹ Linh</h2>
         </div>
 
-        <!-- Bottom Details: Date & Personalized Invitation Box -->
-        <div class="space-y-4">
+        <!-- Bottom Details: Date, Guest Card & Open Button -->
+        <div class="space-y-3">
           <!-- Badge Lời mời cá nhân -->
-          <div class="wedding-card bg-white/95 backdrop-blur-md border border-wedding-accent/30 rounded-2xl p-4 shadow-xl text-wedding-dark max-w-sm mx-auto">
-            <p class="text-xs uppercase font-medium tracking-widest text-wedding-accent mb-0.5">Trân trọng kính mời</p>
-            <h3 id="guest-name-hero" class="text-2xl font-bold font-serif text-stone-800">Quý khách quý & Gia đình</h3>
-            <p class="text-xs text-stone-500 mt-1">Tới dự bữa tiệc thân mật mừng lễ thành hôn</p>
+          <div class="wedding-card bg-white/95 backdrop-blur-md border border-wedding-accent/30 rounded-2xl p-3.5 shadow-xl text-wedding-dark max-w-sm mx-auto">
+            <p class="text-[10px] uppercase font-medium tracking-widest text-wedding-accent mb-0.5">Trân trọng kính mời</p>
+            <h3 id="guest-name-hero" class="text-xl font-bold font-serif text-stone-800">Quý khách quý & Gia đình</h3>
           </div>
 
           <!-- Big Date -->
           <div class="text-wedding-dark pt-1">
-            <div class="inline-flex items-center gap-3 text-wedding-accent text-sm font-semibold tracking-widest uppercase">
+            <div class="inline-flex items-center gap-2 sm:gap-3 text-wedding-accent text-xs sm:text-sm font-semibold tracking-widest uppercase">
               <span id="hero-day-of-week">Thứ Bảy</span>
               <span>•</span>
-              <span id="hero-date-text" class="text-2xl font-serif text-wedding-dark font-bold tracking-normal">28.11.2026</span>
+              <span id="hero-date-text" class="text-xl sm:text-2xl font-serif text-wedding-dark font-bold tracking-normal">28.11.2026</span>
               <span>•</span>
               <span id="hero-time-text">11:00 Trưa</span>
             </div>
-            <p id="hero-lunar-text" class="text-xs text-stone-500 mt-1 font-serif italic">(Nhằm ngày 20 tháng 10 năm Bính Ngọ)</p>
+            <p id="hero-lunar-text" class="text-[11px] text-stone-500 mt-0.5 font-serif italic">(Nhằm ngày 20 tháng 10 năm Bính Ngọ)</p>
           </div>
+
+          <!-- Nút Chạm Mở Thiệp Cho Classic Theme -->
+          <button id="open-classic-btn" onclick="openEnvelopeAndReveal()" class="mt-2 px-6 py-2.5 rounded-full bg-stone-900/90 hover:bg-stone-900 backdrop-blur text-white font-medium text-xs tracking-wider shadow-xl active:scale-95 transition-all flex items-center justify-center gap-2 mx-auto">
+            <span>CHẠM ĐỂ MỞ THIỆP MỜI</span>
+            <i data-lucide="mail-open" class="w-4 h-4 text-rose-300"></i>
+          </button>
         </div>
       </div>
     </header>
+
+    <!-- WRAPPER NỘI DUNG ĐẦY ĐỦ CỦA THIỆP MỜI (BUNG RA SAU KHI MỞ PHONG BÌ) -->
+    <div id="invitation-full-content" class="hidden transition-all duration-700">
 
     <!-- KOREAN DATE & ROMANTIC QUOTE BLOCK (NHƯ FRAME_03 TRONG VIDEO TIKTOK) -->
     <div id="korean-date-quote-block" class="hidden text-center py-12 px-6 bg-transparent border-b border-stone-200/50">
@@ -798,6 +797,13 @@
           <a href="https://tiktok.com" target="_blank" class="px-2 py-0.5 rounded bg-stone-800 font-bold text-[10px] text-white">TikTok</a>
         </div>
       </div>
+      <!-- Replay / Reset Envelope Button -->
+      <div class="py-4 text-center bg-[#141A23]">
+        <button onclick="resetEnvelope()" class="px-5 py-2.5 rounded-full border border-stone-600 bg-stone-800/80 hover:bg-stone-700 text-stone-200 text-xs font-semibold shadow-sm transition-all inline-flex items-center gap-2 active:scale-95">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-rose-300"></i>
+          <span>Đóng & Xem lại phong bì mời</span>
+        </button>
+      </div>
     </div>
 
     <!-- FOOTER -->
@@ -810,9 +816,17 @@
       <p class="text-[11px] text-stone-400">
         Thiệp Cưới Online © <span id="footer-couple-names">Quốc Huy & Mỹ Linh</span>
       </p>
+      <div class="pt-2">
+        <button onclick="resetEnvelope()" class="px-5 py-2.5 rounded-full border border-stone-300 bg-white/90 hover:bg-white text-stone-700 text-xs font-semibold shadow-sm transition-all inline-flex items-center gap-2 mx-auto active:scale-95">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-stone-500"></i>
+          <span>Đóng & Xem lại phong bì mời</span>
+        </button>
+      </div>
     </footer>
 
-  </div>
+    </div> <!-- END INVITATION FULL CONTENT -->
+
+  </div> <!-- END MAIN INVITATION WRAPPER -->
 
   <!-- ==================== BẢNG TÙY CHỈNH THIỆP CƯỚI TOÀN DIỆN (MODAL) ==================== -->
   <div id="config-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-3 sm:p-5 hidden">
@@ -1334,8 +1348,8 @@
             <i data-lucide="palette" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="font-serif font-bold text-lg text-stone-900">Kho 1,000 Mẫu Thiệp Cưới Chuyên Nghiệp</h3>
-            <p class="text-[11px] text-stone-500">20 Bộ sưu tập x 50 mẫu phong cách đa dạng — Giữ nguyên 100% ảnh & thông tin</p>
+            <h3 class="font-serif font-bold text-lg text-stone-900">Kho 100 Mẫu Thiệp Cưới Phong Bì Hoa (TikTok Minh Anh)</h3>
+            <p class="text-[11px] text-stone-500">100 Mẫu phong bì hoa độc bản & 1.000+ mẫu phong cách đa dạng — Giữ nguyên 100% ảnh & thông tin</p>
           </div>
         </div>
         <button onclick="closeTemplateModal()" class="text-stone-400 hover:text-stone-800 p-1.5 rounded-full hover:bg-stone-100 transition">

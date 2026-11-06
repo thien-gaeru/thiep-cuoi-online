@@ -758,7 +758,7 @@ button, a {
 }
 
 [data-archetype="korean-envelope"] #korean-envelope-hero {
-  display: block !important;
+  display: flex !important;
 }
 [data-archetype="korean-envelope"] #korean-date-quote-block {
   display: block !important;
@@ -780,6 +780,48 @@ button, a {
 }
 [data-archetype="korean-envelope"] #korean-thankyou-block {
   display: block !important;
+}
+
+/* Khóa toàn bộ nội dung thiệp mời cho đến khi khách chạm mở phong bì */
+#invitation-full-content.hidden {
+  display: none !important;
+}
+
+/* 3D Envelope Flap (Nắp gập mở 3D phong bì) & Con dấu sáp */
+.envelope-top-flap {
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.envelope-top-flap.open {
+  transform: rotateX(180deg);
+  z-index: 5 !important;
+}
+.wax-seal-badge {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+#korean-wax-seal {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#korean-wax-seal.broken {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+  pointer-events: none;
+}
+
+@keyframes fadeInContent {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fadeInContent 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Thẻ thiệp phong cách Hàn Quốc */
