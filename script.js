@@ -1538,10 +1538,25 @@ function applyTemplate(templateId, isInit = false) {
     applyParticleEffect(tmpl.particle);
   }
 
-  // Cập nhật background wrapper thiệp
+  // Cập nhật background wrapper thiệp và thuộc tính Archetype / Border / Avatar Frame độc bản
   const wrapper = document.getElementById('main-invitation-wrapper');
   if (wrapper) {
     wrapper.className = `max-w-xl mx-auto min-h-screen bg-gradient-to-b ${tmpl.theme.bg} shadow-2xl relative pb-28 border-x border-stone-200/40 transition-all duration-500`;
+    wrapper.setAttribute('data-archetype', tmpl.archetype || 'botanical-garden');
+    wrapper.setAttribute('data-border-style', tmpl.borderStyle || 'classic');
+    wrapper.setAttribute('data-avatar-frame', tmpl.avatarFrame || 'circle-gold');
+  }
+
+  // Render huy hiệu biểu tượng độc bản tại Hero Section
+  renderArchetypeHeaderBadge(tmpl);
+
+  // Cập nhật Font Family của mẫu
+  if (tmpl.fontFamily) {
+    currentConfig.effects = currentConfig.effects || {};
+    currentConfig.effects.fontFamily = tmpl.fontFamily;
+    applyFontFamily(tmpl.fontFamily);
+    const effFontEl = document.getElementById('cfg-font-family');
+    if (effFontEl) effFontEl.value = tmpl.fontFamily;
   }
 
   // Cập nhật màu con dấu sáp
@@ -1568,6 +1583,280 @@ function applyTemplate(templateId, isInit = false) {
     triggerWeddingConfetti();
     showToast(`Đã áp dụng mẫu #${tmpl.id}: ${tmpl.name}!`);
     renderTemplatePage();
+  }
+}
+
+function renderArchetypeHeaderBadge(tmpl) {
+  const badgeContainer = document.getElementById('archetype-hero-badge');
+  if (!badgeContainer) return;
+
+  const style = tmpl.headerStyle || 'botanical-wreath';
+  const concept = tmpl.concept || tmpl.name || 'Thiệp Cưới Sang Trọng';
+  const id = tmpl.id || 1;
+
+  switch (style) {
+    case 'song-hy':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-2 rounded-full bg-red-950/80 border-2 border-amber-300 shadow-xl text-amber-300 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🏮</span>
+            <span class="font-serif font-black text-2xl tracking-widest leading-none drop-shadow">囍</span>
+            <span class="text-xs">🏮</span>
+          </div>
+          <span class="text-[9px] uppercase tracking-[0.25em] text-amber-200 font-semibold mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'royal-crest':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-5 py-2 rounded-2xl bg-stone-900/85 border border-amber-400 shadow-2xl text-amber-300 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-base">👑</span>
+            <span class="font-serif font-bold text-xs tracking-[0.3em] uppercase text-amber-200">ROYAL WEDDING CREST</span>
+            <span class="text-base">👑</span>
+          </div>
+          <div class="w-20 h-[1px] bg-amber-400/60 my-1"></div>
+          <span class="text-[8px] uppercase tracking-[0.3em] text-stone-300 font-mono">${escapeHtml(concept)} • GOLD FOIL</span>
+        </div>
+      `;
+      break;
+
+    case 'editorial-masthead':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-5 py-2 bg-black/90 border-y-2 border-white shadow-2xl text-white backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-3">
+            <span class="text-[9px] font-mono tracking-widest text-stone-300">VOL. 2026</span>
+            <span class="font-serif font-black text-xs sm:text-sm tracking-[0.35em] uppercase">THE WEDDING ISSUE</span>
+            <span class="text-[9px] font-mono tracking-widest text-stone-300">#${id}</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.35em] text-stone-400 mt-0.5">${escapeHtml(concept)} • HIGH FASHION</span>
+        </div>
+      `;
+      break;
+
+    case 'newspaper-headline':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-2 bg-stone-100/95 border-y-4 border-double border-stone-900 text-stone-900 shadow-xl animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-[11px] font-serif font-black uppercase tracking-wider">THE WEDDING CHRONICLE</span>
+            <span class="text-[9px] bg-stone-900 text-white px-1.5 py-0.2 rounded font-mono font-bold">EXTRA!</span>
+          </div>
+          <span class="text-[8px] font-serif italic text-stone-700 mt-0.5">${escapeHtml(concept)} • OFFICIALLY MARRIED</span>
+        </div>
+      `;
+      break;
+
+    case 'boarding-pass':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-2 rounded-xl bg-blue-950/85 border border-sky-400/80 shadow-2xl text-sky-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">✈️</span>
+            <span class="font-mono font-bold text-xs tracking-wider uppercase text-white">FIRST CLASS BOARDING PASS</span>
+            <span class="text-xs">✈️</span>
+          </div>
+          <div class="flex items-center gap-2 text-[8px] font-mono text-sky-300 mt-0.5">
+            <span>FLIGHT LOVE-2026</span>
+            <span>•</span>
+            <span>GATE: HAPPINESS</span>
+            <span>•</span>
+            <span>PASS #${id}</span>
+          </div>
+        </div>
+      `;
+      break;
+
+    case 'botanical-wreath':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-emerald-950/75 border border-emerald-400/60 shadow-xl text-emerald-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🌿</span>
+            <span class="font-serif italic text-xs tracking-widest text-emerald-100">Botanical Garden Elegance</span>
+            <span class="text-xs">🌸</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-emerald-300/80">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'kraft-stamp':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded bg-amber-950/80 border-2 border-dashed border-amber-300/80 text-amber-200 shadow-xl backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">📮</span>
+            <span class="font-mono font-bold text-xs tracking-widest uppercase">AIR MAIL • SPECIAL DELIVERY</span>
+          </div>
+          <span class="text-[8px] font-mono text-amber-300/80 mt-0.5">${escapeHtml(concept)} • WITH LOVE</span>
+        </div>
+      `;
+      break;
+
+    case 'glass-pill':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 border border-white/60 backdrop-blur-md shadow-xl text-white animate-fade-in">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-[10px] font-semibold tracking-widest uppercase drop-shadow">${escapeHtml(concept)}</span>
+          <span class="text-xs">✨</span>
+        </div>
+      `;
+      break;
+
+    case 'enso-seal':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-stone-900/80 border border-stone-400 shadow-xl text-stone-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-sm">⭕</span>
+            <span class="font-serif tracking-widest text-xs text-amber-200">${escapeHtml(concept)}</span>
+            <span class="text-xs bg-red-800 text-white px-1.5 py-0.5 rounded font-serif text-[9px]">喜</span>
+          </div>
+          <span class="text-[8px] tracking-[0.2em] text-stone-400 mt-0.5">Vạn Duyên Hội Ngộ • Tâm An Hạnh Phúc</span>
+        </div>
+      `;
+      break;
+
+    case 'celestial-moon':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-slate-950/90 border border-yellow-300/80 shadow-2xl text-yellow-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🌙</span>
+            <span class="font-serif tracking-[0.25em] text-xs font-semibold uppercase text-yellow-300">CELESTIAL UNION</span>
+            <span class="text-xs">✨</span>
+          </div>
+          <span class="text-[8px] font-mono tracking-[0.25em] text-yellow-200/90 mt-0.5">${escapeHtml(concept)} • STAR #${id}</span>
+        </div>
+      `;
+      break;
+
+    case 'gatsby-arch':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 bg-black/90 border-2 border-amber-400 shadow-2xl text-amber-300 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-amber-400">◆</span>
+            <span class="font-serif font-black tracking-[0.3em] text-xs uppercase">GREAT GATSBY 1930s GALA</span>
+            <span class="text-xs text-amber-400">◆</span>
+          </div>
+          <span class="text-[8px] tracking-[0.3em] text-amber-200 font-mono mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'clapperboard':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-lg bg-zinc-950/90 border border-zinc-500 shadow-2xl text-white backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🎬</span>
+            <span class="font-mono font-bold text-xs tracking-wider uppercase">SCENE: FOREVER • TAKE: #${id}</span>
+            <span class="text-xs">🎬</span>
+          </div>
+          <span class="text-[8px] font-mono text-zinc-400 mt-0.5">${escapeHtml(concept)} • 35MM MOTION PICTURE</span>
+        </div>
+      `;
+      break;
+
+    case 'wine-crest':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-rose-950/85 border border-rose-400/80 shadow-xl text-rose-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🍷</span>
+            <span class="font-serif tracking-[0.2em] text-xs font-semibold uppercase">BURGUNDY WINE GALA</span>
+            <span class="text-xs">🍷</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-rose-300 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'seashell-crest':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-teal-950/80 border border-teal-300/70 shadow-xl text-teal-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🌊</span>
+            <span class="font-serif italic text-xs tracking-wider text-teal-100">Tropical Ocean Breeze</span>
+            <span class="text-xs">🐚</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-teal-300/90 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'leather-bookmark':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-md bg-stone-900/85 border-l-4 border-amber-600 shadow-xl text-amber-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">📖</span>
+            <span class="font-serif text-xs tracking-wider">CHAPTER: HAPPILY EVER AFTER</span>
+            <span class="text-xs">☕</span>
+          </div>
+          <span class="text-[8px] font-mono text-stone-400 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'french-cameo':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-pink-950/80 border border-pink-300/80 shadow-xl text-pink-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">⚜️</span>
+            <span class="font-serif italic text-xs tracking-widest text-pink-100">Château De Versailles Romance</span>
+            <span class="text-xs">⚜️</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.3em] text-pink-300/90 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'maple-garland':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-amber-950/80 border border-orange-400/80 shadow-xl text-amber-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🍁</span>
+            <span class="font-serif italic text-xs tracking-wider text-orange-200">Autumn Amber Glow</span>
+            <span class="text-xs">🍂</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-amber-300 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'snowflake-crest':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-sky-950/85 border border-cyan-300/80 shadow-xl text-cyan-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">❄️</span>
+            <span class="font-serif tracking-widest text-xs font-semibold uppercase text-cyan-200">WINTER FROST CRYSTAL</span>
+            <span class="text-xs">❄️</span>
+          </div>
+          <span class="text-[8px] font-mono tracking-[0.25em] text-cyan-300 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'ribbon-bow':
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-full bg-rose-950/75 border border-rose-300/70 shadow-xl text-rose-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🎀</span>
+            <span class="font-serif italic text-xs tracking-widest text-pink-100">Sweet Ribbon & Confection</span>
+            <span class="text-xs">🎀</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-rose-200 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
+
+    case 'watercolor-splash':
+    default:
+      badgeContainer.innerHTML = `
+        <div class="inline-flex flex-col items-center justify-center px-4 py-1.5 rounded-xl bg-indigo-950/80 border border-indigo-300/70 shadow-xl text-indigo-200 backdrop-blur-md animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs">🎨</span>
+            <span class="font-serif italic text-xs tracking-wider text-indigo-100">Artist Watercolor Canvas</span>
+            <span class="text-xs">🖌️</span>
+          </div>
+          <span class="text-[8px] uppercase tracking-[0.25em] text-indigo-300 mt-0.5">${escapeHtml(concept)}</span>
+        </div>
+      `;
+      break;
   }
 }
 
@@ -1664,6 +1953,53 @@ function getFilteredTemplates() {
   return currentFilteredTemplates;
 }
 
+const ARCHETYPE_INFO = {
+  'oriental-silk': { label: 'Á Đông Cổ Điển', icon: '🏮', color: 'bg-red-50 text-red-700 border-red-200' },
+  'botanical-garden': { label: 'Vườn Hoa Cỏ', icon: '🌿', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  'royal-luxury': { label: 'Hoàng Gia Gold', icon: '👑', color: 'bg-amber-50 text-amber-800 border-amber-300' },
+  'rustic-kraft': { label: 'Rustic Kraft', icon: '📮', color: 'bg-orange-50 text-orange-800 border-orange-200' },
+  'editorial-vogue': { label: 'Tạp Chí Vogue', icon: '📰', color: 'bg-stone-100 text-stone-800 border-stone-300' },
+  'ocean-breeze': { label: 'Biển Nhiệt Đới', icon: '🌊', color: 'bg-teal-50 text-teal-700 border-teal-200' },
+  'pastel-sweet': { label: 'Pastel Ngọt Ngào', icon: '🎀', color: 'bg-pink-50 text-pink-700 border-pink-200' },
+  'watercolor-canvas': { label: 'Thủy Mặc Nghệ Thuật', icon: '🎨', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+  'vintage-postcard': { label: 'Bưu Thiếp Du Lịch', icon: '✉️', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  'celestial-galaxy': { label: 'Ngân Hà Tinh Tú', icon: '🌙', color: 'bg-slate-900 text-yellow-300 border-slate-700' },
+  'wedding-newspaper': { label: 'Nhật Báo Hôn Lễ', icon: '🗞️', color: 'bg-stone-100 text-stone-900 border-stone-400' },
+  'french-rococo': { label: 'Cung Điện Pháp', icon: '⚜️', color: 'bg-rose-50 text-rose-700 border-rose-200' },
+  'autumn-amber': { label: 'Mùa Thu Vàng', icon: '🍁', color: 'bg-amber-50 text-amber-800 border-amber-200' },
+  'winter-frost': { label: 'Băng Tuyết Winter', icon: '❄️', color: 'bg-sky-50 text-sky-700 border-sky-200' },
+  'boarding-pass': { label: 'Vé Máy Bay VIP', icon: '✈️', color: 'bg-blue-50 text-blue-700 border-blue-200' },
+  'art-deco': { label: 'Art Deco Gatsby', icon: '◆', color: 'bg-stone-900 text-amber-300 border-stone-700' },
+  'zen-enso': { label: 'Zen Thiền Wabi', icon: '⭕', color: 'bg-stone-100 text-stone-800 border-stone-300' },
+  'glassmorphism': { label: 'Kính Mờ Hiện Đại', icon: '🪟', color: 'bg-cyan-50 text-cyan-800 border-cyan-200' },
+  'wine-gala': { label: 'Tiệc Rượu Burgundy', icon: '🍷', color: 'bg-rose-100 text-rose-900 border-rose-300' },
+  'coffee-book': { label: 'Cà Phê Sách Cổ', icon: '📖', color: 'bg-amber-50 text-amber-900 border-amber-300' },
+  'cinema-film': { label: 'Điện Ảnh 35mm', icon: '🎬', color: 'bg-zinc-900 text-zinc-100 border-zinc-700' }
+};
+
+const FRAME_LABELS = {
+  'cathedral-arch': 'Vòm cung điện',
+  'polaroid-tape': 'Polaroid dán băng',
+  'square-minimal': 'Vuông sắc cạnh',
+  'petal-organic': 'Đường cong cánh hoa',
+  'octagon-deco': 'Bát giác Gatsby',
+  'ticket-notch': 'Vé khuyết góc',
+  'sprocket-frame': 'Khung cuộn phim',
+  'news-column': 'Cột báo tin tức',
+  'circle-enso': 'Vòng tròn Enso',
+  'circle-gold': 'Tròn viền vàng',
+  'oval-cameo': 'Bầu dục Cameo',
+  'glass-rounded': 'Bo tròn kính mờ',
+  'ice-crystal': 'Pha lê băng tuyết',
+  'circle-stars': 'Hào quang tinh tú',
+  'book-corner': 'Góc sách vintage',
+  'circle-wine': 'Tròn rượu vang',
+  'soft-rounded': 'Bo tròn mềm',
+  'rounded-amber': 'Góc lượn hổ phách',
+  'circle-cyan': 'Viền xanh ngọc bích',
+  'artist-oval': 'Elip cọ vẽ họa sĩ'
+};
+
 function renderTemplateGrid(list) {
   const grid = document.getElementById('template-grid-container');
   if (!grid) return;
@@ -1676,54 +2012,87 @@ function renderTemplateGrid(list) {
 
   list.forEach(t => {
     const isCurrent = (currentConfig.templateId || 11) === t.id;
+    const arch = ARCHETYPE_INFO[t.archetype] || { label: 'Độc bản', icon: '✨', color: 'bg-stone-100 text-stone-700 border-stone-200' };
+    const frameLabel = FRAME_LABELS[t.avatarFrame] || 'Khung nghệ thuật';
+
     const card = document.createElement('div');
-    card.className = `rounded-2xl border p-3 flex flex-col justify-between transition-all duration-300 bg-white shadow-sm hover:shadow-md ${
+    card.className = `rounded-2xl border p-3.5 flex flex-col justify-between transition-all duration-300 bg-white shadow-sm hover:shadow-lg ${
       isCurrent ? 'ring-2 ring-wedding-accent border-wedding-accent' : 'border-stone-200 hover:border-wedding-accent/50'
     }`;
 
     // Icon mô tả hạt rơi
-    const particleIcon = t.particle === 'hearts' ? '❤️' :
-                         t.particle === 'snow' ? '❄️' :
-                         t.particle === 'gold-sparkles' ? '✨' :
-                         t.particle === 'fireflies' ? '🌟' : '🌸';
+    const particleIcon = t.particle === 'hearts' ? '❤️ Tim bay' :
+                         t.particle === 'snow' ? '❄️ Tuyết rơi' :
+                         t.particle === 'gold-sparkles' ? '✨ Bụi vàng' :
+                         t.particle === 'fireflies' ? '🌟 Đom đóm' :
+                         t.particle === 'confetti' ? '🎉 Pháo giấy' : '🌸 Cánh hoa';
 
     card.innerHTML = `
-      <div class="space-y-2.5">
-        <div class="relative rounded-xl overflow-hidden aspect-[4/3] bg-stone-100">
-          <img src="${escapeHtml(t.thumb)}" alt="${escapeHtml(t.name)}" class="w-full h-full object-cover" loading="lazy">
-          <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-black/65 backdrop-blur-sm text-white">
-            #${t.id} • ${escapeHtml(t.tag)}
+      <div class="space-y-3">
+        <!-- Thumbnail + Archetype Badge -->
+        <div class="relative rounded-xl overflow-hidden aspect-[16/10] bg-stone-100 group">
+          <img src="${escapeHtml(t.thumb)}" alt="${escapeHtml(t.name)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy">
+          
+          <!-- Badge Bố cục kiến trúc -->
+          <span class="absolute top-2 left-2 px-2.5 py-1 rounded-full text-[10px] font-bold ${arch.color} border shadow-md flex items-center gap-1 backdrop-blur-sm">
+            <span>${arch.icon}</span>
+            <span>${arch.label}</span>
           </span>
-          ${isCurrent ? '<span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500 text-white shadow">Đang dùng</span>' : ''}
+
+          <span class="absolute bottom-2 left-2 px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-black/70 text-white backdrop-blur-sm">
+            #${t.id}
+          </span>
+
+          ${isCurrent ? '<span class="absolute top-2 right-2 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-lg flex items-center gap-1">✓ Đang dùng</span>' : ''}
         </div>
 
+        <!-- Tiêu đề Concept & Mô tả -->
         <div>
           <div class="flex items-center justify-between gap-1">
-            <h4 class="font-serif font-bold text-sm text-stone-900 line-clamp-1">${escapeHtml(t.name)}</h4>
-            <span class="text-xs shrink-0" title="Hạt rơi: ${t.particle}">${particleIcon}</span>
+            <h4 class="font-serif font-bold text-sm text-stone-900 line-clamp-1" title="${escapeHtml(t.name)}">${escapeHtml(t.concept || t.name)}</h4>
           </div>
-          <p class="text-[11px] text-stone-500 line-clamp-2 mt-0.5">${escapeHtml(t.desc)}</p>
+          <p class="text-[11px] text-stone-500 line-clamp-2 mt-1 leading-relaxed">${escapeHtml(t.desc)}</p>
         </div>
 
-        <!-- Badges hiệu ứng chuyển cảnh & màu sắc -->
-        <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-          <span class="text-[9px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 font-mono">🎬 ${t.transition || 'cinematic'}</span>
-          <div class="flex items-center gap-1 ml-auto">
-            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.primary}" title="Chủ đạo"></span>
-            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.secondary}" title="Màu phụ"></span>
-            <span class="w-3.5 h-3.5 rounded-full border border-black/10 shadow-inner" style="background:${t.theme.envelopeWax}" title="Màu con dấu"></span>
+        <!-- Chi tiết phân hóa thực chất: Khung ảnh, Viền thiệp, Phông chữ -->
+        <div class="bg-stone-50 rounded-xl p-2 space-y-1 text-[10px] text-stone-600 border border-stone-200/60 font-sans">
+          <div class="flex items-center justify-between">
+            <span class="text-stone-400">Khung ảnh:</span>
+            <span class="font-medium text-stone-800">${frameLabel}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-stone-400">Kiểu viền:</span>
+            <span class="font-mono text-stone-700">${t.borderStyle || 'classic'}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-stone-400">Font chữ:</span>
+            <span class="font-mono text-wedding-accent">${t.fontFamily ? t.fontFamily.replace('font-', '') : 'script'}</span>
+          </div>
+        </div>
+
+        <!-- Badges chuyển cảnh, hạt rơi & bảng màu -->
+        <div class="flex items-center justify-between pt-0.5">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 font-mono">🎬 ${t.transition || 'cinematic'}</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600 font-mono">${particleIcon}</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0 ml-2">
+            <span class="w-3.5 h-3.5 rounded-full border border-black/15 shadow-inner" style="background:${t.theme.primary}" title="Màu chính"></span>
+            <span class="w-3.5 h-3.5 rounded-full border border-black/15 shadow-inner" style="background:${t.theme.secondary}" title="Màu phụ"></span>
+            <span class="w-3.5 h-3.5 rounded-full border border-black/15 shadow-inner" style="background:${t.theme.envelopeWax}" title="Màu dấu sáp"></span>
           </div>
         </div>
       </div>
 
+      <!-- Action Button -->
       <div class="pt-3 border-t border-stone-100 mt-3">
         <button onclick="applyTemplate(${t.id})" 
-                class="w-full py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
+                class="w-full py-2.5 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5 ${
                   isCurrent 
-                    ? 'bg-green-50 text-green-700 border border-green-200 cursor-default' 
-                    : 'bg-wedding-accent hover:bg-stone-800 text-white shadow-sm'
+                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold cursor-default' 
+                    : 'bg-wedding-accent hover:bg-stone-900 text-white shadow-sm hover:shadow'
                 }">
-          ${isCurrent ? '<i data-lucide="check" class="w-3.5 h-3.5"></i> Đang kích hoạt' : 'Áp dụng mẫu này'}
+          ${isCurrent ? '<i data-lucide="check" class="w-4 h-4"></i> Đang kích hoạt' : 'Áp dụng phong cách này'}
         </button>
       </div>
     `;

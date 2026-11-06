@@ -302,3 +302,443 @@ button, a {
   font-family: 'Be Vietnam Pro', system-ui, sans-serif !important;
 }
 
+/* ==========================================================================
+   20 KIẾN TRÚC THIẾT KẾ THIỆP THỰC CHẤT (20 SUBSTANTIVE DESIGN ARCHETYPES)
+   ========================================================================== */
+
+/* Lớp cơ sở cho toàn bộ thẻ thiệp */
+.wedding-card {
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 1. Hoàng Gia Versailles & Gold Foil */
+[data-archetype="royal-luxury"] .wedding-card {
+  border: 2px solid var(--theme-secondary, #D4AF37) !important;
+  outline: 1px solid var(--theme-secondary, #D4AF37) !important;
+  outline-offset: 4px;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 35px rgba(212, 175, 55, 0.18) !important;
+  background: var(--theme-card-bg, #FFFFFF) !important;
+}
+[data-archetype="royal-luxury"] #groom-avatar-frame,
+[data-archetype="royal-luxury"] #bride-avatar-frame {
+  border-radius: 999px 999px 24px 24px !important;
+  border: 4px solid var(--theme-secondary, #D4AF37) !important;
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.28) !important;
+}
+
+/* 2. Truyền Thống Á Đông & Song Hỷ Cát Tường */
+[data-archetype="oriental-silk"] .wedding-card {
+  border: 2px solid var(--theme-secondary, #D97706) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 32px rgba(185, 28, 28, 0.22) !important;
+  background: var(--theme-card-bg, #FFFDF9) !important;
+  position: relative;
+}
+[data-archetype="oriental-silk"] #groom-avatar-frame,
+[data-archetype="oriental-silk"] #bride-avatar-frame {
+  border: 4px solid var(--theme-secondary, #D97706) !important;
+  border-radius: 50% !important;
+  outline: 2px dashed var(--theme-primary, #B91C1C) !important;
+  outline-offset: 4px;
+  box-shadow: 0 10px 25px rgba(185, 28, 28, 0.25) !important;
+}
+
+/* 3. Tạp Chí Thời Trang Vogue Minimalist */
+[data-archetype="editorial-vogue"] .wedding-card {
+  border: 1px solid var(--theme-text, #171717) !important;
+  outline: none !important;
+  border-radius: 2px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="editorial-vogue"] #groom-avatar-frame,
+[data-archetype="editorial-vogue"] #bride-avatar-frame {
+  border-radius: 2px !important;
+  border: 1.5px solid var(--theme-text, #171717) !important;
+  box-shadow: none !important;
+}
+
+/* 4. Hoa Cỏ & Botanical Garden */
+[data-archetype="botanical-garden"] .wedding-card {
+  border: 1.5px solid var(--theme-secondary, #A7F3D0) !important;
+  border-radius: 36px 12px 36px 12px !important;
+  box-shadow: 0 14px 30px rgba(5, 150, 105, 0.1) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="botanical-garden"] #groom-avatar-frame,
+[data-archetype="botanical-garden"] #bride-avatar-frame {
+  border-radius: 36px 12px 36px 12px !important;
+  border: 3px solid var(--theme-primary, #059669) !important;
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.15) !important;
+}
+
+/* 5. Rustic Mộc Mạc & Giấy Kraft Vintage */
+[data-archetype="rustic-kraft"] .wedding-card {
+  border: 2px dashed rgba(180, 83, 9, 0.45) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 25px rgba(120, 53, 15, 0.1) !important;
+  background: #FAF7F0 !important;
+}
+[data-archetype="rustic-kraft"] #groom-avatar-frame,
+[data-archetype="rustic-kraft"] #bride-avatar-frame {
+  border-radius: 4px !important;
+  border: 6px solid #FFFFFF !important;
+  border-bottom: 20px solid #FFFFFF !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.14) !important;
+}
+
+/* 6. Nhật Báo Tình Yêu (The Wedding Gazette) */
+[data-archetype="wedding-newspaper"] .wedding-card {
+  border-top: 3px double #292524 !important;
+  border-bottom: 3px double #292524 !important;
+  border-left: 1px solid #D6D3D1 !important;
+  border-right: 1px solid #D6D3D1 !important;
+  border-radius: 0px !important;
+  background: #FAF6F0 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+}
+[data-archetype="wedding-newspaper"] #groom-avatar-frame,
+[data-archetype="wedding-newspaper"] #bride-avatar-frame {
+  border-radius: 0px !important;
+  border: 1px solid #44403C !important;
+  padding: 4px !important;
+  background: white !important;
+  box-shadow: none !important;
+}
+
+/* 7. Vé Máy Bay & Hộ Chiếu First Class */
+[data-archetype="boarding-pass"] .wedding-card {
+  border: 1.5px solid #CBD5E1 !important;
+  border-left: 5px dashed var(--theme-primary, #0284C7) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="boarding-pass"] #groom-avatar-frame,
+[data-archetype="boarding-pass"] #bride-avatar-frame {
+  border-radius: 18px !important;
+  border: 3.5px solid var(--theme-primary, #0284C7) !important;
+}
+
+/* 8. Pha Lê & Kính Mờ Glassmorphism */
+[data-archetype="glassmorphism"] .wedding-card {
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 28px !important;
+  box-shadow: 0 20px 45px rgba(31, 38, 135, 0.09) !important;
+}
+[data-archetype="glassmorphism"] #groom-avatar-frame,
+[data-archetype="glassmorphism"] #bride-avatar-frame {
+  border-radius: 28px !important;
+  border: 3.5px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* 9. Thiền Định Wabi-Sabi & Thư Đạo Enso */
+[data-archetype="zen-enso"] .wedding-card {
+  border: 1px solid #D6D3D1 !important;
+  border-left: 5px solid var(--theme-primary, #3F6212) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05) !important;
+  background: #FCFBF9 !important;
+}
+[data-archetype="zen-enso"] #groom-avatar-frame,
+[data-archetype="zen-enso"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3px solid #847A73 !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08) !important;
+}
+
+/* 10. Dạ Hội Ngân Hà & Starlight Midnight */
+[data-archetype="celestial-galaxy"] .wedding-card {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1.5px solid rgba(250, 204, 21, 0.5) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(234, 179, 8, 0.06) !important;
+  color: #F8FAFC !important;
+}
+[data-archetype="celestial-galaxy"] .wedding-card h3,
+[data-archetype="celestial-galaxy"] .wedding-card p,
+[data-archetype="celestial-galaxy"] .wedding-card strong,
+[data-archetype="celestial-galaxy"] .wedding-card span {
+  color: #F8FAFC !important;
+}
+[data-archetype="celestial-galaxy"] #groom-avatar-frame,
+[data-archetype="celestial-galaxy"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3.5px solid #FACC15 !important;
+  box-shadow: 0 0 22px rgba(250, 204, 21, 0.45) !important;
+}
+
+/* 11. Cung Điện Versailles & Rococo Romance */
+[data-archetype="french-rococo"] .wedding-card {
+  border: 2px solid #E879F9 !important;
+  border-radius: 28px !important;
+  box-shadow: 0 12px 35px rgba(232, 121, 249, 0.16) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="french-rococo"] #groom-avatar-frame,
+[data-archetype="french-rococo"] #bride-avatar-frame {
+  border-radius: 50% / 60% 60% 40% 40% !important;
+  border: 4px solid #F472B6 !important;
+}
+
+/* 12. Mùa Thu Vàng & Lá Phong Amber Glow */
+[data-archetype="autumn-amber"] .wedding-card {
+  border: 2px solid #EA580C !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 30px rgba(234, 88, 12, 0.15) !important;
+  background: #FFFDF9 !important;
+}
+[data-archetype="autumn-amber"] #groom-avatar-frame,
+[data-archetype="autumn-amber"] #bride-avatar-frame {
+  border-radius: 24px !important;
+  border: 3.5px solid #EA580C !important;
+}
+
+/* 13. Mùa Đông Tuyết Trắng & Crystal Frost */
+[data-archetype="winter-frost"] .wedding-card {
+  border: 2px solid #38BDF8 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 35px rgba(56, 189, 248, 0.2) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="winter-frost"] #groom-avatar-frame,
+[data-archetype="winter-frost"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3.5px solid #38BDF8 !important;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.3) !important;
+}
+
+/* 14. Bưu Thiếp Du Lịch Cổ Điển & Màu Nước Canvas (Vintage Postcard / Watercolor) */
+[data-archetype="vintage-postcard"] .wedding-card,
+[data-archetype="watercolor-canvas"] .wedding-card {
+  border: 2px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+  background: #FFFDF9 !important;
+}
+[data-archetype="vintage-postcard"] #groom-avatar-frame,
+[data-archetype="vintage-postcard"] #bride-avatar-frame,
+[data-archetype="watercolor-canvas"] #groom-avatar-frame,
+[data-archetype="watercolor-canvas"] #bride-avatar-frame {
+  border-radius: 12px !important;
+  border: 3px solid #64748B !important;
+}
+
+/* 15. Broadway & Bến Thượng Hải 1930s Art Deco */
+[data-archetype="art-deco"] .wedding-card {
+  background: #171717 !important;
+  border: 2px solid #D4AF37 !important;
+  outline: 1px solid #D4AF37 !important;
+  outline-offset: -6px;
+  border-radius: 4px !important;
+  box-shadow: 0 14px 35px rgba(212, 175, 55, 0.25) !important;
+  color: #FEF3C7 !important;
+}
+[data-archetype="art-deco"] .wedding-card h3,
+[data-archetype="art-deco"] .wedding-card p,
+[data-archetype="art-deco"] .wedding-card strong,
+[data-archetype="art-deco"] .wedding-card span {
+  color: #FEF3C7 !important;
+}
+[data-archetype="art-deco"] #groom-avatar-frame,
+[data-archetype="art-deco"] #bride-avatar-frame {
+  border-radius: 16px !important;
+  border: 3px solid #D4AF37 !important;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* 16. Biển Xanh & San Hô Nhiệt Đới */
+[data-archetype="ocean-breeze"] .wedding-card {
+  border: 2px solid #2DD4BF !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 30px rgba(45, 212, 191, 0.16) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="ocean-breeze"] #groom-avatar-frame,
+[data-archetype="ocean-breeze"] #bride-avatar-frame {
+  border-radius: 24px !important;
+  border: 3px solid #0D9488 !important;
+}
+
+/* 17. Điện Ảnh & Cuộn Phim 35mm Hollywood */
+[data-archetype="cinema-film"] .wedding-card {
+  background: #18181B !important;
+  border: 2px solid #3F3F46 !important;
+  border-left: 7px dashed #A1A1AA !important;
+  border-right: 7px dashed #A1A1AA !important;
+  border-radius: 10px !important;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.45) !important;
+  color: #F4F4F5 !important;
+}
+[data-archetype="cinema-film"] .wedding-card h3,
+[data-archetype="cinema-film"] .wedding-card p,
+[data-archetype="cinema-film"] .wedding-card strong,
+[data-archetype="cinema-film"] .wedding-card span {
+  color: #F4F4F5 !important;
+}
+[data-archetype="cinema-film"] #groom-avatar-frame,
+[data-archetype="cinema-film"] #bride-avatar-frame {
+  border-radius: 8px !important;
+  border: 3px solid #71717A !important;
+}
+
+/* 18. Tiệc Rượu Vang Burgundy & Đêm Dạ Vũ */
+[data-archetype="wine-gala"] .wedding-card {
+  background: #1C1417 !important;
+  border: 2px solid #E11D48 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 35px rgba(225, 29, 72, 0.22) !important;
+  color: #FFF1F2 !important;
+}
+[data-archetype="wine-gala"] .wedding-card h3,
+[data-archetype="wine-gala"] .wedding-card p,
+[data-archetype="wine-gala"] .wedding-card strong,
+[data-archetype="wine-gala"] .wedding-card span {
+  color: #FFF1F2 !important;
+}
+[data-archetype="wine-gala"] #groom-avatar-frame,
+[data-archetype="wine-gala"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3px solid #E11D48 !important;
+}
+
+/* 19. Tiệm Cà Phê & Sách Cổ Bình Yên */
+[data-archetype="coffee-book"] .wedding-card {
+  border: 1.5px solid #A16207 !important;
+  border-left: 6px solid #713F12 !important;
+  border-radius: 6px 16px 16px 6px !important;
+  box-shadow: 0 10px 25px rgba(113, 63, 18, 0.12) !important;
+  background: #FAF6EE !important;
+}
+[data-archetype="coffee-book"] #groom-avatar-frame,
+[data-archetype="coffee-book"] #bride-avatar-frame {
+  border-radius: 8px !important;
+  border: 3px solid #713F12 !important;
+}
+
+/* 20. Pastel Dịu Ngọt & Sweet Ribbon */
+[data-archetype="pastel-sweet"] .wedding-card {
+  border: 2px solid #FDBA74 !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 30px rgba(251, 146, 60, 0.15) !important;
+  background: #FFFFFF !important;
+}
+[data-archetype="pastel-sweet"] #groom-avatar-frame,
+[data-archetype="pastel-sweet"] #bride-avatar-frame {
+  border-radius: 24px !important;
+  border: 3px solid #EA580C !important;
+}
+
+/* ==================== ĐẶC TRƯNG KHUNG ẢNH ĐỘC BẢN (AVATAR FRAMES) ==================== */
+[data-avatar-frame="cathedral-arch"] #groom-avatar-frame,
+[data-avatar-frame="cathedral-arch"] #bride-avatar-frame {
+  border-radius: 999px 999px 24px 24px !important;
+}
+[data-avatar-frame="polaroid-tape"] #groom-avatar-frame,
+[data-avatar-frame="polaroid-tape"] #bride-avatar-frame {
+  border-radius: 4px !important;
+  border: 8px solid #FFFFFF !important;
+  border-bottom: 24px solid #FFFFFF !important;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18) !important;
+}
+[data-avatar-frame="square-minimal"] #groom-avatar-frame,
+[data-avatar-frame="square-minimal"] #bride-avatar-frame {
+  border-radius: 0px !important;
+  border: 2px solid #18181B !important;
+}
+[data-avatar-frame="petal-organic"] #groom-avatar-frame,
+[data-avatar-frame="petal-organic"] #bride-avatar-frame {
+  border-radius: 42% 58% 70% 30% / 45% 45% 55% 55% !important;
+}
+[data-avatar-frame="octagon-deco"] #groom-avatar-frame,
+[data-avatar-frame="octagon-deco"] #bride-avatar-frame {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  border-radius: 0 !important;
+}
+[data-avatar-frame="ticket-notch"] #groom-avatar-frame,
+[data-avatar-frame="ticket-notch"] #bride-avatar-frame {
+  border-radius: 12px !important;
+  border: 3px dashed #64748B !important;
+}
+[data-avatar-frame="sprocket-frame"] #groom-avatar-frame,
+[data-avatar-frame="sprocket-frame"] #bride-avatar-frame {
+  border-radius: 8px !important;
+  outline: 3px dashed #71717A !important;
+  outline-offset: 4px;
+}
+[data-avatar-frame="news-column"] #groom-avatar-frame,
+[data-avatar-frame="news-column"] #bride-avatar-frame {
+  border-radius: 0px !important;
+  border: 3px solid #1C1917 !important;
+}
+[data-avatar-frame="circle-enso"] #groom-avatar-frame,
+[data-avatar-frame="circle-enso"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 5px double #78350F !important;
+}
+[data-avatar-frame="circle-gold"] #groom-avatar-frame,
+[data-avatar-frame="circle-gold"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 4px solid #D4AF37 !important;
+}
+[data-avatar-frame="oval-cameo"] #groom-avatar-frame,
+[data-avatar-frame="oval-cameo"] #bride-avatar-frame {
+  border-radius: 50% / 60% 60% 40% 40% !important;
+  border: 4px solid #F472B6 !important;
+}
+[data-avatar-frame="glass-rounded"] #groom-avatar-frame,
+[data-avatar-frame="glass-rounded"] #bride-avatar-frame {
+  border-radius: 28px !important;
+  border: 3px solid rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(8px);
+}
+[data-avatar-frame="ice-crystal"] #groom-avatar-frame,
+[data-avatar-frame="ice-crystal"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3.5px solid #38BDF8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4) !important;
+}
+[data-avatar-frame="circle-stars"] #groom-avatar-frame,
+[data-avatar-frame="circle-stars"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3px solid #FDE047 !important;
+  box-shadow: 0 0 25px rgba(253, 224, 71, 0.35) !important;
+}
+[data-avatar-frame="book-corner"] #groom-avatar-frame,
+[data-avatar-frame="book-corner"] #bride-avatar-frame {
+  border-radius: 6px 20px 6px 20px !important;
+  border: 3px solid #713F12 !important;
+}
+[data-avatar-frame="circle-wine"] #groom-avatar-frame,
+[data-avatar-frame="circle-wine"] #bride-avatar-frame {
+  border-radius: 50% !important;
+  border: 3.5px solid #BE123C !important;
+}
+[data-avatar-frame="soft-rounded"] #groom-avatar-frame,
+[data-avatar-frame="soft-rounded"] #bride-avatar-frame {
+  border-radius: 28px !important;
+  border: 3px solid #F472B6 !important;
+}
+[data-avatar-frame="rounded-amber"] #groom-avatar-frame,
+[data-avatar-frame="rounded-amber"] #bride-avatar-frame {
+  border-radius: 20px !important;
+  border: 3px solid #EA580C !important;
+}
+[data-avatar-frame="circle-cyan"] #groom-avatar-frame,
+[data-avatar-frame="circle-cyan"] #bride-avatar-frame {
+  border-radius: 24px !important;
+  border: 3px solid #0D9488 !important;
+}
+[data-avatar-frame="artist-oval"] #groom-avatar-frame,
+[data-avatar-frame="artist-oval"] #bride-avatar-frame {
+  border-radius: 50% / 40% 40% 60% 60% !important;
+  border: 3.5px solid #6366F1 !important;
+}
+
+
+
